@@ -8,8 +8,8 @@ source $hotnet2/venv/bin/activate
 
 # Create network data.
 python $hotnet2/makeNetworkFiles.py \
-    -e  $cache_folder/edges.txt \
-    -i  $cache_folder/vertices.txt \
+    -e  $cache_folder/hotnet2_edges.txt \
+    -i  $cache_folder/hotnet2_vertices.txt \
     -nn dip \
     -p  dip \
     -b  0.5 \

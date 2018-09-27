@@ -42,8 +42,8 @@ if __name__ == "__main__":
     module_genes = results["module_genes"]
     bg_genes = results["bg_genes"]
 
-    file(os.path.join(constants.OUTPUT_DIR, "module_genes.txt"),"w+").write("\n".join(module_genes))
-    file(os.path.join(constants.OUTPUT_DIR, "bg_genes.txt"), "w+").write("\n".join(bg_genes))
+    file(os.path.join(constants.OUTPUT_DIR, "bionet_module_genes.txt"),"w+").write("\n".join(module_genes))
+    file(os.path.join(constants.OUTPUT_DIR, "bionet_bg_genes.txt"), "w+").write("\n".join(bg_genes))
 
     utils.go.check_group_enrichment(module_genes,bg_genes)
 

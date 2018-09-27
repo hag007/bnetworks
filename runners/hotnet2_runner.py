@@ -8,7 +8,7 @@ import os
 import numpy as np
 from numpy import log10
 import pandas as pd
-
+import json
 import subprocess
 
 # import rpy2.robjects.numpy2ri  as numpy2ri
@@ -38,15 +38,15 @@ def sif2hotnet2(network_name):
     vertices = list(set(np.append(src,dst)))
 
     lns = ["{} {}".format(i+1, cur) for i, cur in enumerate(vertices)]
-    file(os.path.join(constants.CACHE_DIR, "vertices.txt"), "w+").write("\n".join(lns))
+    file(os.path.join(constants.CACHE_DIR, "hotnet2_vertices.txt"), "w+").write("\n".join(lns))
 
     inds = map(lambda x: (vertices.index(x[0])+1, vertices.index(x[1])+1), zip(src,dst))
 
 
     lns = ["{} {} {}".format(cur[0], cur[1], 1) for cur in inds]
-    file(os.path.join(constants.CACHE_DIR, "edges.txt"), "w+").write("\n".join(lns))
+    file(os.path.join(constants.CACHE_DIR, "hotnet2_edges.txt"), "w+").write("\n".join(lns))
 
-    print subprocess.Popen("bash ../sh/scripts/hotnet2.sh", shell=True, stdout=subprocess.PIPE).stdout.read() # cwd=dir_path
+    print subprocess.Popen("bash ../sh/scripts/prepare_hotnet2.sh", shell=True, stdout=subprocess.PIPE).stdout.read() # cwd=dir_path
 
 def run_hotnet2(deg_file_name, network_file_name):
     script = file("scripts/bionet.r").read()
@@ -71,12 +71,24 @@ def prepare_input(method=constants.DEG_EDGER, network_name="dip"):
 
     sif2hotnet2(network_name=network_name)
 
-    return heat_file_name, network_file_name
+    vertices = set(pd.read_csv(os.path.join(constants.CACHE_DIR, "hotnet2_vertices.txt"), sep=" ", index_col=False, header=None).ix[:,1])
+    degs = set(pd.read_csv(deg_file_name, sep="\t").ix[:,0])
+    bg_genes = list(vertices.intersection(degs))
+    file(os.path.join(constants.OUTPUT_DIR, "hotnet2_bg_genes.txt"), "w+").write("\n".join(bg_genes))
+    return heat_file_name, network_file_name, bg_genes
 
 
 if __name__ == "__main__":
-    deg_file_name, network_file_name = prepare_input(method=constants.DEG_EDGER)
+    heat_file_name, network_file_name, bg_genes = prepare_input(method=constants.DEG_EDGER)
+    print subprocess.Popen("bash ../sh/scripts/run_hotnet2.sh", shell=True,
+                           stdout=subprocess.PIPE).stdout.read()  # cwd=dir_path
 
+    results = json.load(file(os.path.join(constants.OUTPUT_DIR,"results","consensus","subnetworks.json")))
+    modules = [x["core"] for x in results["consensus"]]
+    module_genes = reduce((lambda x, y: x + y), modules)
+    file(os.path.join(constants.OUTPUT_DIR,"hotnet2_module_genes.txt"), "w+").write("\n".join(module_genes))
+
+    utils.go.check_group_enrichment(module_genes, bg_genes)
 
 
 
