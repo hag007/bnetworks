@@ -59,7 +59,7 @@ def load_gene_expression_profile(gene_list_file_name=None, gene_expression_file_
             print stopwatch.stop("done filter gene list")
 
         if gene_expression_path == None:
-            gene_expression_path = os.path.join(constants.TCGA_DATA_DIR, gene_expression_file_name)
+            gene_expression_path = os.path.join(constants.DATA_DIR, gene_expression_file_name)
             stopwatch.start()
         f = open(gene_expression_path,'r')
         expression_profiles_filtered = [l.strip().split() for i, l in enumerate(f) if i==0 or l[:l.strip().find('\t')].split(".")[0] in gene_list]

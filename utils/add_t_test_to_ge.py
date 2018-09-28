@@ -9,7 +9,8 @@ import constants
 from numpy import log10
 
 
-def calc_ttest(dataset="test", gene_expression_file_name="ge.tsv"):
+def calc_ttest(dataset="TNFa", gene_expression_file_name="ge.tsv"):
+    constants.update_dirs(DATASET_NAME="TNFa")
     h_rows, h_cols, ge_dataset = infra.separate_headers(infra.load_gene_expression_profile_by_genes(gene_expression_file_name=gene_expression_file_name))
 
     pvals = []
@@ -43,7 +44,7 @@ def calc_ttest(dataset="test", gene_expression_file_name="ge.tsv"):
     for i, cur in enumerate(output_matrix):
         lines.append("\t".join(cur))
 
-    file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "gescore.tsv"), "w+").write("\n".join(lines))
+    file(os.path.join(constants.OUTPUT_DIR, "gescore.tsv"), "w+").write("\n".join(lines))
 
 
 calc_ttest()
