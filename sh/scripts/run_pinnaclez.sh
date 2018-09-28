@@ -12,7 +12,7 @@ score=MI
 trials=100
 improvement=0.001
 ST1=0.05
-ST2=0.05
+ST2=0.2
 ST3=0.00005
 
 java -jar ../jars/pinnaclez-ORIGINAL.jar $data_folder/TNFa_class \

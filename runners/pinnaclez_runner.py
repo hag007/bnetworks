@@ -59,7 +59,7 @@ if __name__ == "__main__":
                            stdout=subprocess.PIPE).stdout.read()  # cwd=dir_path
 
     results = file(os.path.join(constants.OUTPUT_DIR,"pinnaclez_results.txt")).read().split()
-    module_genes = [x for x in results if x.startswith("ENSG")]
+    module_genes = list(set([x for x in results if x.startswith("ENSG")]))
     dip_network = pd.read_csv(os.path.join(constants.NETWORKS_DIR, "dip.sif"), sep="\t", index_col=False, header=None)
     bg_genes = set(dip_network.ix[:,0]).union(set(dip_network.ix[:,2]))
     exp_genes, _1, _2 = infra.separate_headers(infra.load_gene_expression_profile())
