@@ -1,0 +1,6 @@
+gene_file=ALTERED_GENE_LIST_HYPERMUTATORS_EXCLUDED.txt
+title=GBM, Hypermutators Excluded;  altered in 2% or more of all cases
+shortest_path_threshold=2
+p_value_threshold=0.05
+num_global_trials=0
+num_local_trials=0

@@ -1,0 +1,6 @@
+gene_file={gene_file}
+title=benchmark
+shortest_path_threshold={sp_threshold}
+p_value_threshold={pval_threshold}
+num_global_trials=0
+num_local_trials=0

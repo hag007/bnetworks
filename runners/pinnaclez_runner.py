@@ -60,10 +60,11 @@ if __name__ == "__main__":
 
     results = file(os.path.join(constants.OUTPUT_DIR,"pinnaclez_results.txt")).read().split()
     module_genes = list(set([x for x in results if x.startswith("ENSG")]))
-    dip_network = pd.read_csv(os.path.join(constants.NETWORKS_DIR, "dip.sif"), sep="\t", index_col=False, header=None)
+    dip_network = pd.read_csv(os.path.join(constants.NETWORKS_DIR, "dip_out.sif"), sep="\t", index_col=False, header=None)
     bg_genes = set(dip_network.ix[:,0]).union(set(dip_network.ix[:,2]))
     exp_genes, _1, _2 = infra.separate_headers(infra.load_gene_expression_profile())
-    bg_genes = list(bg_genes.union(set(exp_genes)))
+    # bg_genes = list(bg_genes.union(set(exp_genes)))
+    bg_genes = list(bg_genes)
     file(os.path.join(constants.OUTPUT_DIR, "pinnaclez_bg_genes.txt"), "w+").write("\n".join(bg_genes))
     file(os.path.join(constants.OUTPUT_DIR,"pinnaclez_module_genes.txt"), "w+").write("\n".join(module_genes))
 

@@ -18,7 +18,7 @@ with file(os.path.join(constants.DICTIONARIES_DIR, "dip_ppi.txt")) as f1:
     gene_list = list(set([y for x in lns_formatted for y in x]))
     file(os.path.join(constants.LIST_DIR, "dip_bg.txt"), "w+").write("\n".join(gene_list))
 
-    lns_formatted = ["\t".join([x[0], "ppi", x[1]]) for x in lns_formatted]
+    lns_formatted = ["\t".join([x[0], "ppi", x[1]]) for x in lns_formatted] + ["\t".join([x[1], "ppi", x[0]]) for x in lns_formatted if x[0] != x[1]]
 
     print len(lns_formatted)
     with file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "dip_out.sif"), 'w+') as f2:

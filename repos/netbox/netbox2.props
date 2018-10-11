@@ -1,0 +1,8 @@
+mutation_file=MUTATION_FINAL.txt
+cna_file=CNA_FINAL.txt
+case_file=GBM_SEQUENCED_NO_HYPERMUTATORS_CASE_LIST.txt
+title=GBM, Hypermutators Excluded
+gene_frequency_threshold=0.000001
+shortest_path_threshold=1
+network_partition_algorithm=ng
+p_value_threshold=.05
