@@ -19,7 +19,7 @@ pandas2ri.activate()
 
 import shutil
 import constants
-
+import random
 from r.r_runner import run_rscript
 
 import DEG_runner
@@ -40,57 +40,65 @@ def prepare_input(method=constants.DEG_EDGER, network_name="dip"):
     src = np.array(network_df["ID_interactor_A"])
     dst = np.array(network_df["ID_interactor_B"])
 
-    vertices = set(np.append(src,dst))
+    vertices = list(set(np.append(src,dst)))
+    A = np.zeros((len(vertices), len(vertices)))
+
+    v_list_data = np.c_[np.array([i+1 for i in range(len(vertices))]), np.ones(len(vertices)), np.zeros(len(vertices))]
+    vlist = pd.DataFrame(v_list_data,index = [i for i in range(len(vertices))], columns=['content', 'weight', 'degree'], dtype=np.int)
+
+
+    for i, cur_r in network_df.iterrows():
+        A[vertices.index(cur_r["ID_interactor_A"]),vertices.index(cur_r["ID_interactor_B"])]=1
+        A[vertices.index(cur_r["ID_interactor_B"]), vertices.index(cur_r["ID_interactor_A"])] = 1
+        vlist.loc[list(set([vertices.index(cur_r["ID_interactor_B"]), vertices.index(cur_r["ID_interactor_A"])])),["degree"]]+=1
 
 
     deg = infra.load_gene_expression_profile_by_genes(gene_expression_path=deg_file_name)
     h_rows, h_cols, deg_data = infra.separate_headers(deg)
-    total_deg_genes = h_rows
     ind = np.where(h_cols=="qval")[0][0]
     ordered_ind = np.argsort(deg_data[:,ind])
     deg_data=deg_data[ordered_ind,:]
     h_rows=h_rows[ordered_ind]
-    sig_binary_col = deg_data[:,np.where(h_cols=="qval")[0][0]]<0.05
-    sig_binary_output = np.c_[h_rows,  np.array(sig_binary_col, dtype=np.int)]
-    file(os.path.join(constants.CACHE_DIR, "binary_score_{}.txt".format(method)), "w+").write("\n".join(["\t".join(x) for x in sig_binary_output]))
-    bg_genes = list(vertices)# list(vertices.intersection(set(total_deg_genes)))
+    sig_last_index = np.where(deg_data[:,np.where(h_cols=="qval")[0][0]]>0.05)[0][0]
+
+    degs = list(set(h_rows[:sig_last_index]).intersection(vertices))
+    background = list(set(vertices).intersection(set(h_rows)))
+    random_sets = [random.sample(vertices, len(degs)) for x in range(10000)]
+
+    bg_genes = vertices
     bg_genes_file_name=os.path.join(constants.OUTPUT_DIR, "keypathwayminer_bg_genes.txt")
     file(os.path.join(constants.OUTPUT_DIR, bg_genes_file_name), "w+").write("\n".join(bg_genes))
-    return network_file_name, bg_genes
 
+
+    file(os.path.join(constants.OUTPUT_DIR,"A"),"w+").write("\n".join(["\t".join([str(y) for y in x])  for x in A]))
+    file(os.path.join(constants.OUTPUT_DIR, "degs"),"w+").write("\n".join(degs))
+    file(os.path.join(constants.OUTPUT_DIR, "proteins"),"w+").write("\n".join(vertices))
+    file(os.path.join(constants.OUTPUT_DIR, "vlist"),"w+").write("\t".join(vlist.columns)+"\n"+"\n".join(["\t".join([str(y) for y in x]) for i,x in vlist.iterrows()]))
+    file(os.path.join(constants.OUTPUT_DIR, "background"),"w+").write("\n".join(background))
+    file(os.path.join(constants.OUTPUT_DIR, "random_sets"),"w+").write("\n".join(["\t".join(x) for x in random_sets]))
+
+    return network_file_name, bg_genes, \
+           os.path.join(constants.OUTPUT_DIR, "A"), os.path.join(constants.OUTPUT_DIR,"degs"), \
+           os.path.join(constants.OUTPUT_DIR, "proteins"), os.path.join(constants.OUTPUT_DIR,"vlist"), \
+           os.path.join(constants.OUTPUT_DIR, "background"), os.path.join(constants.OUTPUT_DIR,"random_sets"),\
+           0.05, os.path.join(constants.OUTPUT_DIR, "moduledicoverer_output.txt")
+
+
+def run_modulediscoverer(A_file, degs_file, proteins_file, vlist_file, background_file, random_sets_file, p_value, output_file):
+    script = file("../r/scripts/ModuleDiscovererMain.r").read()
+    return run_rscript(script=script, A_file=A_file, degs_file=degs_file, proteins_file=proteins_file, vlist_file=vlist_file, background_file=background_file, random_sets_file=random_sets_file, p_value=p_value, output_file=output_file)
 
 if __name__ == "__main__":
-
-    if os.path.exists("../repos/keypathwayminer/results"):
-        results = shutil.rmtree("../repos/keypathwayminer/results")
-
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    print(dir_path)
     score_method=constants.DEG_EDGER
-    network_file_name, bg_genes = prepare_input(method=score_method)
-    formatted_script = file("../sh/scripts/run_keypathwayminer.sh.format").read().format(base_folder=constants.BASE_PROFILE, dataset="TNFa_2",
-                                                                     network_name="dip", rank_method=score_method, is_greedy="true")
-    file("../sh/scripts/run_keypathwayminer.sh","w+").write(formatted_script)
+    network_file_name, bg_genes, A_file, degs_file, proteins_file, vlist_file, background_file, random_sets_file, p_value, output_file = prepare_input(method=score_method)
+    run_modulediscoverer(A_file, degs_file, proteins_file, vlist_file, background_file, random_sets_file, p_value, output_file)
 
-    formatted_script = file("../repos/keypathwayminer/kpm.properties.format").read().format(base_folder=constants.BASE_PROFILE, network_name="dip")
-    file("../repos/keypathwayminer/kpm.properties","w+").write(formatted_script)
-
-    formatted_script = file("../repos/keypathwayminer/datasets_file.txt.format").read().format(base_folder=constants.BASE_PROFILE, dataset="TNFa_2", score_method=score_method)
-    file("../repos/keypathwayminer/datasets_file.txt","w+").write(formatted_script)
-
-    print subprocess.Popen("bash ../../sh/scripts/run_keypathwayminer.sh", shell=True,
-                           stdout=subprocess.PIPE, cwd="../repos/keypathwayminer").stdout.read()  # cwd=dir_path
-
-    i=1
-    module_genes=[]
-    while os.path.exists("../repos/keypathwayminer/results/Pathway-{}-NODES-.txt".format("%02d" % (i,))):
-        results = file("../repos/keypathwayminer/results/Pathway-{}-NODES-.txt".format("%02d" % (i,))).readlines()
-        results = map(lambda x: x.strip(), results)
-        module_genes = module_genes + results
-        i+=1
-    module_genes = list(set(module_genes))
-
-
-    file(os.path.join(constants.OUTPUT_DIR,"keypathwayminer_module_genes.txt"), "w+").write("\n".join(module_genes))
-
+    results = file(output_file).readlines()
+    results = [y for x in results for y in x.strip().split()]
+    module_genes = list(set(results))
+    file(os.path.join(constants.OUTPUT_DIR,"modulediscoverer_module_genes.txt"), "w+").write("\n".join(module_genes))
     utils.go.check_group_enrichment(module_genes, bg_genes)
 
 

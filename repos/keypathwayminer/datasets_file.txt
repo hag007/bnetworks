@@ -1,2 +1,0 @@
-ID	L	PATH
-1	0	/home/hag007/bnet/datasets/TNFa_2/cache/binary_score_edger.txt

@@ -1,9 +1,0 @@
-rm report.html
-rm network.sif
-rm modules_perc.txt
-rm modules_perc.dat
-rm modules_ng.txt
-rm modules_ng.dat
-rm node_type.txt
-rm genes.txt
-rm altered_genes.txt

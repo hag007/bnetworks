@@ -22,7 +22,7 @@ import DEG_runner
 import utils.go
 
 def run_bionet(deg_file_name, network_file_name):
-    script = file("scripts/bionet.r").read()
+    script = file(os.path.join(constants.ALGO_BASE_DIR, "bionet", "bionet.r")).read()
     return run_rscript(script=script, output_vars = ["module_genes", "bg_genes"], network_file_name=network_file_name, deg_file_name=deg_file_name)
 
 
@@ -36,7 +36,7 @@ def prepare_input(method=constants.DEG_EDGER, network_name="dip"):
 
 
 if __name__ == "__main__":
-    deg_file_name, network_file_name = prepare_input(method=constants.DEG_DESEQ)
+    deg_file_name, network_file_name = prepare_input(method=constants.DEG_EDGER)
 
     results = run_bionet(deg_file_name, network_file_name)
     module_genes = results["module_genes"]
