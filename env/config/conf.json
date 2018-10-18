@@ -1,4 +1,5 @@
 {"BASE_PROFILE" : "/home/hag007/bnet",
+  "ALGO_BASE_PROFILE" : "/home/hag007/repos/bnetworks_alg",
 "BASE_PROFILE_WINDOWS" : "D:\\omics",
 "BASE_PROFILE_SERVER" : "/specific/netapp5/gaga/hagailevi/omics",
 "BASE_PROFILE_LINUX" : "/media/hag007/Data/omics"}

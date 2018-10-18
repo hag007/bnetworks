@@ -4,11 +4,13 @@ http://bioconductor.org/packages/2.5/bioc/html/edgeR.html
 Usage:
     count_diffexp.py <count_file>
 """
+import sys
+sys.path.insert(0, '../')
+
+
 import os
 import numpy as np
-from numpy import log10
 import pandas as pd
-import json
 import subprocess
 
 # import rpy2.robjects.numpy2ri  as numpy2ri
@@ -20,9 +22,8 @@ pandas2ri.activate()
 
 import constants
 
-from r.r_runner import run_rscript
-
-import DEG_runner
+from utils.r_runner import run_rscript
+from utils.server import get_parameters
 
 import infra
 
@@ -46,7 +47,7 @@ def sif2hotnet2(network_name):
     lns = ["{} {} {}".format(cur[0], cur[1], 1) for cur in inds]
     file(os.path.join(constants.CACHE_DIR, "hotnet2_edges.txt"), "w+").write("\n".join(lns))
 
-    print subprocess.Popen("bash ../sh/scripts/prepare_hotnet2.sh", shell=True, stdout=subprocess.PIPE).stdout.read() # cwd=dir_path
+    print subprocess.Popen("bash ../sh/scripts/prepare_hotnet2.sh.format", shell=True, stdout=subprocess.PIPE).stdout.read() # cwd=dir_path
 
 def run_hotnet2(deg_file_name, network_file_name):
     script = file("scripts/bionet.r").read()
@@ -55,7 +56,11 @@ def run_hotnet2(deg_file_name, network_file_name):
 
 if __name__ == "__main__":
     constants.update_dirs(DATASET_NAME="TNFa")
-    print subprocess.Popen("bash ../sh/scripts/run_pinnaclez.sh", shell=True,
+    params = get_parameters()
+    if params != None:
+        args, NETWORK_NAME, dataset_name = params
+
+    print subprocess.Popen("bash ../sh/scripts/run_pinnaclez.sh.format", shell=True,
                            stdout=subprocess.PIPE).stdout.read()  # cwd=dir_path
 
     results = file(os.path.join(constants.OUTPUT_DIR,"pinnaclez_results.txt")).read().split()

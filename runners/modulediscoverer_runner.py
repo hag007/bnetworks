@@ -4,12 +4,14 @@ http://bioconductor.org/packages/2.5/bioc/html/edgeR.html
 Usage:
     count_diffexp.py <count_file>
 """
+import sys
+
+sys.path.insert(0, '../')
+
+
 import os
 import numpy as np
-from numpy import log10
 import pandas as pd
-import json
-import subprocess
 
 # import rpy2.robjects.numpy2ri  as numpy2ri
 # numpy2ri.activate()
@@ -17,19 +19,15 @@ import subprocess
 from rpy2.robjects import pandas2ri
 pandas2ri.activate()
 
-import shutil
 import constants
 import random
-from r.r_runner import run_rscript
+from utils.r_runner import run_rscript
 
-import DEG_runner
+from utils.server import get_parameters
 
 import infra
 
 import utils.go
-
-from utils.ensembl2gene_symbol import e2g_convertor
-from utils.ensembl2entrez import ensembl2entrez_convertor
 
 
 def prepare_input(method=constants.DEG_EDGER, network_name="dip"):
@@ -89,8 +87,10 @@ def run_modulediscoverer(A_file, degs_file, proteins_file, vlist_file, backgroun
     return run_rscript(script=script, A_file=A_file, degs_file=degs_file, proteins_file=proteins_file, vlist_file=vlist_file, background_file=background_file, random_sets_file=random_sets_file, p_value=p_value, output_file=output_file)
 
 if __name__ == "__main__":
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    print(dir_path)
+    params = get_parameters()
+    if params != None:
+        args, NETWORK_NAME, dataset_name = params
+
     score_method=constants.DEG_EDGER
     network_file_name, bg_genes, A_file, degs_file, proteins_file, vlist_file, background_file, random_sets_file, p_value, output_file = prepare_input(method=score_method)
     run_modulediscoverer(A_file, degs_file, proteins_file, vlist_file, background_file, random_sets_file, p_value, output_file)

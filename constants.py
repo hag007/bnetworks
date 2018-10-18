@@ -5,7 +5,11 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 PATH_TO_CONF = "env/config/conf.json"
 config_json = json.load(file(os.path.join(dir_path, PATH_TO_CONF)))
 
+REPO_DIR = os.path.dirname(os.path.realpath(__file__))
+SH_DIR = os.path.join(REPO_DIR, "sh","scripts")
+
 ALGO_BASE_DIR = config_json['ALGO_BASE_PROFILE']
+
 
 
 USE_CACHE = True
@@ -16,8 +20,8 @@ BASE_PROFILE= config_json['BASE_PROFILE']
 DATASET_NAME = "TNFa_2"
 DATASETS_DIR= os.path.join(BASE_PROFILE, "datasets")
 NETWORKS_DIR = os.path.join(BASE_PROFILE, "networks")
-DATASET_DIR = os.path.join(DATASETS_DIR, "data")
-DATA_DIR = os.path.join(DATASET_DIR, DATASET_NAME)
+DATASET_DIR = os.path.join(DATASETS_DIR, DATASET_NAME)
+DATA_DIR = os.path.join(DATASET_DIR, "data")
 CACHE_DIR = os.path.join(DATASET_DIR, "cache")
 DICTIONARIES_DIR = os.path.join(BASE_PROFILE, "dictionaries")
 OUTPUT_DIR = os.path.join(DATASET_DIR, "output")
@@ -80,6 +84,7 @@ def update_dirs(BASE_DIR=config_json["BASE_PROFILE"], DATASET_NAME=None, DATASET
     global CACHE_GLOBAL_DIR
     global OUTPUT_GLOBAL_DIR
     global DATA_DIR
+    global DATASET_DIR
     BASE_PROFILE=BASE_DIR
     DATASET_TYPE = DATASET_TYPE_u
     CANCER_TYPE = CANCER_TYPE_u

@@ -4,32 +4,25 @@ http://bioconductor.org/packages/2.5/bioc/html/edgeR.html
 Usage:
     count_diffexp.py <count_file>
 """
+import sys
+sys.path.insert(0, '../')
+
 import os
 import numpy as np
-from numpy import log10
 import pandas as pd
-import json
-import subprocess
 
 # import rpy2.robjects.numpy2ri  as numpy2ri
 # numpy2ri.activate()
-from rpy2.rinterface import consoleFlush
 from rpy2.robjects import pandas2ri
 pandas2ri.activate()
 
-import shutil
 import constants
-import random
-from r.r_runner import run_rscript
-
-import DEG_runner
+from utils.r_runner import run_rscript
+from utils.server import get_parameters
 
 import infra
 
 import utils.go
-
-from utils.ensembl2gene_symbol import e2g_convertor
-from utils.ensembl2entrez import ensembl2entrez_convertor
 
 
 def prepare_input(method=constants.DEG_EDGER, network_name="dip"):
@@ -78,9 +71,10 @@ def run_cosine(ppi_i_file, ge_file):
     return run_rscript(script=script, output_vars = ["max_subnet", "subnets", "adjs"], ppi_i_file=ppi_i_file, ge_file=ge_file)
 
 if __name__ == "__main__":
-    constants.update_dirs(DATASET_NAME="TNFa_2")
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    print(dir_path)
+    params = get_parameters()
+    if params != None:
+        args, NETWORK_NAME, dataset_name = params
+
     score_method=constants.DEG_EDGER
     network_file_name, bg_genes, vertices_ids, ppi_i_file, ge_file = prepare_input(method=score_method)
     results = run_cosine(ppi_i_file=ppi_i_file, ge_file=ge_file)

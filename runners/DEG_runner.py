@@ -11,18 +11,18 @@ import numpy as np
 # import rpy2.robjects.numpy2ri  as numpy2ri
 # numpy2ri.activate()
 
-from rpy2.robjects import r, pandas2ri
+from rpy2.robjects import pandas2ri
 pandas2ri.activate()
 
 
 import constants
 import infra
 
-from r.r_runner import run_rscript
+from utils.r_runner import run_rscript
 
 
 def run_DEG(method, conditions, data, genes, group):
-    script = file("scripts/{}.r".format(method)).read()
+    script = file(os.path.join(constants.REPO_DIR,"r","scripts","{}.r".format(method))).read()
     return run_rscript(script=script, data=data, genes=genes, conditions=conditions, group=group)
 
 
@@ -50,7 +50,7 @@ def main(method=constants.DEG_EDGER):
 
     combined_DEG = pd.concat([data, res], axis=1, sort=False)
     combined_DEG = combined_DEG.sort_values("pval".format(method))
-    combined_DEG.to_csv(os.path.join(constants.CACHE_DIR, "deg_{}.tsv".format(method)), sep="\t")
+    combined_DEG.to_csv(os.path.join(constants.CACHE_DIR, "deg_{}.tsv".format(method)), sep="\t", index_label="id")
 
 if __name__ == "__main__":
     main()

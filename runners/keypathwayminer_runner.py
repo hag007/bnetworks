@@ -4,11 +4,13 @@ http://bioconductor.org/packages/2.5/bioc/html/edgeR.html
 Usage:
     count_diffexp.py <count_file>
 """
+
+import sys
+sys.path.insert(0, '../')
+
 import os
 import numpy as np
-from numpy import log10
 import pandas as pd
-import json
 import subprocess
 
 # import rpy2.robjects.numpy2ri  as numpy2ri
@@ -20,32 +22,27 @@ pandas2ri.activate()
 import shutil
 import constants
 
-from r.r_runner import run_rscript
+from utils.scripts import format_script
+from utils.network import get_bg_genes
 
-import DEG_runner
+from utils.server import get_parameters
 
 import infra
+import DEG_runner
 
 import utils.go
 
-from utils.ensembl2gene_symbol import e2g_convertor
-from utils.ensembl2entrez import ensembl2entrez_convertor
+ALGO_NAME = "keypathwayminer"
+ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 
+NETWORK_NAME = "dip"
 
-def prepare_input(method=constants.DEG_EDGER, network_name="dip"):
+def prepare_input(method=constants.DEG_EDGER):
     deg_file_name = os.path.join(constants.CACHE_DIR, "deg_{}.tsv".format(method))
-    network_file_name = os.path.join(constants.NETWORKS_DIR, "{}.sif".format(network_name))
-
-    network_df = pd.read_csv(network_file_name, sep="\t")
-    src = np.array(network_df["ID_interactor_A"])
-    dst = np.array(network_df["ID_interactor_B"])
-
-    vertices = set(np.append(src,dst))
-
-
+    if not os.path.exists(deg_file_name):
+        DEG_runner.main(method=method)
     deg = infra.load_gene_expression_profile_by_genes(gene_expression_path=deg_file_name)
     h_rows, h_cols, deg_data = infra.separate_headers(deg)
-    total_deg_genes = h_rows
     ind = np.where(h_cols=="qval")[0][0]
     ordered_ind = np.argsort(deg_data[:,ind])
     deg_data=deg_data[ordered_ind,:]
@@ -53,45 +50,60 @@ def prepare_input(method=constants.DEG_EDGER, network_name="dip"):
     sig_binary_col = deg_data[:,np.where(h_cols=="qval")[0][0]]<0.05
     sig_binary_output = np.c_[h_rows,  np.array(sig_binary_col, dtype=np.int)]
     file(os.path.join(constants.CACHE_DIR, "binary_score_{}.txt".format(method)), "w+").write("\n".join(["\t".join(x) for x in sig_binary_output]))
-    bg_genes = list(vertices)# list(vertices.intersection(set(total_deg_genes)))
-    bg_genes_file_name=os.path.join(constants.OUTPUT_DIR, "keypathwayminer_bg_genes.txt")
+
+    bg_genes_file_name=os.path.join(constants.OUTPUT_DIR, "{}_bg_genes.txt".format(ALGO_NAME))
     file(os.path.join(constants.OUTPUT_DIR, bg_genes_file_name), "w+").write("\n".join(bg_genes))
-    return network_file_name, bg_genes
+
+
+
+def format_scripts(network_name="dip"):
+    format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE, DATASET_DIR=constants.DATASET_DIR)
+    format_script(os.path.join(ALGO_DIR, "kpm.properties"), base_folder=constants.BASE_PROFILE, network_name=network_name)
+    format_script(os.path.join(ALGO_DIR, "datasets_file.txt"), base_folder=constants.BASE_PROFILE, dataset=constants.DATASET_NAME, score_method=score_method)
+
+
+def extract_module_genes():
+    i = 1
+    module_genes = []
+    while os.path.exists(os.path.join(ALGO_DIR, "results", "Pathway-{}-NODES-.txt".format("%02d" % (i,)))):
+        results = file(
+            os.path.join(ALGO_DIR, "results", "Pathway-{}-NODES-.txt".format("%02d" % (i,)))).readlines()
+        results = map(lambda x: x.strip(), results)
+        module_genes = module_genes + results
+        i += 1
+    module_genes = list(set(module_genes))
+    file(os.path.join(constants.OUTPUT_DIR, "{}_module_genes.txt".format(ALGO_NAME)), "w+").write("\n".join(module_genes))
+    return module_genes, os.path.join(constants.OUTPUT_DIR, "{}_module_genes.txt".format(ALGO_NAME))
 
 
 if __name__ == "__main__":
+    params = get_parameters()
+    if params != None:
+        args, NETWORK_NAME, dataset_name = params
 
-    if os.path.exists("../repos/keypathwayminer/results"):
-        results = shutil.rmtree("../repos/keypathwayminer/results")
+    network_file_dir = os.path.join(constants.NETWORKS_DIR, "{}.sif".format(NETWORK_NAME))
+    bg_genes = get_bg_genes()
+
+    if os.path.exists(os.path.join(ALGO_DIR, "results")):
+        shutil.rmtree(os.path.join(ALGO_DIR, "results"))
+
+
+
 
     score_method=constants.DEG_EDGER
-    network_file_name, bg_genes = prepare_input(method=score_method)
-    formatted_script = file("../sh/scripts/run_keypathwayminer.sh.format").read().format(base_folder=constants.BASE_PROFILE, dataset="TNFa_2",
-                                                                     network_name="dip", rank_method=score_method, is_greedy="true")
-    file("../sh/scripts/run_keypathwayminer.sh","w+").write(formatted_script)
+    prepare_input(method=score_method)
 
-    formatted_script = file("../repos/keypathwayminer/kpm.properties.format").read().format(base_folder=constants.BASE_PROFILE, network_name="dip")
-    file("../repos/keypathwayminer/kpm.properties","w+").write(formatted_script)
+    format_scripts(network_name=NETWORK_NAME)
 
-    formatted_script = file("../repos/keypathwayminer/datasets_file.txt.format").read().format(base_folder=constants.BASE_PROFILE, dataset="TNFa_2", score_method=score_method)
-    file("../repos/keypathwayminer/datasets_file.txt","w+").write(formatted_script)
+    print subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
+                           stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
 
-    print subprocess.Popen("bash ../../sh/scripts/run_keypathwayminer.sh", shell=True,
-                           stdout=subprocess.PIPE, cwd="../repos/keypathwayminer").stdout.read()  # cwd=dir_path
+    module_genes, module_genes_file_name = extract_module_genes()
 
-    i=1
-    module_genes=[]
-    while os.path.exists("../repos/keypathwayminer/results/Pathway-{}-NODES-.txt".format("%02d" % (i,))):
-        results = file("../repos/keypathwayminer/results/Pathway-{}-NODES-.txt".format("%02d" % (i,))).readlines()
-        results = map(lambda x: x.strip(), results)
-        module_genes = module_genes + results
-        i+=1
-    module_genes = list(set(module_genes))
-
-
-    file(os.path.join(constants.OUTPUT_DIR,"keypathwayminer_module_genes.txt"), "w+").write("\n".join(module_genes))
 
     utils.go.check_group_enrichment(module_genes, bg_genes)
+
+    sys.stdout.write(module_genes_file_name)
 
 
 
