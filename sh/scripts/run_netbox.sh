@@ -1,11 +1,11 @@
-base_folder=/home/hag007/bnet
+base_folder=/home/ec2-user/bnet
 network_folder=$base_folder/networks
 datasets_folder=$base_folder/datasets
 data_folder=$dataset_folder/data
 cache_folder=$dataset_folder/cache
 output_folder=$dataset_folder/output
-dataset_folder=/home/hag007/bnet/datasets/user1539808512.0
-export NETBOX_HOME=/home/hag007/repos/bnetworks_alg/netbox # ../repos/netbox
+dataset_folder=/home/ec2-user/bnet/datasets/user1540115637.1
+export NETBOX_HOME=/home/ec2-user/bnetworks_alg/netbox # ../repos/netbox
 export PATH=$PATH:$NETBOX_HOME/bin
 
 

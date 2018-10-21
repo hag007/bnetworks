@@ -7,7 +7,7 @@ from sklearn.datasets import fetch_mldata
 import sklearn.preprocessing
 import numpy as np
 import matplotlib as mpl
-#mpl.use('Agg')
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import style
 style.use("ggplot")

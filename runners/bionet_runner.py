@@ -26,7 +26,7 @@ from utils.server import get_parameters
 
 import DEG_runner
 
-import utils.go
+# import utils.go
 
 
 ALGO_NAME = "bionet"
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     file(os.path.join(constants.OUTPUT_DIR, "bionet_module_genes.txt"),"w+").write("\n".join(module_genes))
     file(os.path.join(constants.OUTPUT_DIR, "bionet_bg_genes.txt"), "w+").write("\n".join(bg_genes))
 
-    utils.go.check_group_enrichment(module_genes,bg_genes)
+  #  utils.go.check_group_enrichment(module_genes,bg_genes)
 
     sys.stdout.write(os.path.join(constants.OUTPUT_DIR, "bionet_module_genes.txt"))
 

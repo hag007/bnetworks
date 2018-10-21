@@ -57,7 +57,7 @@ if __name__ == "__main__":
                                                                           ALGO_DIR=ALGO_DIR, NETWORK_NAME=NETWORK_NAME, RANK_METHOD=score_method,
                                                                           IS_GREEDY=str(cur_search_method=="greedy"), OUTPUT_FILE=results_file_name)
 
-        print subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
+        subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
                                stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
 
         results = file(results_file_name.format(constants.OUTPUT_DIR, ALGO_NAME)).readlines()
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         module_genes = [y for x in results for y in x.split()[:-1]]
         file(os.path.join(constants.OUTPUT_DIR,"{}_{}_module_genes.txt".format(ALGO_NAME, cur_search_method)), "w+").write("\n".join(module_genes))
 
-        utils.go.check_group_enrichment(module_genes, bg_genes)
+        # utils.go.check_group_enrichment(module_genes, bg_genes)
 
         sys.stdout.write(os.path.join(constants.OUTPUT_DIR,"{}_{}_module_genes.txt".format(ALGO_NAME, cur_search_method)))
 
