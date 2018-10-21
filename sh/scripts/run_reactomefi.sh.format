@@ -1,0 +1,14 @@
+base_folder={BASE_FOLDER}
+network_folder=$base_folder/networks
+datasets_folder=$base_folder/datasets
+data_folder=$dataset_folder/data
+cache_folder=$dataset_folder/cache
+output_folder=$dataset_folder/output
+dataset_folder={DATASET_DIR}
+
+
+
+sudo python {ALGO_DIR}/bin/netAnalyze.py $data_folder/ge.tsv \
+                                    $networks_folder/{NETWORK_NAME}.sif
+
+

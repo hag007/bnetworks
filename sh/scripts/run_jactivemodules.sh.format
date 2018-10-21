@@ -12,7 +12,6 @@ echo $cache_folder/deg_{RANK_METHOD}.tsv
 
 
 java -jar $algo_dir/jactivemodules.jar \
-                                 $networks_folder/{NETWORK_NAME}.sif \
-                                 $cache_folder/deg_{RANK_METHOD}.tsv \
+
                                  $is_greedy \
                                  {OUTPUT_FILE}

@@ -56,9 +56,9 @@ def prepare_input(method=constants.DEG_EDGER):
 
 
 
-def format_scripts(network_name="dip"):
+def format_scripts(network_name="dip", algo_dir=ALGO_DIR):
     format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE, DATASET_DIR=constants.DATASET_DIR)
-    format_script(os.path.join(ALGO_DIR, "kpm.properties"), base_folder=constants.BASE_PROFILE, network_name=network_name)
+    format_script(os.path.join(ALGO_DIR, "kpm.properties"), base_folder=constants.BASE_PROFILE, network_name=network_name, algo_dir=ALGO_DIR)
     format_script(os.path.join(ALGO_DIR, "datasets_file.txt"), base_folder=constants.BASE_PROFILE, dataset=constants.DATASET_NAME, score_method=score_method)
 
 
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     score_method=constants.DEG_EDGER
     prepare_input(method=score_method)
 
-    format_scripts(network_name=NETWORK_NAME)
+    format_scripts(network_name=NETWORK_NAME, algo_dir=ALGO_DIR)
 
     print subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
                            stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()

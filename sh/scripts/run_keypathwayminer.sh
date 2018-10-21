@@ -4,7 +4,7 @@ datasets_folder=$base_folder/datasets
 data_folder=$dataset_folder/data
 cache_folder=$dataset_folder/cache
 output_folder=$dataset_folder/output
-dataset_folder=/home/hag007/bnet/datasets/user1539811953.19
+dataset_folder=/home/hag007/bnet/datasets/TNFa_2
 
 pwd
 

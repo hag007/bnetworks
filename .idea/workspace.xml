@@ -2,33 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/jactivemodules_sa_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/network.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/scripts.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/server.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runners/reactomefi_runner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sh/scripts/run_reactomefi.sh.format" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env/config/conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/env/config/conf.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/r/r_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/r_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/DEG_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/DEG_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/bionet_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/bionet_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/cosine_reduced_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/cosine_reduced_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/cosine_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/cosine_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/hotnet2_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/hotnet2_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/jactivemodules_runner.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/runners/keypathwayminer_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/keypathwayminer_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/modulediscoverer_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/modulediscoverer_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/netbox_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/netbox_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/pinnaclez_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/pinnaclez_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2.sh.format" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_hotnet2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_hotnet2.sh.format" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh.format" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh.format" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_netbox.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_netbox.sh.format" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_pinnaclez.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_pinnaclez.sh.format" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,11 +18,56 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="hotnet2_runner.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hotnet2_runner.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runners/hotnet2_runner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
+            <state relative-caret-position="19">
               <caret line="69" column="38" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="run_netbox.sh.format" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sh/scripts/run_netbox.sh.format">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="11" column="38" lean-forward="true" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="run_reactomefi.sh.format" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sh/scripts/run_reactomefi.sh.format">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="run_keypathwayminer.sh.format" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh.format">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reactomefi_runner.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runners/reactomefi_runner.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="482">
+              <caret line="55" column="78" lean-forward="true" selection-start-line="55" selection-start-column="78" selection-end-line="55" selection-end-column="78" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="run_jactivemodules.sh.format" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
             </state>
           </provider>
         </entry>
@@ -69,20 +93,11 @@
       <file leaf-file-name="makeHeatFile.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../bnetworks_alg/hotnet2/makeHeatFile.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
+            <state relative-caret-position="456">
               <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="scripts.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/scripts.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -92,42 +107,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="209">
               <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ratio.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/goatools/ratio.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="go_enrichment.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/goatools/go_enrichment.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="325" selection-start-line="325" selection-end-line="325" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="netbox_runner.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runners/netbox_runner.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-668">
-              <caret line="33" selection-start-line="33" selection-end-line="33" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="keypathwayminer_runner.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runners/keypathwayminer_runner.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="97" column="82" lean-forward="true" selection-start-line="97" selection-start-column="27" selection-end-line="97" selection-end-column="82" />
             </state>
           </provider>
         </entry>
@@ -169,6 +148,7 @@
       <find>conf_file</find>
       <find>get_bg_genes</find>
       <find>parser</find>
+      <find>NETWORK_NAME</find>
     </findStrings>
     <replaceStrings>
       <replace>ALGO_DIR</replace>
@@ -180,8 +160,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/r/scripts/r_sb.r" />
-        <option value="$PROJECT_DIR$/r/r_runner.py" />
         <option value="$PROJECT_DIR$/r/DEG_runner.py" />
         <option value="$PROJECT_DIR$/r/scripts/edger.r" />
         <option value="$PROJECT_DIR$/r/scripts/bionet.r" />
@@ -210,10 +188,8 @@
         <option value="$PROJECT_DIR$/utils/network.py" />
         <option value="$PROJECT_DIR$/sh/scripts/run_netbox" />
         <option value="$PROJECT_DIR$/utils/scripts.py" />
-        <option value="$PROJECT_DIR$/sh/scripts/run_netbox.sh.format" />
         <option value="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh.format" />
         <option value="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh" />
-        <option value="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format" />
         <option value="$PROJECT_DIR$/constants.py" />
         <option value="$PROJECT_DIR$/runners/DEG_runner.py" />
         <option value="$PROJECT_DIR$/utils/server.py" />
@@ -231,6 +207,10 @@
         <option value="$PROJECT_DIR$/sh/scripts/run_hotnet2.sh.format" />
         <option value="$PROJECT_DIR$/sh/scripts/prepare_hotnet2.sh.format" />
         <option value="$PROJECT_DIR$/runners/hotnet2_runner.py" />
+        <option value="$PROJECT_DIR$/sh/scripts/run_netbox.sh.format" />
+        <option value="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format" />
+        <option value="$PROJECT_DIR$/sh/scripts/run_reactomefi.sh.format" />
+        <option value="$PROJECT_DIR$/runners/reactomefi_runner.py" />
       </list>
     </option>
   </component>
@@ -266,6 +246,11 @@
             <path>
               <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
               <item name="bnetworks" type="462c0819:PsiDirectoryNode" />
+              <item name="runners" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bnetworks" type="462c0819:PsiDirectoryNode" />
               <item name="sh" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -287,19 +272,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/runners" />
-      <recent name="$PROJECT_DIR$/sh/scripts" />
-      <recent name="$PROJECT_DIR$/r/scripts" />
-      <recent name="$PROJECT_DIR$/repos/keypathwayminer" />
-      <recent name="$PROJECT_DIR$/repos/keypathwatminer" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/utils" />
       <recent name="$PROJECT_DIR$/repos/keypathwayminer" />
       <recent name="$PROJECT_DIR$/repos/cosine" />
       <recent name="$PROJECT_DIR$/repos/bionet" />
       <recent name="$PROJECT_DIR$/repos/modulediscoverer" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/runners" />
+      <recent name="$PROJECT_DIR$/sh/scripts" />
+      <recent name="$PROJECT_DIR$/r/scripts" />
+      <recent name="$PROJECT_DIR$/repos/keypathwayminer" />
+      <recent name="$PROJECT_DIR$/repos/keypathwatminer" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -436,16 +421,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.23504043" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.23504043" />
       <window_info anchor="bottom" id="TODO" order="10" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.32889345" />
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" id="Python Console" order="0" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.32889345" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.32889345" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.32889345" />
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -456,6 +440,7 @@
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.32889345" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -680,20 +665,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/core/ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16416">
-          <caret line="901" selection-start-line="901" selection-end-line="901" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/rpy2/robjects/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5795">
-          <caret line="340" selection-start-line="340" selection-end-line="340" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/core/frame.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="29811">
@@ -708,74 +679,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repos/bionet/bionet.r">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="29" lean-forward="true" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/repos/bionet/bionet.r" />
     <entry file="file://$PROJECT_DIR$/utils/go.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
           <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repos/cosine/cosine.r">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="158" column="8" selection-start-line="158" selection-start-column="2" selection-end-line="158" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/keypathwayminer.r.old">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="246" column="29" selection-start-line="246" selection-start-column="29" selection-end-line="246" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/negative_list.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/positive_list.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/kpm.properties.format">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/datasets_file.txt.format">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="78" selection-start-line="1" selection-start-column="78" selection-end-line="1" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/kpm.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1349">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/datsets_file.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repos/modulediscoverer/ModuleDiscoverer.r">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3173">
-          <caret line="16" column="52" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/repos/cosine/cosine.r" />
+    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/keypathwayminer.r.old" />
+    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/negative_list.txt" />
+    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/positive_list.txt" />
+    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/kpm.properties.format" />
+    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/datasets_file.txt.format" />
+    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/kpm.properties" />
+    <entry file="file://$PROJECT_DIR$/repos/keypathwayminer/datsets_file.txt" />
+    <entry file="file://$PROJECT_DIR$/repos/modulediscoverer/ModuleDiscoverer.r" />
     <entry file="file://$PROJECT_DIR$/runners/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -800,41 +720,19 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="16" column="16" lean-forward="true" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
-          <folding>
-            <element signature="e#1#33#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sh/scripts/run_netbox">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/sh/scripts/run_netbox" />
     <entry file="file://$PROJECT_DIR$/utils/network.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="7" column="84" selection-start-line="7" selection-start-column="84" selection-end-line="7" selection-end-column="84" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sh/scripts/run_netbox.sh.format">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="39" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sh/scripts/run_netbox.sh">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh">
       <provider selected="true" editor-type-id="text-editor">
@@ -936,21 +834,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/goatools/ratio.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
+        <state relative-caret-position="646">
           <caret line="34" selection-start-line="34" selection-end-line="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/goatools/go_enrichment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
+        <state relative-caret-position="6156">
           <caret line="325" selection-start-line="325" selection-end-line="325" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/runners/keypathwayminer_runner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
+        <state relative-caret-position="1843">
           <caret line="97" column="82" lean-forward="true" selection-start-line="97" selection-start-column="27" selection-end-line="97" selection-end-column="82" />
         </state>
       </provider>
@@ -959,13 +857,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh.format">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -978,14 +869,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/runners/netbox_runner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-668">
+        <state relative-caret-position="627">
           <caret line="33" selection-start-line="33" selection-end-line="33" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../bnetworks_alg/hotnet2/makeHeatFile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
+        <state relative-caret-position="456">
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
@@ -1016,8 +907,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/runners/hotnet2_runner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
+        <state relative-caret-position="19">
           <caret line="69" column="38" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sh/scripts/run_netbox.sh.format">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="38" lean-forward="true" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runners/reactomefi_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="55" column="78" lean-forward="true" selection-start-line="55" selection-start-column="78" selection-end-line="55" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sh/scripts/run_reactomefi.sh.format">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh.format">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
