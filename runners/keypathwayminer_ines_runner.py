@@ -56,13 +56,13 @@ def prepare_input(method=constants.DEG_EDGER):
 
 
 
-def format_scripts(network_name="dip", algo_dir=ALGO_DIR):
-    format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE, DATASET_DIR=constants.DATASET_DIR)
+def format_scripts(network_name="dip", algo_dir=ALGO_DIR,STRATEGY="ines"):
+    format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE, DATASET_DIR=constants.DATASET_DIR, STRATEGY=STRATEGY)
     format_script(os.path.join(ALGO_DIR, "kpm.properties"), base_folder=constants.BASE_PROFILE, network_name=network_name, algo_dir=ALGO_DIR)
     format_script(os.path.join(ALGO_DIR, "datasets_file.txt"), base_folder=constants.BASE_PROFILE, dataset=constants.DATASET_NAME, score_method=score_method)
 
 
-def extract_module_genes():
+def extract_module_genes(STRATEGY):
     i = 1
     module_genes = []
     while os.path.exists(os.path.join(ALGO_DIR, "results", "Pathway-{}-NODES-.txt".format("%02d" % (i,)))):
@@ -72,15 +72,15 @@ def extract_module_genes():
         module_genes = module_genes + results
         i += 1
     module_genes = list(set(module_genes))
-    file(os.path.join(constants.OUTPUT_DIR, "{}_module_genes.txt".format(ALGO_NAME)), "w+").write("\n".join(module_genes))
-    return module_genes, os.path.join(constants.OUTPUT_DIR, "{}_module_genes.txt".format(ALGO_NAME))
+    file(os.path.join(constants.OUTPUT_DIR, "{}_{}_module_genes.txt".format(ALGO_NAME, STRATEGY)), "w+").write("\n".join(module_genes))
+    return module_genes, os.path.join(constants.OUTPUT_DIR, "{}_{}_module_genes.txt".format(ALGO_NAME,STRATEGY))
 
 
 if __name__ == "__main__":
     params = get_parameters()
     if params != None:
         args, NETWORK_NAME, dataset_name = params
-
+    STRATEGY="INES"
     network_file_dir = os.path.join(constants.NETWORKS_DIR, "{}.sif".format(NETWORK_NAME))
     bg_genes = get_bg_genes()
 
@@ -93,20 +93,14 @@ if __name__ == "__main__":
     score_method=constants.DEG_EDGER
     prepare_input(method=score_method)
 
-    format_scripts(network_name=NETWORK_NAME, algo_dir=ALGO_DIR)
+    format_scripts(network_name=NETWORK_NAME, algo_dir=ALGO_DIR,STRATEGY=STRATEGY)
 
     print subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
                            stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
 
-    module_genes, module_genes_file_name = extract_module_genes()
+    module_genes, module_genes_file_name = extract_module_genes(STRATEGY)
 
 
     utils.go.check_group_enrichment(module_genes, bg_genes)
 
     sys.stdout.write(module_genes_file_name)
-
-
-
-
-
-
