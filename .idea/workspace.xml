@@ -2,56 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/runners/datasets_multithread_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/deprecated/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/disease_genes_association_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/aggregate_reports.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/datasets.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/df_helpers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/disease_genes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/ebm.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/generate_ge_from_enst.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/integrate_pvals_ebm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infra.py" beforeDir="false" afterPath="$PROJECT_DIR$/infra.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/r/scripts/edger.r" beforeDir="false" afterPath="$PROJECT_DIR$/r/scripts/edger.r" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/r/scripts/r_sb.r" beforeDir="false" afterPath="$PROJECT_DIR$/r/scripts/r_sb.r" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/DEG_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/DEG_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/ModuleSingleSeed.graphml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/bionet_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/bionet_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/cosine_reduced_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/deprecated/cosine_reduced_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/cosine_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/deprecated/cosine_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/hotnet2_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/hotnet2_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/jactivemodules_sa_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/jactivemodules_sa_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/keypathwayminer_glone_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/keypathwayminer_glone_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/keypathwayminer_ines_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/keypathwayminer_ines_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/last.mc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/modulediscoverer_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/deprecated/modulediscoverer_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/modules.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/netbox_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/netbox_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/network.sif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/node_type.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/pinnaclez_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/deprecated/pinnaclez_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/reactomefi_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/reactomefi_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/report.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_hotnet2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_hotnet2.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh.format" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh.format" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_netbox.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_netbox.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_reactomefi.sh.format" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_reactomefi.sh.format" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/add_t_test_to_ge.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/add_t_test_to_ge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/filter_ge_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/filter_ge_file.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/gene_expression_filter.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/gene_expression_filter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/glycolysis_pathwaycard.txt" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/go.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/go.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/order_phenotypes_by_expression.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/order_phenotypes_by_expression.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/ensembl2entrez.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/ensembl2entrez.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -96,12 +47,12 @@
         <entry file="file://$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="273">
-              <caret line="76" lean-forward="true" selection-end-line="92" />
+              <caret line="76" selection-end-line="92" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jactivemodules_sa_runner.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="jactivemodules_sa_runner.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runners/jactivemodules_sa_runner.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="344">
@@ -110,11 +61,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__builtin__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/-1219902337/__builtin__.py">
+      <file leaf-file-name="ensembl2entrez.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/utils/ensembl2entrez.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="2833" column="8" selection-start-line="2833" selection-start-column="8" selection-end-line="2833" selection-end-column="8" />
+            <state relative-caret-position="171">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -211,7 +165,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/r/scripts/ModuleDiscovererMain.r" />
         <option value="$PROJECT_DIR$/r/scripts/cosine.r" />
         <option value="$PROJECT_DIR$/sh/scripts/prepare_hotnet2.sh" />
         <option value="$PROJECT_DIR$/sh/scripts/run_pinnaclez.sh.format" />
@@ -262,6 +215,7 @@
         <option value="$PROJECT_DIR$/runners/keypathwayminer_ines_runner.py" />
         <option value="$PROJECT_DIR$/runners/keypathwayminer_glone_runner.py" />
         <option value="$PROJECT_DIR$/runners/jactivemodules_sa_runner.py" />
+        <option value="$PROJECT_DIR$/utils/ensembl2entrez.py" />
       </list>
     </option>
   </component>
@@ -287,12 +241,12 @@
             <path>
               <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
               <item name="bnetworks" type="462c0819:PsiDirectoryNode" />
-              <item name="runners" type="462c0819:PsiDirectoryNode" />
+              <item name="sh" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
               <item name="bnetworks" type="462c0819:PsiDirectoryNode" />
-              <item name="sh" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -899,13 +853,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/core/generic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="4375" selection-start-line="4375" selection-end-line="4375" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="398">
@@ -975,6 +922,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
           <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1224,7 +1174,7 @@
     <entry file="file://$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
-          <caret line="76" lean-forward="true" selection-end-line="92" />
+          <caret line="76" selection-end-line="92" />
         </state>
       </provider>
     </entry>
@@ -1232,6 +1182,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="344">
           <caret line="57" column="23" selection-start-line="57" selection-start-column="23" selection-end-line="57" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/ensembl2entrez.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
