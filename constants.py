@@ -10,8 +10,11 @@ SH_DIR = os.path.join(REPO_DIR, "sh","scripts")
 
 ALGO_BASE_DIR = config_json['ALGO_BASE_PROFILE']
 
-
-
+SERVER_MODE = False
+REPORTS = False
+DISEASE_MODE = False
+HG_MODE = False
+EMB_MODE = False
 USE_CACHE = True
 PHENOTYPE_FORMAT = "GDC"
 DATASET_TYPE = "GDC-TCGA"
@@ -20,6 +23,7 @@ BASE_PROFILE= config_json['BASE_PROFILE']
 DATASET_NAME = "TNFa_2"
 DATASETS_DIR= os.path.join(BASE_PROFILE, "datasets")
 NETWORKS_DIR = os.path.join(BASE_PROFILE, "networks")
+TEMPLATES_DIR = os.path.join(BASE_PROFILE, "templates")
 DATASET_DIR = os.path.join(DATASETS_DIR, DATASET_NAME)
 DATA_DIR = os.path.join(DATASET_DIR, "data")
 CACHE_DIR = os.path.join(DATASET_DIR, "cache")
@@ -34,6 +38,8 @@ REPOS_DIR = os.path.join(BASE_PROFILE, "repos")
 
 DEG_DESEQ = "deseq"
 DEG_EDGER = "edger"
+PREDEFINED_SCORE = "predefined_scored"
+IS_PVAL_SCORES = True
 
 SEPARATOR = "@%@"
 
@@ -69,7 +75,7 @@ ON_THE_FLY = "ON_THE_FLY"
 FILTER_KEYWORDS = ["_label", "_name"]
 ALL_CANCER_TYPES = ["ESCA", "LAML", "ACC", "CHOL", "BLCA", "BRCA", "CESC", "COAD", "UCEC", "GBM", "HNSC", "KICH", "KIRC", "KIRP", "DLBC", "LIHC", "LGG", "LUAD", "LUSC", "SKCM", "MESO", "UVM", "PANCAN", "OV", "PAAD", "PCPG", "PRAD", "READ", "SARC", "STAD", "TGCT", "THYM", "THCA", "UCS"]
 ALL_TUMOR_TYPES = ["Primary Tumor", "Metastatic", "Additional - New Parimary", "Additional Metatatic", "Primary Blood Derived Cancer - Peripheral Blood", "Blood Derived Cancer - Bone Marrow, Post-treatment", "Primary Blood Derived Cancer - Bone Marrow", "Recurrent Blood Derived Cancer - Peripheral Blood", "Recurrent Tumor"]
-def update_dirs(BASE_DIR=config_json["BASE_PROFILE"], DATASET_NAME=None, DATASET_TYPE_u = "GDC-TCGA", CANCER_TYPE_u = "SKCM"):
+def update_dirs(BASE_DIR=config_json["BASE_PROFILE"], DATASET_NAME_u=None, DATASET_TYPE_u ="GDC-TCGA", CANCER_TYPE_u ="SKCM"):
 
     global BASE_PROFILE
     global CACHE_DIR
@@ -85,15 +91,17 @@ def update_dirs(BASE_DIR=config_json["BASE_PROFILE"], DATASET_NAME=None, DATASET
     global OUTPUT_GLOBAL_DIR
     global DATA_DIR
     global DATASET_DIR
+    global DATASET_NAME
     BASE_PROFILE=BASE_DIR
     DATASET_TYPE = DATASET_TYPE_u
     CANCER_TYPE = CANCER_TYPE_u
-    if DATASET_NAME is None:
-        DATASET_NAME = "TNFa_2"
+    if DATASET_NAME_u is None:
+        DATASET_NAME_u = "TNFa_2"
+    DATASET_NAME = DATASET_NAME_u
 
-    DATASET_DIR = os.path.join(DATASETS_DIR,DATASET_NAME)  # ""{}/{}/".format(DATASET_TYPE,CANCER_TYPE)
 
     DATASETS_DIR= os.path.join(BASE_PROFILE, "datasets")
+    DATASET_DIR = os.path.join(DATASETS_DIR, DATASET_NAME)  # ""{}/{}/".format(DATASET_TYPE,CANCER_TYPE)
     CACHE_DIR = os.path.join(DATASET_DIR, "cache")
     DICTIONARIES_DIR = os.path.join(BASE_PROFILE, "dictionaries")
     OUTPUT_DIR = os.path.join(DATASET_DIR, "output")

@@ -22,8 +22,9 @@ pandas2ri.activate()
 import constants
 
 from utils.r_runner import run_rscript
-from utils.network import get_bg_genes
-
+from utils.network import get_network_genes
+from utils.network import build_all_reports
+from utils.server import get_score
 import infra
 
 import utils.go
@@ -32,19 +33,17 @@ import DEG_runner
 
 from utils.ensembl2entrez import ensembl2entrez_convertor
 from utils.scripts import format_script
-from utils.server import get_parameters
+import utils.server as server
 
 ALGO_NAME = "netbox"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 
-
-def prepare_input(method=constants.DEG_EDGER, network_name="dip"):
-    deg_file_name = os.path.join(constants.CACHE_DIR, "deg_{}.tsv".format(method))
-    if not os.path.exists(deg_file_name):
-        DEG_runner.main(method=method)
+NETWORK_NAME = "dip"
 
 
-    deg = infra.load_gene_expression_profile_by_genes(gene_expression_path=deg_file_name)
+def init_specific_params(score_file_name):
+
+    deg = infra.load_gene_expression_profile_by_genes(gene_expression_path=score_file_name)
     h_rows, h_cols, deg_data = infra.separate_headers(deg)
 
     ind = np.where(h_cols=="qval")[0][0]
@@ -58,33 +57,43 @@ def prepare_input(method=constants.DEG_EDGER, network_name="dip"):
     conf_file = "conf.props"
     format_script(os.path.join(ALGO_DIR, conf_file), pval_threshold=0.05, sp_threshold=2, gene_file=ge_list)
 
-    return conf_file
+def extract_modules_and_bg(bg_genes):
+    results = file(os.path.join(ALGO_DIR, "modules.txt")).readlines()
+    modules = [[] for x in range(max([int(x.strip().split(" =")[1]) for x in results[1:]]) + 1)]
+    for x in results[1:]:
+        if int(x.strip().split(" =")[1]) != -1:
+            modules[int(x.strip().split(" =")[1])].append(x.strip().split(" =")[0])
+        else:
+            modules.append([x.strip().split(" =")[0]])
+    modules = filter(lambda x: len(x) > 0, modules)
+    all_bg_genes = [bg_genes for x in modules]
+    return modules, all_bg_genes
 
 
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None):
+    global NETWORK_NAME
+    constants.update_dirs(DATASET_NAME_u=dataset_name)
+    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME)
 
-
-if __name__ == "__main__":
-    params = get_parameters()
-    if params != None:
-        args, NETWORK_NAME, dataset_name = params
-
-    conf_file = prepare_input(method=constants.DEG_EDGER)
-
-    bg_genes = get_bg_genes()
-
+    init_specific_params(score_file_name)
     script_name = "run_{}.sh".format(ALGO_NAME)
-    format_script(os.path.join(constants.SH_DIR, script_name), BASE_FOLDER=constants.BASE_PROFILE, DATASET_DIR=constants.DATASET_DIR, NETBOX_DIR=ALGO_DIR)
-
-    script_path = os.path.join(constants.SH_DIR, script_name)
+    format_script(os.path.join(constants.SH_DIR, script_name), BASE_FOLDER=constants.BASE_PROFILE,
+                  DATASET_DIR=constants.DATASET_DIR, NETBOX_DIR=ALGO_DIR)
     print subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
                            stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
 
-    results = file(os.path.join(ALGO_DIR, "modules.txt")).readlines()
-    module_genes = [x.split()[0] for x in results[1:]]
+    modules, all_bg_genes = extract_modules_and_bg(bg_genes)
+    output_base_dir = ""
+    if constants.REPORTS:
+        output_base_dir = build_all_reports(ALGO_NAME, modules, all_bg_genes, network_file_name, disease_name, expected_genes)
+    output_file_name = os.path.join(constants.OUTPUT_DIR,
+                                    "{}_client_output.txt".format(ALGO_NAME))
+    server.output_modules(output_file_name, modules, score_file_name, output_base_dir )
 
-    file(os.path.join(constants.OUTPUT_DIR,"netbox_module_genes.txt"), "w+").write("\n".join(module_genes))
-    utils.go.check_group_enrichment(module_genes, bg_genes)
-    sys.stdout.write(os.path.join(constants.OUTPUT_DIR,"netbox_module_genes.txt"))
+
+if __name__ == "__main__":
+    constants.update_dirs(DATASET_NAME_u="MCF7_2")
+    main()
 
 
 

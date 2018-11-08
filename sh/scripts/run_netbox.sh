@@ -4,7 +4,7 @@ datasets_folder=$base_folder/datasets
 data_folder=$dataset_folder/data
 cache_folder=$dataset_folder/cache
 output_folder=$dataset_folder/output
-dataset_folder=/home/hag007/bnet/datasets/user1539808512.0
+dataset_folder=/home/hag007/bnet/datasets/user1541661595.89
 export NETBOX_HOME=/home/hag007/repos/bnetworks_alg/netbox # ../repos/netbox
 export PATH=$PATH:$NETBOX_HOME/bin
 

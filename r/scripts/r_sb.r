@@ -23,30 +23,34 @@ library("BioNet")
 
 library(edgeR)
 
-group <- c(1,1,1,2,2,2)
-data <- read.delim("/home/hag007/bnet/datasets/TNFa_2/data/ge.tsv", row.names = 1)
+group <- c(1,2)
+data <- read.delim("/home/hag007/bnet/datasets/DSIGENET_1540891160.94_1/data/ge.tsv", row.names = 1)
 genes <- rownames(data)
 y <- DGEList(counts=data,group=group)
 y <- calcNormFactors(y)
 design <- model.matrix(~group)
 y <- estimateDisp(y,design)
+if (is.na(y$common.dispersion)){
+  y$common.dispersion=0.05
+}
 et <- exactTest(y)
 edgeR_results = topTags(et, n = nrow(data))$table
 # rownames(edgeR_results) <- genes
-# result <- data.frame(edgeR_results[order(edgeR_results$FDR),])
+result <- data.frame(edgeR_results[order(edgeR_results$FDR),])
+
+
 
 
 ##load dictionary
-p.dict <- read.delim("/home/hag007/bnet/dictionaries/esnp_dictionary.txt")
-p.dict <- p.dict[!(duplicated(p.dict[["ENSP"]])),]
-rownames(p.dict) <- p.dict[["ENSP"]]
-p.dict <- p.dict["ENSG"]
+# p.dict <- read.delim("/home/hag007/bnet/dictionaries/esnp_dictionary.txt")
+# p.dict <- p.dict[!(duplicated(p.dict[["ENSP"]])),]
+# rownames(p.dict) <- p.dict[["ENSP"]]
+# p.dict <- p.dict["ENSG"]
 
 ##load STRING ppi
 # ppi <- read.delim("/home/hag007/bnet/dictionaries/string_ppi_small.txt")
 # ppi <- ppi[c(1,2)] 
 # ppi <- data.frame(lapply(ppi, function(x) {
-#   x <-  gsub("9606.", "", x)
 #   }))
 # 
 # ppi <- data.frame(lapply(ppi, function(x) {

@@ -1,5 +1,5 @@
-from main import load_phenotype_data
-from main import load_gene_list
+from infra import load_phenotype_data
+from infra import load_gene_list
 import numpy as np
 import os
 

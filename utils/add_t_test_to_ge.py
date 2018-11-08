@@ -10,7 +10,7 @@ from numpy import log10
 
 
 def calc_ttest(dataset="TNFa", gene_expression_file_name="ge.tsv"):
-    constants.update_dirs(DATASET_NAME="TNFa")
+    constants.update_dirs(DATASET_NAME_u="TNFa")
     h_rows, h_cols, ge_dataset = infra.separate_headers(infra.load_gene_expression_profile_by_genes(gene_expression_file_name=gene_expression_file_name))
 
     pvals = []

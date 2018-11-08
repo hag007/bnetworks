@@ -13,6 +13,7 @@ import os
 import numpy as np
 import pandas as pd
 import subprocess
+import json
 
 # import rpy2.robjects.numpy2ri  as numpy2ri
 # numpy2ri.activate()
@@ -24,51 +25,63 @@ import constants
 
 import infra
 
-import DEG_runner
 import utils.go
 
+import DEG_runner
 from utils.scripts import format_script
-from utils.network import get_bg_genes
-
-from utils.server import get_parameters
-
+from utils.network import get_network_genes
+from utils.network import build_all_reports
+import utils.server as server
 
 ALGO_NAME = "jactivemodules"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 NETWORK_NAME = "dip"
 
+
+def init_specific_params(search_method):
+    results_file_name = "{}/{}_{}_results.txt".format(constants.OUTPUT_DIR, ALGO_NAME, search_method)
+    return results_file_name
+
+
+def extract_modules_and_bg(bg_genes, results_file_name, modules_genes_file_name):
+    results = file(results_file_name.format(constants.OUTPUT_DIR, ALGO_NAME)).readlines()
+    modules = [x.split()[:-1] for x in results]
+    all_bg_genes = [bg_genes for x in modules]
+    module_genes = [y for x in modules for y in x]
+    file(modules_genes_file_name, "w+").write("\n".join(module_genes))
+    return all_bg_genes, modules
+
+
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None):
+    global NETWORK_NAME
+    constants.update_dirs(DATASET_NAME_u=dataset_name)
+    search_method = "sa"
+    network_file_name, score_file_name, score_method, bg_genes= server.init_common_params(NETWORK_NAME)
+
+    results_file_name = init_specific_params(search_method)
+
+    format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE,
+                  DATASET_DIR=constants.DATASET_DIR,
+                  ALGO_DIR=ALGO_DIR, NETWORK_NAME=NETWORK_NAME, SCORE_FILE_NAME=score_file_name,
+                  IS_GREEDY=str(search_method == "greedy"), OUTPUT_FILE=results_file_name)
+
+    subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
+                     stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
+
+    modules_genes_file_name = os.path.join(constants.OUTPUT_DIR, "{}_{}_module_genes.txt".format(ALGO_NAME, search_method))
+    all_bg_genes, modules = extract_modules_and_bg(bg_genes, results_file_name, modules_genes_file_name)
+
+    output_base_dir = ""
+    if constants.REPORTS:
+        output_base_dir = build_all_reports(ALGO_NAME + "_" + search_method, modules, all_bg_genes, network_file_name, disease_name, expected_genes)
+
+    output_file_name=os.path.join(constants.OUTPUT_DIR,
+                 "{}_{}_client_output.txt".format(ALGO_NAME, search_method))
+    server.output_modules(output_file_name, modules, score_file_name, output_base_dir)
+
+
 if __name__ == "__main__":
-    params = get_parameters()
-    if params != None:
-        args, NETWORK_NAME, dataset_name = params
-
-    score_method = constants.DEG_EDGER
-    deg_file_name = os.path.join(constants.CACHE_DIR, "deg_{}.tsv".format(score_method))
-    if not os.path.exists(deg_file_name):
-        DEG_runner.main(method=score_method)
-
-    network_file_name = os.path.join(constants.NETWORKS_DIR, "{}.sif".format(NETWORK_NAME))
-    bg_genes = get_bg_genes()
-
-    for cur_search_method in ["sa"]:
-
-        results_file_name = "{}/{}_{}_results.txt".format(constants.OUTPUT_DIR, ALGO_NAME, cur_search_method)
-        format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE, DATASET_DIR=constants.DATASET_DIR,
-                                                                          ALGO_DIR=ALGO_DIR, NETWORK_NAME=NETWORK_NAME, RANK_METHOD=score_method,
-                                                                          IS_GREEDY=str(cur_search_method=="greedy"), OUTPUT_FILE=results_file_name)
-
-        print subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
-                               stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
-
-        results = file(results_file_name.format(constants.OUTPUT_DIR, ALGO_NAME)).readlines()
-
-        module_genes = [y for x in results for y in x.split()[:-1]]
-        file(os.path.join(constants.OUTPUT_DIR,"{}_{}_module_genes.txt".format(ALGO_NAME, cur_search_method)), "w+").write("\n".join(module_genes))
-
-        utils.go.check_group_enrichment(module_genes, bg_genes)
-
-        sys.stdout.write(os.path.join(constants.OUTPUT_DIR,"{}_{}_module_genes.txt".format(ALGO_NAME, cur_search_method)))
-
+    main()
 
 
 

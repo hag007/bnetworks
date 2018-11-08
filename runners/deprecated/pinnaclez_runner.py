@@ -55,7 +55,7 @@ def run_hotnet2(deg_file_name, network_file_name):
 
 
 if __name__ == "__main__":
-    constants.update_dirs(DATASET_NAME="TNFa")
+    constants.update_dirs(DATASET_NAME_u="TNFa")
     params = get_parameters()
     if params != None:
         args, NETWORK_NAME, dataset_name = params

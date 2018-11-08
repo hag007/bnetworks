@@ -1,6 +1,6 @@
 hotnet2=/home/hag007/repos/bnetworks_alg/hotnet2 # /home/hag007/networks_algo/hotnet2
-cache_folder=/home/hag007/bnet/datasets/user1539866755.33/cache # /home/hag007/bnet/datasets/TNFa_2/cache
-output_folder=/home/hag007/bnet/datasets/user1539866755.33/output # /home/hag007/bnet/datasets/TNFa_2/output
+cache_folder=/home/hag007/bnet/datasets/user1541610168.15/cache # /home/hag007/bnet/datasets/TNFa_2/cache
+output_folder=/home/hag007/bnet/datasets/user1541610168.15/output # /home/hag007/bnet/datasets/TNFa_2/output
 network_name=dip
 num_cores=-1
 num_network_permutations=1 # 100

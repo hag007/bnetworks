@@ -1,18 +1,19 @@
 base_folder=/home/hag007/bnet
 networks_folder=$base_folder/networks
 datasets_folder=$base_folder/datasets
-dataset_folder=/home/hag007/bnet/datasets/user1539810927.55
+dataset_folder=/home/hag007/bnet/datasets/user1541628615.2
 data_folder=$dataset_folder/data
 cache_folder=$dataset_folder/cache
 output_folder=$dataset_folder/output
-is_greedy=False
+is_greedy=True
 algo_dir=/home/hag007/repos/bnetworks_alg/jactivemodules
 
-echo $cache_folder/deg_edger.tsv
+echo /home/hag007/bnet/datasets/user1541628615.2/cache/deg_edger.tsv
 
 
 java -jar $algo_dir/jactivemodules.jar \
                                  $networks_folder/dip.sif \
-                                 $cache_folder/deg_edger.tsv \
+                                 /home/hag007/bnet/datasets/user1541628615.2/cache/deg_edger.tsv \
                                  $is_greedy \
-                                 /home/hag007/bnet/datasets/user1539810927.55/output/jactivemodules_sa_results.txt
+                                 /home/hag007/bnet/datasets/user1541628615.2/output/jactivemodules_greedy_results.txt
+

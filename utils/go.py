@@ -21,6 +21,15 @@ import time
 from openpyxl import Workbook
 from openpyxl.styles import Color, PatternFill, Font, Border, Side, Alignment
 
+
+HG_GO_ROOT = "GO root"
+HG_GO_ID = "GO id"
+HG_GO_NAME = "GO name"
+HG_PVAL = "pval"
+HG_QVAL = "qval"
+HG_VALUE = "value"
+HG_TABLE_HEADERS = [HG_GO_ROOT, HG_GO_ID, HG_GO_NAME, HG_VALUE, HG_PVAL, HG_QVAL]
+
 def check_enrichment(gene_list):
     ensembl_for_url = re.sub("\.\d{1,2},", ",", gene_list)
     url = "http://david.abcc.ncifcrf.gov/api.jsp?type=ENSEMBL_GENE_ID&ids={}&tool=chartReport&annot=GOTERM_BP_DIRECT,GOTERM_CC_DIRECT,GOTERM_MF_DIRECT,KEGG_PATHWAY".format(ensembl_for_url)
@@ -28,6 +37,7 @@ def check_enrichment(gene_list):
 
 
 def check_group_enrichment(tested_gene_file_name, total_gene_file_name):
+    if len(tested_gene_file_name) == 0 or len(total_gene_file_name) == 0: return []
 
     if type(total_gene_file_name) == str:
         total_gene_list = load_gene_list(total_gene_file_name)
@@ -56,10 +66,14 @@ def check_group_enrichment(tested_gene_file_name, total_gene_file_name):
                           assoc, obo_dag, methods=["bonferroni", "fdr_bh"])
     g_res = g.run_study([int(cur) for cur in ensembl2entrez_convertor(tested_gene_list)])
 
-    GO_results = [(cur.NS, cur.GO, cur.goterm.name, cur.p_uncorrected, cur.p_fdr_bh) for cur in g_res if
+    GO_results = [(cur.NS, cur.GO, cur.goterm.name, cur.pop_count, cur.p_uncorrected, cur.p_fdr_bh) for cur in g_res if
                   cur.p_fdr_bh <= 0.05]
+
+    hg_report = [{HG_GO_ROOT : cur[0], HG_GO_ID : cur[1], HG_GO_NAME : cur[2], HG_VALUE : cur[3], HG_PVAL : cur[4] , HG_QVAL : cur[5]} for cur in GO_results]
+    hg_report.sort(key=lambda x: x[HG_QVAL])
+
     if len(GO_results) > 0:
-        go_ns, go_terms, go_names, uncorrectd_pvals, FDRs = zip(*GO_results)
+        go_ns, go_terms, go_names, go_hg_value, uncorrectd_pvals, FDRs = zip(*GO_results)
     else:
         go_terms = []
         uncorrectd_pvals = []
@@ -70,6 +84,7 @@ def check_group_enrichment(tested_gene_file_name, total_gene_file_name):
                         "\r\n".join(go_terms), "\r\n".join(go_names), "\r\n".join(map(str, uncorrectd_pvals)),
                         "\r\n".join(map(str, FDRs)))]
     print_to_excel(output_rows, str(tested_gene_file_name)[:10], str(total_gene_file_name)[:10])
+    return hg_report
 
 def print_to_excel(output_rows, gene_list_file_name, total_gene_file_name):
     wb = Workbook()  # ffff00

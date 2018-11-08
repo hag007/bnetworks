@@ -1,5 +1,5 @@
-from main import load_phenotype_data
-from main import load_gene_expression_profile_by_genes
+from infra import load_phenotype_data
+from infra import load_gene_expression_profile_by_genes
 
 SEPARATOR = "@%@"
 

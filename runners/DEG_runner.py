@@ -17,7 +17,9 @@ pandas2ri.activate()
 
 import constants
 import infra
-
+import shutil
+import time
+import random
 from utils.r_runner import run_rscript
 
 
@@ -26,19 +28,26 @@ def run_DEG(method, conditions, data, genes, group):
     return run_rscript(script=script, data=data, genes=genes, conditions=conditions, group=group)
 
 
-def prepare_input(gene_expression_file_name="ge.tsv"):
+def prepare_input(gene_expression_file_name="ge.tsv", groups = None):
+    if groups is not None:
+        groups = infra.load_groups()
+    elif os.path.exists(os.path.join(constants.DATA_DIR, "classes.tsv")):
+        groups = infra.load_groups()
+    else:
+        groups = infra.load_groups()
+
+
     ge_raw = infra.load_gene_expression_profile_by_genes(gene_expression_file_name=gene_expression_file_name)
     genes, conditions, data = infra.separate_headers(ge_raw)
-    group = [1, 1, 1, 2, 2, 2]
     conditions = np.array(conditions)
-    group = np.array(group)
-    data = pd.DataFrame(data, index=genes, columns=conditions, dtype=np.int, )
-    return conditions, data, genes, group
+    groups = np.array(groups,dtype=np.int)
+    data = pd.DataFrame(data, index=genes, columns=conditions, dtype=np.float)
+    return conditions, data, genes, groups
 
 
 
 def main(method=constants.DEG_EDGER):
-    conditions, data, genes, group = prepare_input()
+    conditions, data, genes, group = prepare_input(gene_expression_file_name="ge.tsv")
 
     results = run_DEG(method, conditions, data, genes, group)
     if method==constants.DEG_EDGER:
@@ -50,7 +59,12 @@ def main(method=constants.DEG_EDGER):
 
     combined_DEG = pd.concat([data, res], axis=1, sort=False)
     combined_DEG = combined_DEG.sort_values("pval".format(method))
-    combined_DEG.to_csv(os.path.join(constants.CACHE_DIR, "deg_{}.tsv".format(method)), sep="\t", index_label="id")
+    rand = str(random.random())
+    combined_DEG.to_csv(os.path.join(constants.CACHE_DIR, "deg_{}.tsv.tmp_{}".format(method, rand)), sep="\t", index_label="id")
+    print "prepare {}".format(os.path.join(constants.CACHE_DIR, "deg_{}.tsv.tmp_{}".format(method, rand)))
+    while not os.path.exists(os.path.join(constants.CACHE_DIR, "deg_{}.tsv.tmp_{}".format(method, rand))):
+        print "waiting for {}".format(os.path.join(constants.CACHE_DIR, "deg_{}.tsv.tmp_{}".format(method,rand)))
+    shutil.move(os.path.join(constants.CACHE_DIR, "deg_{}.tsv.tmp_{}".format(method, rand)), os.path.join(constants.CACHE_DIR, "deg_{}.tsv".format(method)))
 
 if __name__ == "__main__":
     main()
