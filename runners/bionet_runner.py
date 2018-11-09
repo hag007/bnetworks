@@ -33,6 +33,8 @@ import DEG_runner
 import utils.go
 import pandas as pd
 
+from utils.network import output_modules
+
 ALGO_NAME = "bionet"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 NETWORK_NAME = "dip"
@@ -85,7 +87,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
     output_file_name = os.path.join(constants.OUTPUT_DIR,
                                     "{}_client_output.txt".format(ALGO_NAME))
-    server.output_modules(output_file_name, modules, score_file_name, output_base_dir)
+    output_modules(output_file_name, modules, score_file_name, output_base_dir)
 
 
 

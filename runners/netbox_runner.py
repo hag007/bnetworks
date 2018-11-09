@@ -34,6 +34,7 @@ import DEG_runner
 from utils.ensembl2entrez import ensembl2entrez_convertor
 from utils.scripts import format_script
 import utils.server as server
+from utils.network import output_modules
 
 ALGO_NAME = "netbox"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
@@ -88,7 +89,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
         output_base_dir = build_all_reports(ALGO_NAME, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
     output_file_name = os.path.join(constants.OUTPUT_DIR,
                                     "{}_client_output.txt".format(ALGO_NAME))
-    server.output_modules(output_file_name, modules, score_file_name, output_base_dir )
+    output_modules(output_file_name, modules, score_file_name, output_base_dir )
 
 
 if __name__ == "__main__":
