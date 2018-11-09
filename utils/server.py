@@ -76,38 +76,6 @@ def get_score(score_method):
 
     return score_file_name
 
-def output_modules(output_file_name, modules, score_file_name, output_base_dir=""):
-    output_data = create_modules_output(modules, score_file_name)
-    file(output_file_name, 'w+').write(output_base_dir + "\n")
-    json.dump(output_data, file(output_file_name, 'a+'))
-    sys.stdout.write(output_file_name)
-
-def reduce_to_dict(x,y):
-    if y["id"] in x:
-        x[y["id"]]["modules"] = x[y["id"]]["modules"] + y["modules"]
-    else:
-        x[y["id"]]=y
-    return x
-
-def merge_two_dicts(x, y):
-
-    z = x.copy()
-    z.update(y)
-    return z
-
-def create_modules_output(modules, score_file_name):
-    scores = pd.read_csv(score_file_name,sep="\t").set_index("id")
-
-    if constants.IS_PVAL_SCORES:
-        scores["score"] = scores["pval"].apply(lambda x: -np.log10(x))
-    zero_scores = [ {"score" : 0, "id" : gene} for module in modules for gene in module if gene not in scores.index]
-    if len(zero_scores) !=0:
-        zero_scores = pd.DataFrame(zero_scores).set_index("id")
-        zero_scores=zero_scores[~zero_scores.index.duplicated(keep='first')]
-        scores = pd.concat([scores, zero_scores],axis=0)
-    return [merge_two_dicts({"id" : k}, v) for k,v in reduce(reduce_to_dict, [{"eid": gene, "modules": [i], "id": gene, "gene_symbol": e2g_convertor([gene])[0], "score" : scores.loc[gene,"score"]} for i, module in enumerate(modules) for gene in module],\
-            {}).iteritems()]
-
 def init_common_params(NETWORK_NAME):
     score_method = constants.DEG_EDGER
     params = get_parameters()

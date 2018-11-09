@@ -11,6 +11,7 @@ import pandas as pd
 from df_helpers import to_full_list
 from df_helpers import to_full_np
 from utils.scripts import format_script
+from utils.ensembl2gene_symbol import  e2g_convertor
 import zipfile
 
 from utils.go import check_group_enrichment
@@ -168,38 +169,61 @@ def general_algo_report(algo_name, all_hg_reports, module_genes, modules_summary
                      "{}_general.tsv".format(report_file_name)), sep="\t", index=False)
 
 
-def draw_network(active_genes, network_name="dip", h_src="ID_interactor_A", h_dst="ID_interactor_B"):
-    # type: (object, object, object, object) -> object
 
-    reduced_nodes = [[x[h_src], x[h_dst]] for i, x in pd.read_csv(os.path.join(constants.NETWORKS_DIR, network_name+".sif"), sep="\t").iterrows() if x[h_src] in active_genes or x[h_dst] in active_genes]
-    reduced_nodes = [y for x in reduced_nodes for y in x]
-    reduced_nodes = list(set(reduced_nodes))
-    cy_edges_all = [{"data": { "id": x[h_src]+x[h_dst], "source": x[h_src], "target": x[h_dst], "label" : "-"}, "selected" : True} if x[h_src] in active_genes and x[h_dst] in active_genes
-                    else {"data": { "id": x[h_src]+x[h_dst], "source": x[h_src], "target": x[h_dst]}}
-                    for i, x in pd.read_csv(os.path.join(constants.NETWORKS_DIR, network_name+".sif"), sep="\t").iterrows() if x[h_src] in active_genes or x[h_dst] in active_genes]
+def output_modules(output_file_name, modules, score_file_name, output_base_dir=""):
+    output_data = create_modules_output(modules, score_file_name)
+    file(output_file_name, 'w+').write(output_base_dir + "\n")
+    json.dump(output_data, file(output_file_name, 'a+'))
+    sys.stdout.write(output_file_name)
 
-    cy_nodes_all = [{"data": {"id" : x, "label": x}, "selected" : True} if x in active_genes else {"data": {"id" : x}} for x in reduced_nodes]
+def reduce_to_dict(x,y):
+    if y["id"] in x:
+        x[y["id"]]["modules"] = x[y["id"]]["modules"] + y["modules"]
+    else:
+        x[y["id"]]=y
+    return x
+
+def merge_two_dicts(x, y):
+
+    z = x.copy()
+    z.update(y)
+    return z
+
+def create_modules_output(modules, score_file_name):
+    scores = pd.read_csv(score_file_name,sep="\t").set_index("id")
+
+    if constants.IS_PVAL_SCORES:
+        scores["score"] = scores["pval"].apply(lambda x: -np.log10(x))
+    zero_scores = [ {"score" : 0, "id" : gene} for module in modules for gene in module if gene not in scores.index]
+    if len(zero_scores) !=0:
+        zero_scores = pd.DataFrame(zero_scores).set_index("id")
+        zero_scores=zero_scores[~zero_scores.index.duplicated(keep='first')]
+        scores = pd.concat([scores, zero_scores],axis=0)
+    return [merge_two_dicts({"id" : k}, v) for k,v in reduce(reduce_to_dict, [{"eid": gene, "modules": [i], "id": gene, "gene_symbol": e2g_convertor([gene])[0], "score" : scores.loc[gene,"score"]} for i, module in enumerate(modules) for gene in module],\
+            {}).iteritems()]
+
+def draw_network(modules, score_file_name, network_file_name, h_src="ID_interactor_A", h_dst="ID_interactor_B"):
+    active_genes = [y for x in modules for y in x]
+    output = [{"data" : x, "label" : x["eid"], "selected" : True } for x in create_modules_output(modules, score_file_name)]
+    active_edges = [[x[h_src], x[h_dst]] for i, x in pd.read_csv(os.path.join(constants.NETWORKS_DIR, network_file_name), sep="\t").iterrows() if x[h_src] in active_genes and x[h_dst] in active_genes]
+    additional_edges = [[x[h_src], x[h_dst]] for i, x in pd.read_csv(os.path.join(constants.NETWORKS_DIR, network_file_name), sep="\t").iterrows() if not (x[h_src] in active_genes and x[h_dst] in active_genes) and (x[h_src] in active_genes or x[h_dst] in active_genes)]
+    additional_nodes = [y for x in (active_edges + additional_edges) for y in x if y if y not in active_edges]
+    additional_nodes = list(set(additional_nodes))
+
+    return output + [{"data" : {"id" : x, "eid" : x, "modules" : []}, "label" : ""} for x in additional_nodes] + [{"data": {"id" : x[0]+"_"+x[1], "source":x[0], "target":x[1]}, "label" : ""} for x in additional_edges] + [{"data": {"id" : x[0]+"_"+x[1], "source":x[0], "target":x[1]}, "label" : "-"} for x in active_edges]
 
 
 
-    cy_nodes_active = [{"data": {"id" : x, "label": x}, "selected" : True} for x in active_genes]
-    cy_edges_active = [{"data": { "id": x[h_src]+x[h_dst], "source": x[h_src], "target": x[h_dst], "label" : "-"}, "selected" : True}
-                       for i, x in pd.read_csv(os.path.join(constants.NETWORKS_DIR, network_name+".sif"), sep="\t").iterrows() if x[h_src] in active_genes and x[h_dst] in active_genes]
-
-    return (cy_edges_active + cy_nodes_active), (cy_edges_all + cy_nodes_all)
-
-
-
-def generate_report_from_template(output_file_name, cy_active, cy_all, algo_name="", hg_report=[],
+def generate_report_from_template(output_file_name, cy, algo_name="", hg_report=[],
                                   disease_genes_statistics=[], modules_summary=[]):
 
     hg_report = to_full_list(hg_report, "#")
     disease_genes_statistics = to_full_list(disease_genes_statistics, "#")
     modules_summary = to_full_list(modules_summary, "#")
 
-    format_script(os.path.join(constants.TEMPLATES_DIR, "graph.html"), DATA_ALL=json.dumps(cy_all),
-                  DATA_ACTIVE=json.dumps(cy_active), HG_REPORT=json.dumps(hg_report),
-                  MODULES_SUMMARY=json.dumps(modules_summary), NUM_OF_GENES=len([x for x in cy_active if not x["data"].has_key("source")]),
+    format_script(os.path.join(constants.TEMPLATES_DIR, "graph.html"),
+                  DATA=json.dumps(cy), HG_REPORT=json.dumps(hg_report),
+                  MODULES_SUMMARY=json.dumps(modules_summary), NUM_OF_GENES=len([x for x in cy if not x["data"].has_key("source")]),
                   DISEASE_GENES=json.dumps(disease_genes_statistics))
     output_dir = os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME, algo_name)
     if not os.path.exists(output_dir):
@@ -209,7 +233,7 @@ def generate_report_from_template(output_file_name, cy_active, cy_all, algo_name
     return "graph_{}.html".format(output_file_name)
 
 
-def build_all_reports(algo_name, modules, all_bg_genes, network_file_name, disease_name=None, expected_genes=None):
+def build_all_reports(algo_name, modules, all_bg_genes, score_file_name, network_file_name, disease_name=None, expected_genes=None):
     output_base_dir = os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME, algo_name)
     if not os.path.exists(output_base_dir):
         os.makedirs(output_base_dir)
@@ -218,7 +242,7 @@ def build_all_reports(algo_name, modules, all_bg_genes, network_file_name, disea
     modules_summary = []
 
     for i, module in enumerate(modules):
-        hg_row, summary_row = module_report(algo_name, i, module, all_bg_genes[i])
+        hg_row, summary_row = module_report(algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name)
         all_hg_reports.append(hg_row)
         modules_summary.append(summary_row)
 
@@ -228,11 +252,11 @@ def build_all_reports(algo_name, modules, all_bg_genes, network_file_name, disea
 
     pd.DataFrame(modules_summary).set_index("module").to_csv(
         os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME, algo_name, "modules_summary.tsv"), sep="\t")
-    generate_algo_report(algo_name, all_bg_genes[0], all_hg_reports, disease_name, expected_genes, module_genes,
-                         modules_summary, "all_modules")
+    generate_algo_report(algo_name, modules, all_bg_genes[0], all_hg_reports, disease_name, expected_genes,
+                         modules_summary, score_file_name, network_file_name, "all_modules")
 
-    generate_algo_report(algo_name, all_bg_genes[0], k_hg_reports, disease_name, expected_genes, module_larger_than_k_genes,
-                         k_modules_summary, "k_{}_modules".format(MODULE_TH))
+    generate_algo_report(algo_name, modules_larger_than_k, all_bg_genes[0], k_hg_reports, disease_name, expected_genes,
+                         k_modules_summary, score_file_name, network_file_name, "k_{}_modules".format(MODULE_TH))
 
     # zipdir(output_main_dir, os.path.join(output_base_dir, "report.zip"))
     return output_base_dir
@@ -252,18 +276,19 @@ def get_k_threshold_modules(modules, all_hg_reports, modules_summary):
     return modules_larger_than_k, module_larger_than_k_genes, k_hg_reports, k_modules_summary
 
 
-def generate_algo_report(algo_name, bg_genes, all_hg_reports, disease_name, expected_genes, module_genes,
-                         modules_summary, report_name):
+def generate_algo_report(algo_name, modules, bg_genes, all_hg_reports, disease_name, expected_genes,
+                         modules_summary, score_file_name, network_file_name, report_name):
     hg_report = []
+    module_genes = [gene for module in modules for gene in module]
     if constants.HG_MODE or constants.EMB_MODE:
         hg_report = check_group_enrichment(module_genes, bg_genes)
-    active_cy, all_cy = draw_network(active_genes=module_genes)
-    generate_report_from_template(report_name, active_cy, all_cy, algo_name, hg_report, [], modules_summary)
+    cy = draw_network(modules, score_file_name, network_file_name)
+    generate_report_from_template(report_name, cy, algo_name, hg_report, [], modules_summary)
     summary_intergrative_reports(all_hg_reports, modules_summary, hg_report, algo_name, module_genes, disease_name,
                                  expected_genes, report_name)
 
 
-def module_report(algo_name, i, module, bg_genes):
+def module_report(algo_name, i, module, bg_genes, score_file_name, network_file_name):
     file(os.path.join(constants.OUTPUT_DIR, "{}_module_genes_{}.txt".format(algo_name, i)), "w+").write(
         "\n".join(module))
     file(os.path.join(constants.OUTPUT_DIR, "{}_bg_genes_{}.txt".format(algo_name, i)), "w+").write(
@@ -275,8 +300,8 @@ def module_report(algo_name, i, module, bg_genes):
         modules_summary_row[SH_ENRICHED] = len(hg_report) - 1
         if constants.EMB_MODE:
             hg_report = emb_score_report(algo_name, "module_" + str(i), "separated_modules_hg_samples", hg_report)
-    active_cy, all_cy = draw_network(active_genes=module)
-    report_output_file_name = generate_report_from_template(algo_name + str(i), active_cy, all_cy, algo_name, hg_report)
+    cy = draw_network([[] for i in range(i)]+[module], score_file_name, network_file_name)
+    report_output_file_name = generate_report_from_template(algo_name + str(i), cy, algo_name, hg_report)
     modules_summary_row[SH_DETAILS] = report_output_file_name
     return hg_report, modules_summary_row
 
