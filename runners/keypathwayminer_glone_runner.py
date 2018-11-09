@@ -34,6 +34,8 @@ import utils.server as server
 
 import utils.go
 
+from utils.network import output_modules
+
 ALGO_NAME = "keypathwayminer"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 
@@ -101,7 +103,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
     output_file_name = os.path.join(constants.OUTPUT_DIR,
                                     "{}_client_output.txt".format(ALGO_NAME))
-    server.output_modules(output_file_name, modules, score_file_name, output_base_dir )
+    output_modules(output_file_name, modules, score_file_name, output_base_dir )
 
 
 if __name__ == "__main__":

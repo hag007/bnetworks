@@ -35,6 +35,8 @@ from utils.ensembl2entrez import ensembl2entrez_convertor
 from utils.scripts import format_script
 from utils.server import get_parameters
 from utils.server import get_score
+from utils.network import output_modules
+
 ALGO_NAME = "reactomefi"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 NETWORK_NAME = "dip"
@@ -75,7 +77,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
     output_file_name = os.path.join(constants.OUTPUT_DIR,
                                     "{}_client_output.txt".format(ALGO_NAME))
-    server.output_modules(output_file_name, modules, score_file_name, output_base_dir )
+    output_modules(output_file_name, modules, score_file_name, output_base_dir )
 
 if __name__ == "__main__":
     constants.update_dirs(DATASET_NAME_u="MCF7_2")
