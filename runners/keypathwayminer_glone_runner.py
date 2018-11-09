@@ -97,7 +97,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
     output_base_dir = ""
     if constants.REPORTS:
-        output_base_dir = build_all_reports(ALGO_NAME + "_" + STRATEGY, modules, all_bg_genes, network_file_name, disease_name, expected_genes)
+        output_base_dir = build_all_reports(ALGO_NAME + "_" + STRATEGY, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
 
     output_file_name = os.path.join(constants.OUTPUT_DIR,
                                     "{}_client_output.txt".format(ALGO_NAME))
