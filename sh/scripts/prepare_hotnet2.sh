@@ -1,5 +1,5 @@
-hotnet2=/home/hag007/repos/bnetworks_alg/hotnet2 # /home/hag007/networks_algo/hotnet2
-cache_folder=/home/hag007/bnet/datasets/user1541690164.42/cache # /home/hag007/bnet/datasets/TNFa_2/cache
+hotnet2=/home/ec2-user/bnetworks_alg/hotnet2 # /home/hag007/networks_algo/hotnet2
+cache_folder=/home/ec2-user/bnet/datasets/user1541731050.71/cache # /home/hag007/bnet/datasets/TNFa_2/cache
 num_cores=-1
 num_network_permutations=1 # 100
 num_heat_permutations=1 # 1000

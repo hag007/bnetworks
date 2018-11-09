@@ -207,7 +207,7 @@ def draw_network(modules, score_file_name, network_file_name, h_src="ID_interact
     output = [{"data" : x, "label" : x["eid"], "selected" : True } for x in create_modules_output(modules, score_file_name)]
     active_edges = [[x[h_src], x[h_dst]] for i, x in pd.read_csv(os.path.join(constants.NETWORKS_DIR, network_file_name), sep="\t").iterrows() if x[h_src] in active_genes and x[h_dst] in active_genes]
     additional_edges = [[x[h_src], x[h_dst]] for i, x in pd.read_csv(os.path.join(constants.NETWORKS_DIR, network_file_name), sep="\t").iterrows() if not (x[h_src] in active_genes and x[h_dst] in active_genes) and (x[h_src] in active_genes or x[h_dst] in active_genes)]
-    additional_nodes = [y for x in (active_edges + additional_edges) for y in x if y if y not in active_edges]
+    additional_nodes = [y for x in (active_edges + additional_edges) for y in x if y if y not in active_genes]
     additional_nodes = list(set(additional_nodes))
 
     return output + [{"data" : {"id" : x, "eid" : x, "modules" : []}, "label" : ""} for x in additional_nodes] + [{"data": {"id" : x[0]+"_"+x[1], "source":x[0], "target":x[1]}, "label" : ""} for x in additional_edges] + [{"data": {"id" : x[0]+"_"+x[1], "source":x[0], "target":x[1]}, "label" : "-"} for x in active_edges]
