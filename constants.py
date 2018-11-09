@@ -11,7 +11,7 @@ SH_DIR = os.path.join(REPO_DIR, "sh","scripts")
 ALGO_BASE_DIR = config_json['ALGO_BASE_PROFILE']
 
 SERVER_MODE = False
-REPORTS = False
+REPORTS = True
 DISEASE_MODE = False
 HG_MODE = False
 EMB_MODE = False
