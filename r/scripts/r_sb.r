@@ -22,9 +22,9 @@ library("Rgraphviz")
 library("BioNet")
 
 library(edgeR)
-
-group <- c(1,2)
-data <- read.delim("/home/hag007/bnet/datasets/DSIGENET_1540891160.94_1/data/ge.tsv", row.names = 1)
+  
+group <- read.delim("/home/hag007/bnet/datasets/BRCA/data/classes.tsv", header=FALSE)
+data <- read.delim("/home/hag007/bnet/datasets/BRCA/data/ge.tsv", row.names = 1)
 genes <- rownames(data)
 y <- DGEList(counts=data,group=group)
 y <- calcNormFactors(y)

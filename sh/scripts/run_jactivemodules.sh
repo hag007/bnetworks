@@ -1,19 +1,23 @@
-base_folder=/home/hag007/bnet
+base_folder=/media/hag007/Data/bnet
 networks_folder=$base_folder/networks
 datasets_folder=$base_folder/datasets
-dataset_folder=/home/hag007/bnet/datasets/user1541722326.25
+dataset_folder=/media/hag007/Data/bnet/datasets/GE_IEM
 data_folder=$dataset_folder/data
 cache_folder=$dataset_folder/cache
 output_folder=$dataset_folder/output
 is_greedy=True
 algo_dir=/home/hag007/repos/bnetworks_alg/jactivemodules
+num_of_modules=10
+overlap_threshold=0
 
-echo /home/hag007/bnet/datasets/user1541722326.25/cache/deg_edger.tsv
+echo /media/hag007/Data/bnet/datasets/GE_IEM/cache/deg_t.tsv
 
 
 java -jar $algo_dir/jactivemodules.jar \
-                                 $networks_folder/dip.sif \
-                                 /home/hag007/bnet/datasets/user1541722326.25/cache/deg_edger.tsv \
+                                 /media/hag007/Data/bnet/networks/dip.sif \
+                                 /media/hag007/Data/bnet/datasets/GE_IEM/cache/deg_t.tsv \
                                  $is_greedy \
-                                 /home/hag007/bnet/datasets/user1541722326.25/output/jactivemodules_greedy_results.txt
+                                 $num_of_modules \
+                                 $overlap_threshold \
+                                 /media/hag007/Data/bnet/datasets/GE_IEM/output/jactivemodules_greedy_results.txt
 

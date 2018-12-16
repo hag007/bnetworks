@@ -41,6 +41,8 @@ def load_gene_expression_profile(gene_list_file_name=None, gene_expression_file_
     if not by_gene:
         axis= 0
         reshape_size = (1, len(expression_profiles_filtered[0])-1)
+
+    expression_profiles_filtered = [x for x in expression_profiles_filtered if len(x)==len(expression_profiles_filtered[0])]
     expression_profiles_filtered = np.array(expression_profiles_filtered)
     row_header = expression_profiles_filtered[0]
     column_header = expression_profiles_filtered[1:,0]
@@ -72,9 +74,12 @@ def l_inf_norm(X, axis, reshape_size):
 def standardization(X, axis, reshape_size):
     return zscore(X,axis=axis)
 
+def none(X, axis, reshape_size):
+    return X
+
 
 def save_expression_profile(expression_profile, output_file_name):
-    f = open(os.path.join(constants.TCGA_DATA_DIR,output_file_name),'w+')
+    f = open(os.path.join(constants.DATA_DIR,output_file_name),'w+')
     for i, cur in enumerate(expression_profile):
         f.write("\t".join(cur)+"\n") # [:5]
         # if i==5000:
@@ -84,11 +89,11 @@ def save_expression_profile(expression_profile, output_file_name):
 
 
 # ["UVM", "SKCM", "LUAD", "LUSC", "BRCA", "ACC","PAAD", "LAML", "CHOL"]
-for dataset in ["UVM"]:
-    constants.update_dirs(CANCER_TYPE_u=dataset)
-    filename = "TCGA-{}.htseq_fpkm-uq{}.tsv"
-    normalization_method = "standardization"
-
+for dataset in ["PRAD_2"]:
+    constants.update_dirs(DATASET_NAME_u=dataset)
+    # filename = "TCGA-{}.htseq_counts{}.tsv"
+    normalization_method = "none"
+    filename = "ge{}.tsv"
     is_by_gene = True
 
     suffix = "_normalized"
@@ -97,5 +102,5 @@ for dataset in ["UVM"]:
     else:
         suffix+="_by_patients_{}".format(normalization_method)
 
-    normalized_expression_profile = load_gene_expression_profile(gene_expression_file_name=filename.format(dataset,""), by_gene=is_by_gene, normalization_method=normalization_method)
-    save_expression_profile(normalized_expression_profile, filename.format(dataset, suffix))
+    normalized_expression_profile = load_gene_expression_profile(gene_expression_file_name=filename.format(""), by_gene=is_by_gene, normalization_method=normalization_method)
+    save_expression_profile(normalized_expression_profile, filename.format(suffix))

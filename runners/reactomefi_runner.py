@@ -45,7 +45,9 @@ NETWORK_NAME = "dip"
 def extract_modules_and_bg(bg_genes):
     results = file(os.path.join(constants.OUTPUT_DIR, "reactomefi_modules.txt")).readlines()
     modules = [x.split("\t")[0].split() for x in results]
+    modules = [cur for cur in modules if len(modules) > 2]
     all_bg_genes = [bg_genes for x in modules]
+    print "extracted {} modules".format(len(modules))
     return modules, all_bg_genes
 
 
@@ -55,10 +57,10 @@ def init_specific_params(NETWORK_NAME):
     return bg_genes, network_file_name
 
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None):
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER):
     global NETWORK_NAME
     constants.update_dirs(DATASET_NAME_u=dataset_name)
-    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME)
+    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME, score_method)
     if score_method == constants.PREDEFINED_SCORE:
         raise Exception("Cannot run this algo on scor-based metrics. please provide gene expression file")
 
@@ -80,5 +82,5 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
     output_modules(output_file_name, modules, score_file_name, output_base_dir )
 
 if __name__ == "__main__":
-    constants.update_dirs(DATASET_NAME_u="MCF7_2")
+    constants.update_dirs(DATASET_NAME_u="SOC")
     main()

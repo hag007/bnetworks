@@ -36,7 +36,6 @@ from utils.network import output_modules
 
 ALGO_NAME = "jactivemodules"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
-NETWORK_NAME = "dip"
 
 
 def init_specific_params(search_method):
@@ -47,24 +46,25 @@ def init_specific_params(search_method):
 def extract_modules_and_bg(bg_genes, results_file_name, modules_genes_file_name):
     results = file(results_file_name.format(constants.OUTPUT_DIR, ALGO_NAME)).readlines()
     modules = [x.split()[:-1] for x in results]
+    modules = [cur for cur in modules if len(cur) > 3]
     all_bg_genes = [bg_genes for x in modules]
     module_genes = [y for x in modules for y in x]
     file(modules_genes_file_name, "w+").write("\n".join(module_genes))
+    print "extracted {} modules".format(len(modules))
     return all_bg_genes, modules
 
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None):
-    global NETWORK_NAME
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip"):
     constants.update_dirs(DATASET_NAME_u=dataset_name)
     search_method = "greedy"
-    network_file_name, score_file_name, score_method, bg_genes= server.init_common_params(NETWORK_NAME)
+    network_file_name, score_file_name, score_method, bg_genes= server.init_common_params(network_file_name, score_method)
 
     results_file_name = init_specific_params(search_method)
 
     format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE,
                   DATASET_DIR=constants.DATASET_DIR,
-                  ALGO_DIR=ALGO_DIR, NETWORK_NAME=NETWORK_NAME, SCORE_FILE_NAME=score_file_name,
-                  IS_GREEDY=str(search_method == "greedy"), OUTPUT_FILE=results_file_name)
+                  ALGO_DIR=ALGO_DIR, NETWORK_NAME=network_file_name, SCORE_FILE_NAME=score_file_name,
+                  IS_GREEDY=str(search_method == "greedy"), OUTPUT_FILE=results_file_name, NUM_OF_MODULES=10, OVERLAP_THRESHOLD=0)
 
     subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
                      stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()

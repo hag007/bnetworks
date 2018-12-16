@@ -15,7 +15,7 @@ __date__ = "2011-11-17 Nov denis"
     # vs unsupervised / semi-supervised svm
 
 #...............................................................................
-def kmeans( X, centres, delta=.001, maxiter=10, metric="euclidean", p=2, verbose=1 ):
+def kmeans( X, centres, delta=.001, maxiter=10, metric="euclidean", p=2, verbose=0 ):
     """ centres, Xtocentre, distances = kmeans( X, initial centres ... )
     in:
         X N x dim  may be sparse
@@ -44,8 +44,8 @@ def kmeans( X, centres, delta=.001, maxiter=10, metric="euclidean", p=2, verbose
         raise ValueError( "kmeans: X %s and centres %s must have the same number of columns" % (
             X.shape, centres.shape ))
     if verbose:
-        # print "kmeans: X %s  centres %s  delta=%.2g  maxiter=%d  metric=%s" % (
-        #     X.shape, centres.shape, delta, maxiter, metric)
+        print "kmeans: X %s  centres %s  delta=%.2g  maxiter=%d  metric=%s" % (
+            X.shape, centres.shape, delta, maxiter, metric)
     allx = np.arange(N)
     prevdist = 0
     for jiter in range( 1, maxiter+1 ):
@@ -54,7 +54,7 @@ def kmeans( X, centres, delta=.001, maxiter=10, metric="euclidean", p=2, verbose
         distances = D[allx,xtoc]
         avdist = distances.mean()  # median ?
         if verbose >= 2:
-            # print "kmeans: av |X - nearest centre| = %.4g" % avdist
+            print "kmeans: av |X - nearest centre| = %.4g" % avdist
         if (1 - delta) * prevdist <= avdist <= prevdist \
         or jiter == maxiter:
             break
@@ -64,7 +64,7 @@ def kmeans( X, centres, delta=.001, maxiter=10, metric="euclidean", p=2, verbose
             if len(c) > 0:
                 centres[jc] = X[c].mean( axis=0 )
     if verbose:
-        # print "kmeans: %d iterations  cluster sizes:" % jiter, np.bincount(xtoc)
+        print "kmeans: %d iterations  cluster sizes:" % jiter, np.bincount(xtoc)
     if verbose >= 2:
         r50 = np.zeros(k)
         r90 = np.zeros(k)
@@ -89,7 +89,7 @@ def kmeanssample( X, k, nsample=0, **kwargs ):
         # seed like sklearn ?
     N, dim = X.shape
     if nsample == 0:
-        nsample = max( 2*np.sqrt(N), 10*k )
+        nsample = max( 2*np.sqrt(N), min(10*k, X.shape[0]) )
     Xsample = randomsample( X, int(nsample) )
     pass1centres = randomsample( X, int(k) )
     samplecentres = kmeans( Xsample, pass1centres, **kwargs )[0]
@@ -180,7 +180,7 @@ if __name__ == "__main__":
     np.random.seed(seed)
     random.seed(seed)
 
-    # print "N %d  dim %d  ncluster %d  kmsample %d  metric %s" % (
+    print "N %d  dim %d  ncluster %d  kmsample %d  metric %s" % (
         N, dim, ncluster, kmsample, metric)
     X = np.random.exponential( size=(N,dim) )
         # cf scikits-learn datasets/

@@ -66,15 +66,16 @@ def extract_modules_and_bg(bg_genes):
             modules[int(x.strip().split(" =")[1])].append(x.strip().split(" =")[0])
         else:
             modules.append([x.strip().split(" =")[0]])
-    modules = filter(lambda x: len(x) > 0, modules)
+    modules = filter(lambda x: len(x) > 3, modules)
     all_bg_genes = [bg_genes for x in modules]
+    print "extracted {} modules".format(len(modules))
     return modules, all_bg_genes
 
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None):
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER):
     global NETWORK_NAME
     constants.update_dirs(DATASET_NAME_u=dataset_name)
-    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME)
+    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME, score_method)
 
     init_specific_params(score_file_name)
     script_name = "run_{}.sh".format(ALGO_NAME)

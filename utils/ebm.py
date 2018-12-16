@@ -75,6 +75,7 @@ def CombinePValues(covar_matrix, p_values, extra_info=False):
 # Output: A combined P-value using Kost's Method.
 #        If extra_info == True: also returns the p-value from Fisher's method, the scale factor c, and the new degrees of freedom from Brown's Method
 def KostsMethod(data_matrix, p_values, extra_info=False):
+    if np.size(data_matrix) == 0 or np.size(p_values) ==0: return 1
     covar_matrix = CalculateKostCovariance(data_matrix)
     covar_matrix = np.nan_to_num(covar_matrix)
     return CombinePValues(covar_matrix, p_values, extra_info=extra_info)

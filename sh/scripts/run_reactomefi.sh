@@ -1,7 +1,7 @@
-base_folder=/home/hag007/bnet
+base_folder=/media/hag007/Data/bnet
 networks_folder=$base_folder/networks
 datasets_folder=$base_folder/datasets
-dataset_folder=/home/hag007/bnet/datasets/user1541610069.63
+dataset_folder=/media/hag007/Data/bnet/datasets/UVM
 data_folder=$dataset_folder/data
 cache_folder=$dataset_folder/cache
 output_folder=$dataset_folder/output

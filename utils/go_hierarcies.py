@@ -4,6 +4,7 @@ __copyright__ = "Copyright (C) 2016-2018, DV Klopfenstein, H Tang. All rights re
 __author__ = "DV Klopfenstein"
 
 import sys
+sys.path.insert(0, '../')
 import collections as cx
 from goatools.godag.consts import Consts
 from goatools.gosubdag.go_paths import GoPaths
@@ -23,10 +24,6 @@ from goatools.base import download_ncbi_associations
 import constants
 from utils.ensembl2entrez import get_entrez2ensembl_dictionary
 import wget, os
-from utils.ensg_dictionary import get_ensg_dict
-from utils.ensp_dictionary import get_ensp_dict
-from utils.string_ppi_dictionary import get_string_ppi_dict
-import infra
 
 class WrHierGO(object):
     """Write hierarchy object."""
@@ -60,13 +57,13 @@ class WrHierGO(object):
 
         obj = _WrHierPrt(self, prt)
         obj.ext_hier_rec(goid)
-        prt.write("VERTICES:\n")
-        for k, v in obj.vertices.iteritems():
-            prt.write(str("{} - {}\n".format(k,v)))
+        # prt.write("VERTICES:\n")
+        # for k, v in obj.vertices.iteritems():
+        #     prt.write(str("{} - {}\n".format(k,v)))
 
-        prt.write("EDGES:\n")
-        for k, v in obj.edges.iteritems():
-            prt.write(str("{} - {}\n".format(k,v)))
+        # prt.write("EDGES:\n")
+        # for k, v in obj.edges.iteritems():
+        #     prt.write(str("{} - {}\n".format(k,v)))
 
         return obj
 
@@ -142,7 +139,9 @@ class _WrHierPrt(object):
                                    "NS": ntgo.NS,
                                    "depth": [depth],
                                    "L" : ntgo.level,
-                                   "D" : ntgo.depth}
+                                   "D" : ntgo.depth,
+				   "obj" : ntobj,
+				   "n_children" : len(ntobj.children)}
 
         self.gos_printed.add(goid)
         # Do not extract hierarchy below this turn if it has already been printed
@@ -280,7 +279,7 @@ def write_hier_all(gosubdag, out, root_term):
 #################################################################
 def extract_hier_all(gosubdag, out, root_term, go2geneids):
     """write_hier.py: Prints the entire mini GO hierarchy, with counts of children."""
-    out.write('\nTEST EXTRACTION: Print all hierarchies:\n')
+    # out.write('\nTEST EXTRACTION: Print all hierarchies:\n')
     objwr = WrHierGO(gosubdag,  go2geneids=go2geneids)
     obj = objwr.ext_hier_down(root_term, out)
     return (obj.vertices, obj.edges)
@@ -289,20 +288,15 @@ def extract_hier_all(gosubdag, out, root_term, go2geneids):
 
 def write_hier_norep(gosubdag, out):
     """Shortens hierarchy report by only printing branches once.
-
          Prints the 'entire hierarchy' of GO:0000005 the 1st time seen:
-
            ---     1 GO:0000005    L-02    D-02
            ----     0 GO:0000010   L-03    D-04
-
          Prints just GO:0000005 (ommit child GO:10) the 2nd time seen:
-
            ===     1 GO:0000005    L-02    D-02
-
          '=' is used in hierarchy mark to indicate that the pathes
              below the marked term have already been printed.
     """
-    out.write('\nTEST ALL: Print branches just once:\n')
+    # out.write('\nTEST ALL: Print branches just once:\n')
     objwr = WrHierGO(gosubdag, concise=True)
     gos_printed = objwr.prt_hier_down("GO:0000001", out)
     assert gos_printed == set(objwr.gosubdag.go2nt)
@@ -312,7 +306,7 @@ def write_hier_lim(gosubdag, out):
     """Limits hierarchy list to GO Terms specified by user."""
     go_omit = ['GO:0000005', 'GO:0000010']
     go_ids = [go_id for go_id in gosubdag.go2obj if go_id not in go_omit]
-    out.write('\nTEST OMIT: 05 and 10:\n')
+    # out.write('\nTEST OMIT: 05 and 10:\n')
     objwr = WrHierGO(gosubdag, include_only=go_ids)
     gos_printed = objwr.prt_hier_down("GO:0000001", out)
     assert not gos_printed.intersection(go_omit), "SHOULD NOT PRINT {GOs}".format(GOs=go_omit)
@@ -321,7 +315,7 @@ def write_hier_lim(gosubdag, out):
 def write_hier_mrk(gosubdag, out):
     """Print all paths, but mark GO Terms of interest. """
     mark_lst = ['GO:0000001', 'GO:0000003', 'GO:0000006', 'GO:0000008', 'GO:0000009']
-    out.write('\nTEST MARK: 01->03->06->08->09:\n')
+    # out.write('\nTEST MARK: 01->03->06->08->09:\n')
     objwr = WrHierGO(gosubdag, go_marks=mark_lst)
     objwr.prt_hier_down("GO:0000001", out)
       #go_marks=[oGO.id for oGO in oGOs_in_cluster])
@@ -345,56 +339,10 @@ def fetch_go_hierarcy():
 
     return (go2geneids, geneids2go)
 
-def fetch_string_ppi_edges():
-    go_edges = {}
-            if constants.USE_CACHE:
-        if os.path.isfile(os.path.join(constants.DICTIONARIES_DIR,"GO_edges_ppi_total.txt")):
-            GO_edges_ppi_grid = infra.load_phenotype_data("GO_edges_ppi_total.txt",phenotype_list_path=constants.DICTIONARIES_DIR)
-            for cur in GO_edges_ppi_grid:
-                go_edges[cur[0]] = int(cur[1])
-            return go_edges
-
-    print "fetching ensg"
-    ensg_dict = get_ensg_dict()
-    print "fetching ensp"
-    ensp_dict = get_ensp_dict()
-    print "fetching string ppi"
-    string_ppi_dict = get_string_ppi_dict()
-    go_edges = {}
-    count = 0
-    for cur_edge, cur_score in string_ppi_dict.iteritems():
-        count +=1
-        print count
-        vertices = cur_edge.split("=")
-        if not ensp_dict.has_key(vertices[0]) or not ensp_dict.has_key(vertices[1]): continue
-
-        go_src = ensp_dict[vertices[0]]["GO Terms"]
-        go_dst = ensp_dict[vertices[1]]["GO Terms"]
-
-        for cur_src in go_src:
-            for cur_dst in go_dst:
-                edge = "{}={}".format(cur_src,cur_dst)
-                edge_alt = "{}={}".format(cur_dst, cur_src)
-                if go_edges.has_key(edge):
-                    go_edges[edge] += int(cur_score)
-                elif go_edges.has_key(edge_alt):
-                    go_edges[edge_alt] += int(cur_score)
-                else:
-                    go_edges[edge] = int(cur_score)
-    with file(os.path.join(constants.DICTIONARIES_DIR, "GO_edges_ppi_total.txt"), "w+") as f:
-        for k,v in go_edges.iteritems():
-            f.write("{}\t{}\n".format(k,v))
-
-    return go_edges
-
-
-
 #################################################################
 # Driver
 #################################################################
-def build_hierarcy():
-    print "fetching ppi"
-    go_edges = fetch_string_ppi_edges()
+def build_hierarcy(roots=['GO:0008150']): #  0008150 0005575 0003674
 
     go2geneids, geneids2go = fetch_go_hierarcy()
 
@@ -406,7 +354,7 @@ def build_hierarcy():
     toc = timeit.default_timer()
     out = file(os.path.join(constants.BASE_PROFILE, "output", "go_hierarcy.txt"), "w+") # sys.stdout
     dict_result = {}
-    for cur_term in ['GO:0005575']:
+    for cur_term in roots:
         vertices, edges = extract_hier_all(gosubdag, out, cur_term ,go2geneids)
         # write_hier_norep(gosubdag, out)
         # write_hier_lim(gosubdag, out)
@@ -414,7 +362,6 @@ def build_hierarcy():
         msg = "Elapsed HMS: {}\n\n".format(str(datetime.timedelta(seconds=(toc-tic))))
         sys.stdout.write(msg)
         dict_result[cur_term] = {"vertices" : vertices, "edges": edges}
-
     return dict_result, go2geneids, geneids2go, get_entrez2ensembl_dictionary()
 
 
@@ -424,4 +371,3 @@ def build_hierarcy():
 #################################################################
 if __name__ == '__main__':
     print build_hierarcy()
-

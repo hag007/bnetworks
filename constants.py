@@ -13,10 +13,10 @@ ALGO_BASE_DIR = config_json['ALGO_BASE_PROFILE']
 SERVER_MODE = False
 REPORTS = True
 DISEASE_MODE = False
-HG_MODE = False
-EMB_MODE = False
-USE_CACHE = True
-PHENOTYPE_FORMAT = "GDC"
+HG_MODE = True
+EMB_MODE = True
+USE_CACHE = False
+PHENOTYPE_FORMAT = "GDC"#"GDC"
 DATASET_TYPE = "GDC-TCGA"
 CANCER_TYPE = "SKCM"
 BASE_PROFILE= config_json['BASE_PROFILE']
@@ -30,14 +30,16 @@ CACHE_DIR = os.path.join(DATASET_DIR, "cache")
 DICTIONARIES_DIR = os.path.join(BASE_PROFILE, "dictionaries")
 OUTPUT_DIR = os.path.join(DATASET_DIR, "output")
 OUTPUT_GLOBAL_DIR = os.path.join(BASE_PROFILE, "output")
-TCGA_DATA_DIR = os.path.join(DATASET_DIR, "tcga_data")
+TCGA_DATA_DIR = os.path.join(DATASET_DIR, "data")
 GO_DIR = os.path.join(BASE_PROFILE, "GO")
 CACHE_GLOBAL_DIR = os.path.join(BASE_PROFILE, "cache_global")
 LIST_DIR = os.path.join(BASE_PROFILE, "list")
 REPOS_DIR = os.path.join(BASE_PROFILE, "repos")
+RAW_DIR = os.path.join(BASE_PROFILE, "raw")
 
 DEG_DESEQ = "deseq"
 DEG_EDGER = "edger"
+DEG_T = "t"
 PREDEFINED_SCORE = "predefined_scored"
 IS_PVAL_SCORES = True
 
@@ -58,7 +60,7 @@ ENSEMBL_TO_ENTREZ = "ensembl2entrez.txt"
 
 GO_OBO_URL = 'http://purl.obolibrary.org/obo/go/go-basic.obo'
 GO_ASSOCIATION_GENE2GEO_URL = 'https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene2go.gz'
-GO_FILE_NAME = 'go-basic.obo'
+GO_FILE_NAME = 'go_bp.obo' #'go-basic.obo'
 GO_ASSOCIATION_FILE_NAME = "gene2go"
 
 NUM_GTE = "gte"
@@ -91,7 +93,9 @@ def update_dirs(BASE_DIR=config_json["BASE_PROFILE"], DATASET_NAME_u=None, DATAS
     global OUTPUT_GLOBAL_DIR
     global DATA_DIR
     global DATASET_DIR
+    global RAW_DIR
     global DATASET_NAME
+
     BASE_PROFILE=BASE_DIR
     DATASET_TYPE = DATASET_TYPE_u
     CANCER_TYPE = CANCER_TYPE_u
@@ -106,9 +110,10 @@ def update_dirs(BASE_DIR=config_json["BASE_PROFILE"], DATASET_NAME_u=None, DATAS
     DICTIONARIES_DIR = os.path.join(BASE_PROFILE, "dictionaries")
     OUTPUT_DIR = os.path.join(DATASET_DIR, "output")
     OUTPUT_GLOBAL_DIR = os.path.join(BASE_PROFILE, "output")
-    TCGA_DATA_DIR = os.path.join(DATASET_DIR, "tcga_data")
+    TCGA_DATA_DIR = os.path.join(DATASET_DIR, "data")
     DATA_DIR = os.path.join(DATASET_DIR, "data")
     GO_DIR = os.path.join(BASE_PROFILE, "GO")
     LIST_DIR = os.path.join(BASE_PROFILE, "list")
     CACHE_GLOBAL_DIR = os.path.join(BASE_PROFILE, "cache_global")
+    RAW_DIR = os.path.join(BASE_PROFILE, "raw")
 update_dirs()

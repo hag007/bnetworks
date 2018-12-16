@@ -1,10 +1,10 @@
-base_folder=/home/hag007/bnet
+base_folder=/media/hag007/Data/bnet
 network_folder=$base_folder/networks
 datasets_folder=$base_folder/datasets
 data_folder=$dataset_folder/data
 cache_folder=$dataset_folder/cache
 output_folder=$dataset_folder/output
-dataset_folder=/home/hag007/bnet/datasets/user1541685403.2
+dataset_folder=/media/hag007/Data/bnet/datasets/GE_random_TNFa_2
 
 pwd
 

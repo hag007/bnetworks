@@ -1,5 +1,7 @@
 library(edgeR)
-
+group=unlist(group)
+print(dim(group))
+print(dim(data))
 y <- DGEList(counts=data,group=group)
 y <- calcNormFactors(y)
 design <- model.matrix(~group)

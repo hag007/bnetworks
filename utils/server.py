@@ -76,8 +76,7 @@ def get_score(score_method):
 
     return score_file_name
 
-def init_common_params(NETWORK_NAME):
-    score_method = constants.DEG_EDGER
+def init_common_params(NETWORK_NAME, score_method = constants.DEG_EDGER):
     params = get_parameters()
     if params != None:
         args, NETWORK_NAME, dataset_name = params
@@ -87,6 +86,8 @@ def init_common_params(NETWORK_NAME):
             score_method = constants.PREDEFINED_SCORE
 
     network_file_name = os.path.join(constants.NETWORKS_DIR, "{}.sif".format(NETWORK_NAME))
-    score_file_name = get_score(score_method)
+    score_file_name = None
+    if score_method is not None:
+        score_file_name = get_score(score_method)
     network_genes = get_network_genes()
     return network_file_name, score_file_name, score_method, network_genes

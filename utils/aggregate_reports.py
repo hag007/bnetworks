@@ -9,7 +9,7 @@ from utils.df_helpers import to_full_list
 from utils.scripts import format_script
 from utils.integrate_pvals_ebm import emb_algos
 from utils.integrate_pvals_ebm import emb_modules
-from scipy.stats import mannwhitneyu
+from integrate_pvals_ebm import calc_mann_whitney_U
 # score_headers = ["overlap_score_(_OS_)", "enriched_terms_score_(_ETS_)", "pval_signal_score_(_PSS_)",
 #                  "PSS_OS_combined_(_PSOS_)", "PSOS_*_ETS_(_PSOSETS_)", ]
 
@@ -44,12 +44,13 @@ def aggregate_report(report_name, root_path):
                os.path.isdir(os.path.join(root_path, name))]
 
     for report in reports:
-        report_data = pd.read_csv(report, sep="\t")
-        report_data["algo"] = report.strip().split("/")[-2]
-        if aggregated_report is None:
-            aggregated_report = report_data
-        else:
-            aggregated_report = pd.concat([aggregated_report, report_data])
+        if os.path.isfile(report) and os.path.getsize(report) > 1:
+            report_data = pd.read_csv(report, sep="\t")
+            report_data["algo"] = report.strip().split("/")[-2]
+            if aggregated_report is None:
+                aggregated_report = report_data
+            else:
+                aggregated_report = pd.concat([aggregated_report, report_data])
 
     aggregated_report =aggregated_report.set_index('algo')
 
@@ -78,6 +79,13 @@ def calc_row_score(C1, C2, algo, report_data):
                                                                  'module_enriched_terms_signal_avg_std']) *
                                                             report_data['module_enriched_terms_avg'] / (
                                                                     report_data['module_enriched_terms_std'] + C2)}
+
+def read_or_empty(file_name):
+    if os.path.exists(file_name):
+        return pd.read_csv(file_name, sep="\t", index_col=0, dtype=np.str)
+    else:
+        return pd.DataFrame()
+
 
 def aggregate_datasets(DATASET_NAME = constants.DATASET_NAME):
 
@@ -109,32 +117,36 @@ def aggregate_datasets(DATASET_NAME = constants.DATASET_NAME):
 
     constants.update_dirs(DATASET_NAME_u=DATASET_NAME)
 
+    file_name = os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME, "all_modules_hg_samples_aggregated.tsv")
+    all_scores = read_or_empty(file_name)
+    file_name = os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME, "all_separated_modules_hg_samples_aggregated.tsv")
+    all_separated_hg_scores = read_or_empty(file_name)
+    file_name = os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME, "k_{}_modules_hg_samples_aggregated.tsv".format(network.MODULE_TH))
+    k_scores = read_or_empty(file_name)
+    file_name = os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME, "k_{}_separated_modules_hg_samples_aggregated.tsv".format(network.MODULE_TH))
+    k_separated_hg_scores = read_or_empty(file_name)
+
     reports_metadata = {"all": [aggregate_all(os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME),
                                               "all_modules_general"),
-                                pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME,
-                                                         "all_modules_hg_samples_aggregated.tsv"), sep="\t", index_col=0, dtype=np.str),
-                                pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME,
-                                                         "all_separated_modules_hg_samples_aggregated.tsv"), sep="\t",
-                                            index_col=0, dtype=np.str)
+                                all_scores,
+                                all_separated_hg_scores
                                 ],
                         "k_{}".format(network.MODULE_TH): [aggregate_all(os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME),
                                                                          "k_{}_modules_general".format(network.MODULE_TH)),
-                                                           pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME,
-                                                                                    "k_{}_modules_hg_samples_aggregated.tsv".format(network.MODULE_TH)), sep="\t", index_col=0, dtype=np.str),
-                                                           pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-                                                                                    constants.DATASET_NAME,
-                                                                                    "k_{}_separated_modules_hg_samples_aggregated.tsv".format(
-                                                                                        network.MODULE_TH)), sep="\t",
-                                                                       index_col=0, dtype=np.str)
+                                                           k_scores,
+                                                           k_separated_hg_scores
                                                            ]}
 
 
     for k, v in reports_metadata.iteritems():
-        mannwhitneyu_rank = calc_mann_whitney_U(root_path, v)
+        mannwhitneyu_rank = []
+        if constants.EMB_MODE and len(v[2].index) !=0:
+            mannwhitneyu_rank = calc_mann_whitney_U(root_path, v[2])
+        pd_report=v[0][1]
+        if len(v[1].index)!=0:
+            pd_report=pd.concat([v[0][1], v[1]], axis=1)
 
-
-
-        concated = to_full_list(pd.concat([v[0][1], v[1]], axis=1), "algo")
+        concated = to_full_list(pd_report, "algo")
         format_script(os.path.join(constants.TEMPLATES_DIR, "report.html"), REPORT=json.dumps(to_full_list(v[0][0], "algo")),
                       SCORE=json.dumps(concated), DISEASE_GENES=[], DISEASE_GENES_SUMMARY=[], MODULES_SCORE=json.dumps(to_full_list(v[2], "algo_module")), EMB_WU=json.dumps(to_full_list(mannwhitneyu_rank, "algo")), MODULE_FILTER=(k+"_modules"))
         output_dir = os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME)
@@ -143,19 +155,6 @@ def aggregate_datasets(DATASET_NAME = constants.DATASET_NAME):
         shutil.move(os.path.join(constants.TEMPLATES_DIR, "report.html"),
                     os.path.join(output_dir, "report_{}.html".format(k)))
 
-
-def calc_mann_whitney_U(root_path, v):
-    mannwhitneyu_rank = []
-    for name in os.listdir(root_path):
-        if os.path.isdir(os.path.join(root_path, name)):
-            v_temp = v[2].copy()
-            v_temp["empirical_brown_score"] = v_temp["empirical_brown_score"].astype(np.float).apply(
-                lambda x: -np.log10(x))
-            x = np.array(v_temp[v_temp["algo"] == name]["empirical_brown_score"])
-            y = np.array(v_temp[v_temp["algo"] != name]["empirical_brown_score"])
-            mannwhitneyu_rank.append({"algo": name, "MWU_pval": mannwhitneyu(x, y).pvalue})
-            print "{}".format(mannwhitneyu_rank[-1])
-    return mannwhitneyu_rank
 
 
 def aggregate_disease(DATASET_NAME):
@@ -172,15 +171,26 @@ def aggregate_disease(DATASET_NAME):
                                                "k_{}_modules_disease".format(network.MODULE_TH))}
         report_all = pd.concat([report_all, reports_metadata["all"][0]])
         report_k = pd.concat([report_k, reports_metadata["k"][0]])
+
         counter += 1
-    report_all = report_all.set_index("algo")
-    report_k = report_k.set_index("algo")
-    df_summary_all = calc_p_r_f_scores(report_all)
-    df_summary_k = calc_p_r_f_scores(report_k)
+    # report_all = report_all.set_index("algo")
+    # report_k = report_k.set_index("algo")
+
+    diseases_summary_headers = ["TP_mean", "TP_std", "TP+FN_mean", "TP+FN_std", "TP+TN_mean", "TP+TN_std",
+                                "TP/(TP+TN)_mean", "TP/(TP+TN)_std", "TP/(TP+FN)_mean", "TP/(TP+FN)_std",
+                                "TP/(TP+TN)_std", "F1_mean", "F1_std"]
+    diseases_headers = ['disease_name', 'TP', 'TP+FN_(_true_)', 'TP+TN_(_retrieved_)',
+                        'TP/(TP+FN)_(_recall_)', 'TP/(TP+TN)_(_precision_)', 'F1',
+                        'module_size_avg', 'module_size_std', 'num_of_modules']
+    report_all = report_all[diseases_headers]
+    report_k = report_k[diseases_headers]
+    df_summary_all = calc_p_r_f_scores(report_all)[diseases_summary_headers]
+    df_summary_k = calc_p_r_f_scores(report_k)[diseases_summary_headers]
     for k, v in {"all": [report_all, df_summary_all], "k_{}".format(network.MODULE_TH): [report_k, df_summary_k]}.iteritems():
+
         format_script(os.path.join(constants.TEMPLATES_DIR, "report.html"), REPORT=[],
                       SCORE=[], DISEASE_GENES=json.dumps(to_full_list(v[0], "algo")),
-                      DISEASE_GENES_SUMMARY=json.dumps(to_full_list(v[1], "algo")), MODULE_FILTER=(k+"_modules"))
+                      DISEASE_GENES_SUMMARY=json.dumps(to_full_list(v[1], "algo")), MODULE_FILTER=(k+"_modules") , MODULES_SCORE=[], EMB_WU=[])
         output_dir = os.path.join(constants.OUTPUT_GLOBAL_DIR, DATASET_NAME)
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
@@ -189,10 +199,10 @@ def aggregate_disease(DATASET_NAME):
 
 
 def calc_p_r_f_scores(df):
-    algos = df["algo"].unique()
+    algos = df.index.unique()
     disease_summary = []
     for cur_algo in algos:
-        df_2 = df[df["algo"] == cur_algo]
+        df_2 = df[df.index == cur_algo]
         disease_summary.append({
             "algo": str(cur_algo),
             "TP_mean": df_2["TP"].astype(np.int).mean(),
@@ -208,11 +218,11 @@ def calc_p_r_f_scores(df):
             "F1_mean": df_2["F1"].astype(np.float).mean(),
             "F1_std": df_2["F1"].astype(np.float).std(ddof=0)})
 
-    return pd.DataFrame(disease_summary)
+    return pd.DataFrame(disease_summary).set_index("algo")
 
 
 if __name__ == "__main__":
-    aggregate_datasets(DATASET_NAME="TNFa_2")
+    aggregate_datasets(DATASET_NAME="IES")
     # aggregate_datasets(DATASET_NAME="MCF7_2")
 
 

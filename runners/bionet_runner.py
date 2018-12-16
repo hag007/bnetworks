@@ -28,7 +28,7 @@ from utils.network import build_all_reports
 from utils.server import get_score
 import utils.server as server
 import DEG_runner
-
+import numpy as np
 
 import utils.go
 import pandas as pd
@@ -52,7 +52,8 @@ def init_specific_params(network_file_name=os.path.join(constants.NETWORKS_DIR, 
 def get_module(network_file_name, score_file_name, is_pval_score, omitted_genes, ts=str(time.time()),fdr=0.05):
     network_file_name = init_specific_params(network_file_name=network_file_name, omitted_genes=omitted_genes, ts=ts)
     results = run_bionet(score_file_name, is_pval_score, network_file_name,fdr)
-    module_genes = results["module_genes"]
+    module_genes = np.array(results["module_genes"])
+
     bg_genes = results["bg_genes"]
     file(os.path.join(constants.OUTPUT_DIR, "{}_module_genes_{}.txt".format(ALGO_NAME, ts)), "w+").write(
         "\n".join(module_genes))
@@ -67,19 +68,26 @@ def run_bionet_for_all_modules(fdr, network_file_name, score_file_name, is_pval_
     omitted_genes = []
     modules = []
     all_bg_genes = []
-    for x in range(5):
+    small_modules=0
+    for x in range(40):
         module_genes, bg_genes = get_module(network_file_name, score_file_name, is_pval_score, omitted_genes, str(x), fdr=fdr)
+        if len(module_genes) == 0 or small_modules==5: break
+
         omitted_genes += list(module_genes)
-        modules.append(module_genes)
-        all_bg_genes.append(bg_genes)
+        if len(module_genes) > 3:
+            small_modules=0
+            modules.append(module_genes)
+            all_bg_genes.append(bg_genes)
+        else:
+            small_modules += 1
     return all_bg_genes, modules
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, fdr=0.05):
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, fdr=0.05):
     global NETWORK_NAME
     constants.update_dirs(DATASET_NAME_u=dataset_name)
-    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME)
+    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME, score_method)
 
-    all_bg_genes, modules = run_bionet_for_all_modules(fdr, network_file_name, score_file_name, score_method!=constants.PREDEFINED_SCORE)
+    all_bg_genes, modules = run_bionet_for_all_modules(fdr, network_file_name, score_file_name, constants.IS_PVAL_SCORES)
 
     output_base_dir = ""
     if constants.REPORTS:

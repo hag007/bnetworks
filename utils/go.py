@@ -17,6 +17,8 @@ from goatools.go_enrichment import GOEnrichmentStudy
 from goatools.associations import read_ncbi_gene2go
 from utils.ensembl2gene_symbol import e2g_convertor
 import openpyxl
+import pandas as pd
+import subprocess
 import time
 from openpyxl import Workbook
 from openpyxl.styles import Color, PatternFill, Font, Border, Side, Alignment
@@ -35,8 +37,71 @@ def check_enrichment(gene_list):
     url = "http://david.abcc.ncifcrf.gov/api.jsp?type=ENSEMBL_GENE_ID&ids={}&tool=chartReport&annot=GOTERM_BP_DIRECT,GOTERM_CC_DIRECT,GOTERM_MF_DIRECT,KEGG_PATHWAY".format(ensembl_for_url)
     return url
 
+def check_group_enrichment(tested_gene_file_name, total_gene_file_name, algo = "", module = "", method="goatools"):
+    if method=="goatools":
+        return check_group_enrichment_goatools(tested_gene_file_name, total_gene_file_name)
+    elif method=="tango":
+        return check_group_enrichment_tango(tested_gene_file_name, total_gene_file_name, algo, module)
 
-def check_group_enrichment(tested_gene_file_name, total_gene_file_name):
+
+def check_group_enrichment_tango(tested_gene_file_name, total_gene_file_name, algo="", module=""):
+    if len(tested_gene_file_name) == 0 or len(total_gene_file_name) == 0: return []
+
+    if type(total_gene_file_name) == str:
+        total_gene_list = [x.split("\t")[0] for x in load_gene_list(total_gene_file_name)]
+    else:
+        total_gene_list = total_gene_file_name
+
+    if type(tested_gene_file_name) == str:
+        tested_gene_list = [x.split("\t")[0] for x in load_gene_list(tested_gene_file_name)]
+    else:
+        tested_gene_list = tested_gene_file_name
+
+    df_tested = pd.DataFrame(index=ensembl2entrez_convertor(tested_gene_list))
+    df_tested["set"]=0
+    df_tested_file_name = os.path.join(constants.OUTPUT_DIR, "_".join(["tested", algo, module]))
+    df_bg_file_name = os.path.join(constants.OUTPUT_DIR, "_".join(["bg", algo, module]))
+    df_tested.to_csv(df_tested_file_name, header=False, sep="\t")
+    pd.DataFrame(index=ensembl2entrez_convertor(total_gene_list)).to_csv(df_bg_file_name, header=False, sep="\t")
+    output_file_name = os.path.join(constants.OUTPUT_DIR, "output_{}_{}".format(algo,module))
+
+
+    conf = file(os.path.join(constants.ALGO_BASE_DIR,"tango","parameter_file.format")).read().format(SET=df_tested_file_name, BACKGROUND=df_bg_file_name, OUTPUT_FILE_NAME=output_file_name)
+    conf_file_name = os.path.join(constants.OUTPUT_DIR, "parameter_file_{}_{}_{}".format(algo,module,time.time()))
+    file(conf_file_name,'w+').write(conf)
+
+    print subprocess.Popen("wine win/annot_sets.exe {}".format(conf_file_name), shell=True,
+                           stdout=subprocess.PIPE, cwd=os.path.join(constants.ALGO_BASE_DIR, "tango")).stdout.read()
+
+    df_results = pd.DataFrame()
+    if os.path.isfile(output_file_name) and os.path.getsize(output_file_name) > 1:
+        df_results = pd.read_csv(output_file_name, sep="\t", index_col=False, header=None)
+
+    hg_report = []
+    go_terms = []
+    uncorrectd_pvals = []
+    FDRs = []
+    go_names = []
+    go_ns = []
+    if len(df_results.index) > 0:
+        # go_ns, go_terms, go_names, go_hg_value, uncorrectd_pvals, FDRs = zip(*[("NA", cur[1]["Category"].split(" - ")[1], cur[1]["Category"].split(" - ")[0], cur[1]["Gene IDs"].count(',')+1, cur[1]["Raw Pvalue"], cur[1]["p-value"]) for cur in df_results.iterrows()])
+        # hg_report = [{HG_GO_ROOT: "NA", HG_GO_ID: cur[1]["Category"].split(" - ")[1], HG_GO_NAME: cur[1]["Category"].split(" - ")[0], HG_VALUE: cur[1]["Gene IDs"].count(',')+1, HG_PVAL: cur[1]["Raw Pvalue"],
+        #               HG_QVAL: cur[1]["p-value"]} for cur in df_results.iterrows()]
+        go_ns, go_terms, go_names, go_hg_value, uncorrectd_pvals, FDRs = zip(*[("NA", cur[1][6], cur[1][1], cur[1][4], 10**float(cur[1][2]), 10**float(cur[1][3])) for cur in df_results.iterrows()])
+        hg_report = [{HG_GO_ROOT: "NA", HG_GO_ID: cur[1][6], HG_GO_NAME: cur[1][1], HG_VALUE: cur[1][5], HG_PVAL: 10**float(cur[1][2]),
+                      HG_QVAL: 10**float(cur[1][3])} for cur in df_results.iterrows()]
+        hg_report.sort(key=lambda x: x[HG_QVAL])
+        hg_report=filter(lambda x: x[HG_QVAL] <=0.05, hg_report)
+
+    output_rows = [("\r\n".join(e2g_convertor(tested_gene_list)),  "\r\n".join(go_ns),
+                        "\r\n".join(go_terms), "\r\n".join(go_names), "\r\n".join(map(str, uncorrectd_pvals)),
+                        "\r\n".join(map(str, FDRs)))]
+    print_to_excel(output_rows, str(tested_gene_file_name)[:10], str(total_gene_file_name)[:10])
+    return hg_report
+
+
+
+def check_group_enrichment_goatools(tested_gene_file_name, total_gene_file_name):
     if len(tested_gene_file_name) == 0 or len(total_gene_file_name) == 0: return []
 
     if type(total_gene_file_name) == str:
@@ -63,28 +128,34 @@ def check_group_enrichment(tested_gene_file_name, total_gene_file_name):
     assoc = read_ncbi_gene2go(os.path.join(constants.GO_DIR, constants.GO_ASSOCIATION_FILE_NAME), no_top=True)
 
     g = GOEnrichmentStudy([int(cur) for cur in ensembl2entrez_convertor(total_gene_list)],
-                          assoc, obo_dag, methods=["bonferroni", "fdr_bh"])
+                          assoc, obo_dag, methods=[]) # "bonferroni", "fdr_bh"
     g_res = g.run_study([int(cur) for cur in ensembl2entrez_convertor(tested_gene_list)])
 
-    GO_results = [(cur.NS, cur.GO, cur.goterm.name, cur.pop_count, cur.p_uncorrected, cur.p_fdr_bh) for cur in g_res if
-                  cur.p_fdr_bh <= 0.05]
+    # GO_results = [(cur.NS, cur.GO, cur.goterm.name, cur.pop_count, cur.p_uncorrected, cur.p_fdr_bh) for cur in g_res if
+    #               cur.p_fdr_bh <= 0.05]
+    GO_results = [(cur.NS, cur.GO, cur.goterm.name, cur.pop_count, cur.p_uncorrected) for cur in g_res if
+                  cur.p_uncorrected <= 0.05]
 
-    hg_report = [{HG_GO_ROOT : cur[0], HG_GO_ID : cur[1], HG_GO_NAME : cur[2], HG_VALUE : cur[3], HG_PVAL : cur[4] , HG_QVAL : cur[5]} for cur in GO_results]
-    hg_report.sort(key=lambda x: x[HG_QVAL])
+    hg_report = [{HG_GO_ROOT : cur[0], HG_GO_ID : cur[1], HG_GO_NAME : cur[2], HG_VALUE : cur[3], HG_PVAL : cur[4] , HG_QVAL : 1} for cur in GO_results] # , HG_QVAL : cur[5]
+    # hg_report.sort(key=lambda x: x[HG_QVAL])
+    hg_report.sort(key=lambda x: x[HG_PVAL])
 
     if len(GO_results) > 0:
-        go_ns, go_terms, go_names, go_hg_value, uncorrectd_pvals, FDRs = zip(*GO_results)
+        go_ns, go_terms, go_names, go_hg_value, uncorrectd_pvals = zip(*GO_results) # , FDRs
     else:
         go_terms = []
         uncorrectd_pvals = []
         FDRs = []
         go_names = []
         go_ns = []
-    output_rows = [("\r\n".join(e2g_convertor(tested_gene_list)),  "\r\n".join(go_ns),
-                        "\r\n".join(go_terms), "\r\n".join(go_names), "\r\n".join(map(str, uncorrectd_pvals)),
-                        "\r\n".join(map(str, FDRs)))]
-    print_to_excel(output_rows, str(tested_gene_file_name)[:10], str(total_gene_file_name)[:10])
+    # output_rows = [("\r\n".join(e2g_convertor(tested_gene_list)),  "\r\n".join(go_ns),
+    #                     "\r\n".join(go_terms), "\r\n".join(go_names), "\r\n".join(map(str, uncorrectd_pvals)),
+    #                     "\r\n".join(map(str, FDRs)))]
+    # print_to_excel(output_rows, str(tested_gene_file_name)[:10], str(total_gene_file_name)[:10])
     return hg_report
+
+
+
 
 def print_to_excel(output_rows, gene_list_file_name, total_gene_file_name):
     wb = Workbook()  # ffff00

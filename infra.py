@@ -28,7 +28,7 @@ def load_dictionary(gene_list_file_name, gene_list_path=None): #  ="TCGA-SKCM.ht
     f.close()
     return lines
 
-def load_groups(groups_file_name="classes.tsv", gene_list_path=None): #  ="TCGA-SKCM.htseq_counts.tsv"
+def load_classes(groups_file_name="classes.tsv", gene_list_path=None): #  ="TCGA-SKCM.htseq_counts.tsv"
     if gene_list_path == None:
         gene_list_path = os.path.join(constants.DATA_DIR,groups_file_name)
     f = open(gene_list_path,'r')
@@ -77,6 +77,7 @@ def load_gene_expression_profile(gene_list_file_name=None, gene_expression_file_
         f = open(gene_expression_path,'r')
         expression_profiles_filtered = [l.strip().split() for i, l in enumerate(f) if i==0 or l[:l.strip().find('\t')].split(".")[0] in gene_list]
 
+    expression_profiles_filtered = [x for x in expression_profiles_filtered if len(x) == len(expression_profiles_filtered[0])]
     # or l.strip()[0:l.strip().find('\t')] in gene_list or l.strip()[0:l.strip().find('\t')].split(".")[0] in gene_list
     f.close()
     print stopwatch.stop("done filter gene expression")
@@ -97,7 +98,7 @@ def load_gene_expression_profile_by_patients(gene_list_file_name=None, gene_expr
 
 def load_phenotype_data(phenotype_file_name, phenotype_list_path=None, source="GDC-TCGA",dataset="melanoma"):
     if not phenotype_list_path:
-        phenotype_list_path = os.path.join(constants.TCGA_DATA_DIR,phenotype_file_name)
+        phenotype_list_path = constants.TCGA_DATA_DIR
     f = open(os.path.join(phenotype_list_path,phenotype_file_name), 'r')
     phenotype_profile = [re.split("[\t]", l.rstrip('\n')) for l in f]
     f.close()
@@ -105,15 +106,18 @@ def load_phenotype_data(phenotype_file_name, phenotype_list_path=None, source="G
 
 def load_survival_data(survival_file_name, survival_list_path=None, source="GDC-TCGA",dataset="melanoma"):
     if not survival_list_path:
-        survival_list_path = os.path.join(constants.TCGA_DATA_DIR,survival_file_name)
+        survival_list_path = constants.TCGA_DATA_DIR
     f = open(os.path.join(survival_list_path,survival_file_name), 'r')
     survival_profile = [l.strip().split('\t') for l in f]
+    if constants.PHENOTYPE_FORMAT=="TCGA":
+        survival_profile = [survival_profile[0]] + [[x[0][:-1]] + x[1:] for x in survival_profile[1:]]
+
     f.close()
     return survival_profile
 
 def load_mutation_data(mutation_file_name, mutation_list_path=None, source="GDC-TCGA", dataset="melanoma"):
     if not mutation_list_path:
-        mutation_list_path = os.path.join(constants.TCGA_DATA_DIR, mutation_file_name)
+        mutation_list_path = constants.TCGA_DATA_DIR
     f = open(mutation_list_path, 'r')
 
     mutation_profile = []
@@ -230,8 +234,8 @@ def load_expression_profile_by_labelling(gene_list_file_name, gene_expression_fi
 
     return expression_profiles_by_labeling
 
-def nCk(n,k):
-  return long( reduce(mul, (Fraction(n-i, i+1) for i in range(k)), 1) )
+# def nCk(n,k):
+#   return long( reduce(mul, (Fraction(n-i, i+1) for i in range(k)), 1) )
 
 def save_sets(st,fl_name):
     fl = open(fl_name,'w+')
@@ -341,8 +345,8 @@ def load_integrated_mutation_data(mutation_file_name,
     return (mutation_dataset, mutations_headers_rows, mutations_headers_columns, labels_assignment, survival_dataset, phenotype_heatmap)
 
 
-def load_integrated_ge_data(tested_gene_list_file_name, total_gene_list_file_name, gene_expression_file_name,
-                            survival_file_name, phenotype_file_name, gene_filter_file_name=None, filter_expression=None,
+def load_integrated_ge_data(tested_gene_list_file_name=None, total_gene_list_file_name=None, gene_expression_file_name="ge.tsv",
+                            survival_file_name=None, phenotype_file_name=None, gene_filter_file_name=None, filter_expression=None,
                             meta_groups=None, var_th_index=None):
 
     cache_path = os.path.join(constants.CACHE_DIR, "datasets",
@@ -365,6 +369,17 @@ def load_integrated_ge_data(tested_gene_list_file_name, total_gene_list_file_nam
         print "separating dataset headers"
         tested_gene_expression_headers_rows, tested_gene_expression_headers_columns, tested_gene_expression = separate_headers(
             tested_gene_expression)
+        myfunc_vec = np.vectorize(lambda x: x if str.isdigit(x[-1]) else x[:-1])
+        if constants.PHENOTYPE_FORMAT=="TCGA":
+            col_original_len = len(tested_gene_expression_headers_columns)
+            tested_gene_expression_headers_columns = myfunc_vec(tested_gene_expression_headers_columns)
+            duplicated_i = [i for i, x in enumerate(tested_gene_expression_headers_columns) if
+             x in tested_gene_expression_headers_columns[i + 1:]]
+            tested_gene_expression_headers_columns=tested_gene_expression_headers_columns[
+                [False if a in duplicated_i else True for a in range(col_original_len)]]
+            tested_gene_expression=tested_gene_expression[:,[False if a in duplicated_i else True for a in range(col_original_len)]]
+
+
 
     if not os.path.exists(cache_path):
         os.makedirs(cache_path)
@@ -373,8 +388,12 @@ def load_integrated_ge_data(tested_gene_list_file_name, total_gene_list_file_nam
     np.save(os.path.join(cache_path,"header_columns.npy"), tested_gene_expression_headers_columns)
     np.save(os.path.join(cache_path,"data.npy"), tested_gene_expression)
 
-    print "loading data survival data"
-    survival_dataset = np.array(load_survival_data(survival_file_name, survival_list_path=None))
+    survival_dataset=None
+    if os.path.exists(os.path.join(constants.DATA_DIR,survival_file_name)):
+        print "loading data survival data"
+        survival_dataset = np.array(load_survival_data(survival_file_name, survival_list_path=None))
+    else:
+        "no survival data. continue..."
 
     if np.shape(tested_gene_expression)[0] < 1:
         print "no expressions were found for the specific gene list {}. skipping...".format(
@@ -387,20 +406,26 @@ def load_integrated_ge_data(tested_gene_list_file_name, total_gene_list_file_nam
         print "number of filtered patients from phenotypes: {}".format(len(filtered_patients))
     else:
         print "no filter applied"
-        filtered_patients = np.append(tested_gene_expression[0, 1:], survival_dataset[1:, 0])
+        filtered_patients = tested_gene_expression[0, 1:]
 
     tested_gene_expression, tested_gene_expression_headers_columns = filter_genes_dataset_by_patients(filtered_patients, tested_gene_expression_headers_columns, tested_gene_expression)
     if np.shape(tested_gene_expression)[1] == 1:
         print "no expressions were found after filtering by labels {}. skipping...".format(filter_expression)
         return None
 
-    survival_dataset = filter_survival_by_patients(filtered_patients, survival_dataset)
-    if np.shape(survival_dataset)[0] == 1:
-        print "no survivors were found after filtering by labels {}. skipping...".format(filter_expression)
-        return None
+    num_filtered_patients = len(tested_gene_expression_headers_columns)
+    if survival_dataset is not None:
+        filtered_patients = np.append(tested_gene_expression[0, 1:], survival_dataset[1:, 0])
+        survival_dataset = filter_survival_by_patients(filtered_patients, survival_dataset)
+        if np.shape(survival_dataset)[0] == 1:
+            print "no survivors were found after filtering by labels {}. skipping...".format(filter_expression)
+            return None
 
-    print "total patients taken into account: {}".format(
-        len([x for x in survival_dataset[:, 0] if x in tested_gene_expression_headers_columns]))
+        num_filtered_patients = len([x for x in survival_dataset[:, 0] if x in tested_gene_expression_headers_columns])
+
+    print "total patients taken into account: {}".format(num_filtered_patients)
+
+
 
     labels_assignment = None
     if meta_groups is not None:
@@ -471,6 +496,12 @@ def filter_genes_dataset_by_patients(filtered_patients, total_patients, dataset_
 
 def num_op_gt(ds_value, q_value):
     try:
-        return float(ds_value) > float(q_value)
+        return str.isdigit(ds_value) and float(ds_value) > float(q_value)
+    except ValueError:
+        return False
+
+def num_op_lt(ds_value, q_value):
+    try:
+        return str.isdigit(ds_value) and float(ds_value) < float(q_value)
     except ValueError:
         return False

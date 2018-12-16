@@ -10,7 +10,7 @@ from utils.ensembl2gene_symbol import e2g_convertor
 
 
 def find_clusters(end_k, gene_expression_top_var, gene_expression_top_var_headers_rows, start_k,
-                gene_expression_top_var_headers_columns, tested_gene_list_file_name, labels_assignment=None, phenotype_heatmap=None, clustering_algorithm="euclidean"):
+                gene_expression_top_var_headers_columns, tested_gene_list_file_name, labels_assignment=None, phenotype_heatmap=None, clustering_algorithm="euclidean", plot=True):
     clfs_results = {}
     for n_clusters in range(start_k, end_k + 1):
         clfs_results[n_clusters] = []
@@ -35,10 +35,10 @@ def find_clusters(end_k, gene_expression_top_var, gene_expression_top_var_header
             clfs_results[n_clusters].append(gene_headers_rows_cluster)
             desc = "k={} clustering cluster {} has {} patients".format(n_clusters, i, len(gene_headers_rows_cluster))
 
-
-        plot_heatmap(gene_expression_top_var, gene_expression_top_var_headers_columns,
-                     labels_assignment, gene_expression_top_var_headers_rows,
-                     tested_gene_list_file_name, n_clusters, phenotype_heatmap=phenotype_heatmap)
+        if plot:
+            plot_heatmap(gene_expression_top_var, gene_expression_top_var_headers_columns,
+                         labels_assignment, gene_expression_top_var_headers_rows,
+                         tested_gene_list_file_name, n_clusters, phenotype_heatmap=phenotype_heatmap)
     return clfs_results
 
 def plot_heatmap(gene_expression_top_var, gene_expression_top_var_headers_columns, labels_assignment,
@@ -89,8 +89,8 @@ def plot_heatmap(gene_expression_top_var, gene_expression_top_var_headers_column
     data.set_clim(np.percentile(gene_expression_top_var,5) , np.percentile(gene_expression_top_var,90) ) # - interval
     plt.savefig(os.path.join(constants.BASE_PROFILE, "output",
                              "heatmap_cluster_by_p_{}_{}_k={}_label_i={}_{}.png".format(constants.CANCER_TYPE,
-                                                                          tested_gene_list_file_name.split(".")[0],
-                                                                          n_clusters, label_index, time.time())))
+                                                                                        tested_gene_list_file_name.split("/")[-1].split('.')[0],
+                                                                                        n_clusters, label_index, time.time())))
     # "heatmap_cluster_by_p_{}_{}_k={}.svg".format(constants.CANCER_TYPE, tested_gene_list_file_name.split(".")[0], n_clusters)), format='svg', dpi=1200)
     # plt.show()
     cb.remove()
