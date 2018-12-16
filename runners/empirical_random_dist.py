@@ -19,6 +19,7 @@ import shutil
 from datasets_multithread_runner import run_dataset
 from utils.go_pval_dist import create_random_ds
 from utils.go_pval_dist import create_permuted_network
+from multiprocessing import Process
 
 from pandas.errors import EmptyDataError
 
@@ -75,6 +76,20 @@ def calc_dist(algos, datasets,is_plot=False,empirical_th=None):
 
         return pval, df_go, df_go_pvals
 
+
+def empirical_dist_iteration(prefix, dataset, cur):
+    print "starting iteration: {}, {}, {}".format(prefix, dataset, cur)
+    random_ds = create_random_ds(prefix, "{}_{}".format(prefix, dataset), cur)
+    permuted_network_file_name = "dip"  # _perm
+    # if cur==0:
+    #     permuted_network_file_name=create_permuted_network(network_file_name=network_file_name)
+    run_dataset(random_ds, score_method=score_method,
+                algos=[algo], network_file_name=permuted_network_file_name)
+    cur_pval, df_terms, df_pval_terms = calc_dist([algo], [random_ds.format(prefix, dataset)])
+    print "done iteration: {}, {}, {}".format(prefix, dataset, cur)
+    return cur_pval, df_pval_terms
+
+
 if __name__ == "__main__":
     # prefix="GE"
     # datasets = ["{}_TNFa_2".format(prefix)]
@@ -101,23 +116,19 @@ if __name__ == "__main__":
         n_terms_2_oom=[]
         summary = []
         diff_values=np.array([0])
-        for cur_real_from_rand in range(0, 1):
-            df_all_terms = pd.DataFrame()
-            cur_real_ds= "{}_{}".format(prefix, dataset) # "{}_random_{}_{}".format(prefix, dataset, cur_real_from_rand)
+        df_all_terms = pd.DataFrame()
+        cur_real_ds= "{}_{}".format(prefix, dataset) # "{}_random_{}_{}".format(prefix, dataset, cur_real_from_rand)
 
-            for algo in algos:
-                pval = np.array([])
-                random_ds = "{}_random_{}".format(prefix, dataset)
-                for cur in range(100):
-                    # if cur==cur_real_from_rand: continue
+        for algo in algos:
+            pval = np.array([])
+            random_ds = "{}_random_{}".format(prefix, dataset)
+            prcs = []
+            for cur in range(105, 110):
+                # if cur==cur_real_from_rand: continue
+                prcs.append(Process(target=empirical_dist_iteration,
+                        args=[prefix, dataset, cur]))
+            for cur in prcs:
+                cur.start()
+            for cur in prcs:
+                cur.join()
 
-                    print "\ncur iteration: {}".format(cur)
-                    random_ds=create_random_ds(prefix, "{}_{}".format(prefix, dataset),cur)
-                    permuted_network_file_name="dip" # _perm
-                    # if cur==0:
-                    #     permuted_network_file_name=create_permuted_network(network_file_name=network_file_name)
-                    run_dataset(random_ds, score_method=score_method,
-                                algos=[algo], network_file_name=permuted_network_file_name)
-                    cur_pval, df_terms, df_pval_terms = calc_dist([algo], [random_ds.format(prefix, dataset)])
-                    pval = np.append(pval, cur_pval)
-                    df_all_terms=pd.concat((df_all_terms, df_pval_terms), axis=1)

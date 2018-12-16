@@ -5,118 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/filters/brca_pam53.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/cancer_types.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/new_tumor_event_after_initial_treatment.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/prad1_resistence.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/prad2_bone_metastatic_ar_noar.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/prad2_bone_metastatic_crpc_other.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/prad2_bone_metastatic_type.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/prad_lymphatic_invasion.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/prad_tumor_level.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/skcm_breslow.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/skcm_clark.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/skcm_tss_tcga_0_1.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/skcm_tss_tcga_1_2.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/skcm_tss_tcga_2_3.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/stages.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/temp.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/ulceration.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_bap1.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_chromosome_abnormality.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_eif1ax.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_extrascleral_extension.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_eye_color.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_gna11.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_gnaq.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_histological_type.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_mitotic_counts.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_sf3b1.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/filters/uvm_tumor_shape_pathologic_clinical.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groups/bone_metastatic_ar.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groups/bone_metastatic_type.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groups/brca_pam53.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groups/chromosome_abnormality.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groups/lymphatic_invasion.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groups/mitotic_counts.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groups/prad_resistence.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groups/prad_tumor_level.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/groups/temp.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/cancer_unsupervised_kmeans_per_algo_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/cancer_unsupervised_kmeans_per_module_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/cancer_unsupervised_pca_per_algo_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/discrimination_summary_plot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/empirical_background_go_term_pval_dist.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/empirical_per_go_term_pval_dist.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/empirical_pval_dist.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/empirical_random_dist.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/keypathwayminer_ines_greedy_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/keypathwayminer_ines_optimal_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/matisse_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/modules_go_clustring_analysis_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/mwu_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runners/rfe_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_matisse.sh.format" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/cache.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/convert_scz_files.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/dendorgram.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/differentially_expressed_genes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/filter_sparse_ge_rows.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/genes_clustering.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/go_pval_dist.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/go_to_modules_plt.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/goids2gonames.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/mouse_to_human.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/pascal_wrapper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/patients_clustering.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/permute_network.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/plot_running_scatter.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/pval_dist.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/remove_false_dirs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/rfe.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/score_pval_dist.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env/config/conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/env/config/conf.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/filters/mir_211_cluster.json" beforeDir="false" afterPath="$PROJECT_DIR$/filters/uvm_mir_211_cluster.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groups/cancer_types.json" beforeDir="false" afterPath="$PROJECT_DIR$/groups/cancer_types.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infra.py" beforeDir="false" afterPath="$PROJECT_DIR$/infra.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/r/scripts/edger.r" beforeDir="false" afterPath="$PROJECT_DIR$/r/scripts/edger.r" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/r/scripts/r_sb.r" beforeDir="false" afterPath="$PROJECT_DIR$/r/scripts/r_sb.r" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/DEG_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/DEG_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/bionet_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/bionet_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/datasets_multithread_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/datasets_multithread_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/disease_genes_association_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/disease_genes_association_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/hotnet2_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/hotnet2_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/jactivemodules_sa_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/jactivemodules_sa_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/keypathwayminer_ines_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/keypathwayminer_ines_aco_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/netbox_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/netbox_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/reactomefi_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/reactomefi_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_hotnet2.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_hotnet2.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runners/empirical_random_dist.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/empirical_random_dist.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh.format" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh.format" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_keypathwayminer.sh.format" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_netbox.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_netbox.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_reactomefi.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_reactomefi.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/add_t_test_to_ge.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/add_t_test_to_ge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/aggregate_reports.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/aggregate_reports.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/clustering.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/clustering.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/disease_genes.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/disease_genes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/ebm.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/ebm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/ensembl2entrez.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/ensembl2entrez.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/go.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/go.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/go_hierarcies.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/go_hierarcies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/integrate_pvals_ebm.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/integrate_pvals_ebm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/km_curve.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/km_curve.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/kmeans.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/kmeans.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/normalize_gene_expression.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/normalize_gene_expression.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/param_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/param_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/pca.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/pca.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -142,10 +32,23 @@
       <file leaf-file-name="empirical_random_dist.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/runners/empirical_random_dist.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="883">
-              <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+            <state relative-caret-position="175">
+              <caret line="125" column="37" selection-start-line="125" selection-start-column="37" selection-end-line="125" selection-end-column="37" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="datasets_multithread_runner.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runners/datasets_multithread_runner.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="1" column="35" lean-forward="true" selection-start-line="1" selection-end-line="1" selection-end-column="35" />
+              <folding>
+                <marker date="1544638186922" expanded="true" signature="5148:5223" ph="..." />
+                <marker date="1544638186922" expanded="true" signature="5747:5946" ph="..." />
               </folding>
             </state>
           </provider>
@@ -205,15 +108,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="frame.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/core/frame.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77102">
-              <caret line="4148" column="12" selection-start-line="4148" selection-start-column="8" selection-end-line="4148" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="go_pval_dist.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/go_pval_dist.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -234,7 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>algos_filter</find>
       <find>df_go</find>
       <find>run_dataset</find>
       <find>calc_dist</find>
@@ -245,7 +138,7 @@
       <find>create_random_ds</find>
       <find>splitext</find>
       <find>permuted_network_file_name</find>
-      <find />
+      <find>total # row after bot</find>
       <find>10</find>
       <find>newgraph</find>
       <find>obo</find>
@@ -263,7 +156,8 @@
       <find>distplo</find>
       <find>txt</find>
       <find>diff_values</find>
-      <find />
+      <find>cur ite</find>
+      <find>OUTPUT_FILE</find>
     </findStrings>
     <replaceStrings>
       <replace>ALGO_DIR</replace>
@@ -416,7 +310,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.empirical_per_go_term_pval_dist">
+  <component name="RunManager" selected="Python.empirical_random_dist">
     <configuration name="aggregate_reports" type="PythonConfigurationType" factoryName="Python">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -489,7 +383,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="go" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="empirical_random_dist" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -497,11 +391,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/runners" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/go.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/runners/empirical_random_dist.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -681,17 +575,17 @@
       <item itemvalue="Python.go_to_modules_plt" />
       <item itemvalue="Python.empirical_pval_dist" />
       <item itemvalue="Python.empirical_per_go_term_pval_dist" />
-      <item itemvalue="Python.go" />
       <item itemvalue="Python.goids2gonames" />
       <item itemvalue="Python.score_pval_dist" />
+      <item itemvalue="Python.empirical_random_dist" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.empirical_random_dist" />
         <item itemvalue="Python.empirical_per_go_term_pval_dist" />
         <item itemvalue="Python.score_pval_dist" />
         <item itemvalue="Python.goids2gonames" />
         <item itemvalue="Python.empirical_pval_dist" />
-        <item itemvalue="Python.go" />
       </list>
     </recent_temporary>
   </component>
@@ -721,12 +615,12 @@
     <frame x="1985" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.8354167" visible="true" weight="0.26145554" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.8354167" visible="true" weight="0.26145554" />
       <window_info anchor="bottom" id="TODO" order="9" sideWeight="0.49973047" weight="0.32991803" />
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.2619946" side_tool="true" weight="0.35860655" />
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" id="Python Console" order="0" />
-      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.7380054" weight="0.4579918" />
+      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.7380054" visible="true" weight="0.4579918" />
       <window_info anchor="right" id="Structure" order="3" sideWeight="0.5020492" side_tool="true" visible="true" weight="0.18113208" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.32786885" />
       <window_info id="Favorites" order="0" sideWeight="0.16458334" side_tool="true" weight="0.30997303" />
@@ -1703,18 +1597,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runners/datasets_multithread_runner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <marker date="1544638186922" expanded="true" signature="5148:5223" ph="..." />
-            <marker date="1544638186922" expanded="true" signature="5747:5946" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/go.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1833,10 +1715,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/runners/datasets_multithread_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="35" lean-forward="true" selection-start-line="1" selection-end-line="1" selection-end-column="35" />
+          <folding>
+            <marker date="1544638186922" expanded="true" signature="5148:5223" ph="..." />
+            <marker date="1544638186922" expanded="true" signature="5747:5946" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/runners/empirical_random_dist.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="883">
-          <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+        <state relative-caret-position="175">
+          <caret line="125" column="37" selection-start-line="125" selection-start-column="37" selection-end-line="125" selection-end-column="37" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
