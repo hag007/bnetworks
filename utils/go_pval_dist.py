@@ -20,6 +20,7 @@ import shutil
 from pandas.errors import EmptyDataError
 from utils.permute_network import EdgeSwapGraph
 
+import random
 
 
 def create_random_ds(prefix, cur_ds, index=None):
@@ -40,10 +41,10 @@ def create_random_ds(prefix, cur_ds, index=None):
     classes_file_name = os.path.join(root_random_dir, "data", "classes.tsv")
     if prefix=="GE":
         shutil.copy(os.path.join(constants.DATASETS_DIR, "{}_{}".format(prefix, cur_ds), 'data', "classes.tsv"), classes_file_name)
-    data = pd.read_csv(os.path.join(constants.DATASETS_DIR, "{}_{}".format(prefix, cur_ds), 'data', data_type), sep='\t', index_col=0)
-    data[data.columns[0]] = pd.Series(np.random.permutation(data[data.columns[0]].values), index=data.index)
-    data[data.columns[1]] = data[data.columns[0]]
-    data.to_csv(data_file_name, sep='\t')
+    data=pd.read_csv(os.path.join(constants.DATASETS_DIR, "{}_{}".format(prefix, cur_ds), 'data', data_type), sep='\t', index_col=0)
+    np.random.seed(int(random.random()*10000))
+    data=pd.DataFrame(data=np.random.permutation(data.values), index=data.index, columns=data.columns)
+    data.to_csv(data_file_name, sep='\t', index_label="id")
     return random_ds_name
 
 def create_permuted_network(network_file_name):

@@ -1,5 +1,8 @@
-
+import os
+import random
 
 def format_script(file_path, **kwargs):
     formatted_script = file(file_path+".format").read().format(**kwargs)
-    file(file_path, "w+").write(formatted_script)
+    exec_file_name="{}_{}{}".format(os.path.splitext(file_path)[0],random.random(), os.path.splitext(file_path)[1])
+    file(exec_file_name, "w+").write(formatted_script)
+    return exec_file_name

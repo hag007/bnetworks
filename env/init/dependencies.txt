@@ -10,3 +10,7 @@ openpyxl
 mord
 lifelines
 spm1d
+simplejson
+rpy==2.8.6
+seaborn
+networkx

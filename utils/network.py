@@ -227,14 +227,14 @@ def generate_report_from_template(output_file_name, cy, algo_name="", hg_report=
     disease_genes_statistics = to_full_list(disease_genes_statistics, "#")
     modules_summary = to_full_list(modules_summary, "#")
 
-    format_script(os.path.join(constants.TEMPLATES_DIR, "graph.html"),
+    report_file_name=format_script(os.path.join(constants.TEMPLATES_DIR, "graph.html"),
                   DATA=json.dumps(cy), HG_REPORT=json.dumps(hg_report),
                   MODULES_SUMMARY=json.dumps(modules_summary), NUM_OF_GENES=len([x for x in cy if not x["data"].has_key("source") and len(x["data"]["modules"])>0]),
                   DISEASE_GENES=json.dumps(disease_genes_statistics))
     output_dir = os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME, algo_name)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    shutil.move(os.path.join(constants.TEMPLATES_DIR, "graph.html"),
+    shutil.move(report_file_name,
                 os.path.join(output_dir, "graph_{}.html".format(output_file_name)))
     return "graph_{}.html".format(output_file_name)
 

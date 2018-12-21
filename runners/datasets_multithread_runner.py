@@ -90,19 +90,23 @@ if __name__ == "__main__":
 
 
 
-    datasets = [name for name in os.listdir(constants.DATASETS_DIR) if
-                  os.path.isdir(os.path.join(constants.DATASETS_DIR, name)) and name.startswith(prefix+"_random") ]
+    # datasets = [name for name in os.listdir(constants.DATASETS_DIR) if
+    #               os.path.isdir(os.path.join(constants.DATASETS_DIR, name)) and name.startswith(prefix+"_random") ]
     # datasets = ["TNFa_2", "MCF7_2", "SOC", "HC12", "IEM", "IES"]
+    datasets=['GWAS_scz_updated']
+    algos = ["bionet", "keypathwayminer_INES_GREEDY", "netbox", "hotnet2", "jactivemodules_greedy", "jactivemodules_sa"]
     for cur_ds in datasets: # datasets: # [1:2]
         print "current folder : {}".format(os.path.basename(cur_ds))
-        score_method = constants.DEG_EDGER
-        if cur_ds.startswith(prefix+"_random_IE"):
-            score_method=constants.DEG_T
+        score_method = constants.PREDEFINED_SCORE
+        if cur_ds.startswith("GE"):
+            score_method = constants.DEG_EDGER
+            if cur_ds.startswith(prefix+"_random_IE"):
+                score_method=constants.DEG_T
 
         run_dataset(cur_ds, score_method=score_method,
-                    algos=["bionet", "keypathwayminer_INES_GREEDY", "netbox", "hotnet2", "jactivemodules_greedy", "jactivemodules_sa"]) #
+                    algos=["hotnet2"]) #
 
-        aggregate_reports.aggregate_datasets(os.path.basename(cur_ds))
+        # aggregate_reports.aggregate_datasets(os.path.basename(cur_ds))
 
         # root_path = os.path.join(constants.OUTPUT_GLOBAL_DIR, os.path.basename(cur_ds))
         # print "summary for {}".format(root_path)

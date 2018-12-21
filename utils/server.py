@@ -85,7 +85,7 @@ def init_common_params(NETWORK_NAME, score_method = constants.DEG_EDGER):
         else:
             score_method = constants.PREDEFINED_SCORE
 
-    network_file_name = os.path.join(constants.NETWORKS_DIR, "{}.sif".format(NETWORK_NAME))
+    network_file_name = os.path.join(constants.NETWORKS_DIR, NETWORK_NAME)
     score_file_name = None
     if score_method is not None:
         score_file_name = get_score(score_method)

@@ -61,12 +61,12 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
     results_file_name = init_specific_params(search_method)
 
-    format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE,
+    script_file_name=format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE,
                   DATASET_DIR=constants.DATASET_DIR,
                   ALGO_DIR=ALGO_DIR, NETWORK_NAME=network_file_name, SCORE_FILE_NAME=score_file_name,
                   IS_GREEDY=str(search_method == "greedy"), OUTPUT_FILE=results_file_name, NUM_OF_MODULES=10, OVERLAP_THRESHOLD=0)
 
-    subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
+    subprocess.Popen("bash {}".format(script_file_name), shell=True,
                      stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
 
     modules_genes_file_name = os.path.join(constants.OUTPUT_DIR, "{}_{}_module_genes.txt".format(ALGO_NAME, search_method))

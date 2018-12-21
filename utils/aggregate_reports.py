@@ -147,12 +147,12 @@ def aggregate_datasets(DATASET_NAME = constants.DATASET_NAME):
             pd_report=pd.concat([v[0][1], v[1]], axis=1)
 
         concated = to_full_list(pd_report, "algo")
-        format_script(os.path.join(constants.TEMPLATES_DIR, "report.html"), REPORT=json.dumps(to_full_list(v[0][0], "algo")),
+        report_file_name=format_script(os.path.join(constants.TEMPLATES_DIR, "report.html"), REPORT=json.dumps(to_full_list(v[0][0], "algo")),
                       SCORE=json.dumps(concated), DISEASE_GENES=[], DISEASE_GENES_SUMMARY=[], MODULES_SCORE=json.dumps(to_full_list(v[2], "algo_module")), EMB_WU=json.dumps(to_full_list(mannwhitneyu_rank, "algo")), MODULE_FILTER=(k+"_modules"))
         output_dir = os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME)
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
-        shutil.move(os.path.join(constants.TEMPLATES_DIR, "report.html"),
+        shutil.move(report_file_name,
                     os.path.join(output_dir, "report_{}.html".format(k)))
 
 

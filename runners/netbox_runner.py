@@ -39,9 +39,6 @@ from utils.network import output_modules
 ALGO_NAME = "netbox"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 
-NETWORK_NAME = "dip"
-
-
 def init_specific_params(score_file_name):
 
     deg = infra.load_gene_expression_profile_by_genes(gene_expression_path=score_file_name)
@@ -52,11 +49,12 @@ def init_specific_params(score_file_name):
     deg_data=deg_data[ordered_ind,:]
     h_rows=h_rows[ordered_ind]
     last_q_index = np.where(deg_data[:,np.where(h_cols=="qval")[0][0]]>0.05)[0][0]
-    ge_list = os.path.join(ALGO_DIR, "ge_list.txt")
-    file(os.path.join(ALGO_DIR, "ge_list.txt"), "w+").write("\n".join([x for x in h_rows[:last_q_index] if len(ensembl2entrez_convertor([x]))>0 ])) # ensembl2entrez_convertor([x])[0]
+    ge_list_file_name = os.path.join(constants.OUTPUT_DIR, "ge_list.txt")
+    file(ge_list_file_name, "w+").write("\n".join([x for x in h_rows[:last_q_index] if len(ensembl2entrez_convertor([x]))>0 ])) # ensembl2entrez_convertor([x])[0]
 
     conf_file = "conf.props"
-    format_script(os.path.join(ALGO_DIR, conf_file), pval_threshold=0.05, sp_threshold=2, gene_file=ge_list)
+    conf_file_name=format_script(os.path.join(ALGO_DIR, conf_file), pval_threshold=0.05, sp_threshold=2, gene_file=ge_list_file_name)
+    return conf_file_name
 
 def extract_modules_and_bg(bg_genes):
     results = file(os.path.join(ALGO_DIR, "modules.txt")).readlines()
@@ -72,16 +70,15 @@ def extract_modules_and_bg(bg_genes):
     return modules, all_bg_genes
 
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER):
-    global NETWORK_NAME
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip"):
     constants.update_dirs(DATASET_NAME_u=dataset_name)
-    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME, score_method)
+    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(network_file_name, score_method)
 
-    init_specific_params(score_file_name)
+    conf_file_name=init_specific_params(score_file_name)
     script_name = "run_{}.sh".format(ALGO_NAME)
-    format_script(os.path.join(constants.SH_DIR, script_name), BASE_FOLDER=constants.BASE_PROFILE,
-                  DATASET_DIR=constants.DATASET_DIR, NETBOX_DIR=ALGO_DIR)
-    print subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
+    script_file_name=format_script(os.path.join(constants.SH_DIR, script_name), BASE_FOLDER=constants.BASE_PROFILE,
+                  DATASET_DIR=constants.DATASET_DIR, CONFIG_FILE_NAME=conf_file_name, NETBOX_DIR=os.path.join(constants.ALGO_BASE_DIR, "netbox"))
+    print subprocess.Popen("bash {}".format(script_file_name), shell=True,
                            stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
 
     modules, all_bg_genes = extract_modules_and_bg(bg_genes)
