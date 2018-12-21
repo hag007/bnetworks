@@ -20,7 +20,7 @@ def main():
         os.makedirs(constants.GO_DIR)
     if not os.path.exists(constants.CACHE_GLOBAL_DIR):
         os.makedirs(constants.CACHE_GLOBAL_DIR)
-    runner.sync_repos()
+    #runner.sync_repos()
     # download_resources.main()
 
 

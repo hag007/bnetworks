@@ -23,12 +23,14 @@ from utils.permute_network import EdgeSwapGraph
 import random
 
 
-def create_random_ds(prefix, cur_ds, index=None):
+def create_random_ds(prefix, cur_ds, index=None, algo=None):
     data_type = "score.tsv"
     if prefix=="GE":
         data_type="ge.tsv"
     cur_ds = cur_ds[len(prefix)+1:]
     random_ds_name=prefix + "_random_" + cur_ds
+    if algo is not None:
+        random_ds_name+="_{}".format(algo)
     if index is not None:
         random_ds_name+="_{}".format(index)
     root_random_dir=os.path.join(constants.DATASETS_DIR, random_ds_name)
@@ -138,6 +140,7 @@ if __name__ == "__main__":
         #     pval = pd.read_csv(os.path.join(constants.DATASETS_DIR, cur_ds, "cache", "deg_t.tsv"), sep='\t')["pval"]
         #     sns.distplot(pval, kde=False)
         #     plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "pval_dist_microarray.png"))
+
 
 
 

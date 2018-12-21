@@ -1,4 +1,4 @@
-base_folder={BASE_FOLDER}
+se_folder={BASE_FOLDER}
 network_folder=$base_folder/networks
 datasets_folder=$base_folder/datasets
 data_folder=$dataset_folder/data
@@ -12,4 +12,5 @@ echo $NETBOX_HOME/bin/netAnalyze.py
 echo {CONFIG_FILE_NAME}
 
 python $NETBOX_HOME/bin/netAnalyze.py {CONFIG_FILE_NAME}
+
 

@@ -69,21 +69,22 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
     subprocess.Popen("bash {}".format(script_file_name), shell=True,
                      stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
 
+    os.remove(script_file_name)
     modules_genes_file_name = os.path.join(constants.OUTPUT_DIR, "{}_{}_module_genes.txt".format(ALGO_NAME, search_method))
     all_bg_genes, modules = extract_modules_and_bg(bg_genes, results_file_name, modules_genes_file_name)
 
     output_base_dir = ""
     if constants.REPORTS:
         output_base_dir = build_all_reports(ALGO_NAME + "_" + search_method, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
-
+ 
     output_file_name=os.path.join(constants.OUTPUT_DIR,
-                 "{}_{}_client_output.txt".format(ALGO_NAME, search_method))
+                  "{}_{}_client_output.txt".format(ALGO_NAME, search_method))
     output_modules(output_file_name, modules, score_file_name, output_base_dir)
 
 
-if __name__ == "__main__":
-    constants.update_dirs(DATASET_NAME_u="TNFa_2")
-    main()
+# if __name__ == "__main__":
+#     constants.update_dirs(DATASET_NAME_u="TNFa_2")
+#     main()
 
 
 

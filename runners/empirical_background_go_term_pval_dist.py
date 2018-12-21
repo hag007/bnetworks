@@ -107,32 +107,34 @@ if __name__ == "__main__":
         emp_pval=np.array([1])
         for algo in algos:
             corrupted_datsets=[]
-            for cur_real_from_rand in range(0, 10):
+            for cur_real_from_rand in range(0, 100):
                 df_all_terms = pd.DataFrame()
                 cur_real_ds= "{}_random_{}_{}".format(prefix, dataset, cur_real_from_rand)
                 print "\ncur outer iteration: {}".format(cur_real_from_rand)
 
-                if not os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_real_ds, algo, "modules_summary.tsv")):
-                    print "outer {} is corrupted. continue...".format(cur_real_ds)
-                    corrupted_datsets.append(cur_real_ds)
-                    continue
+                # if not os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_real_ds, algo, "modules_summary.tsv")):
+                #     print "outer {} is corrupted. continue...".format(cur_real_ds)
+                #     corrupted_datsets.append(cur_real_ds)
+                #     continue
                 pval = np.array([])
                 random_ds = "{}_random_{}".format(prefix, dataset)
-                for cur in range(0,10):
+                for cur in range(0,1000):
 
-
+            
                     print "\ncur inner iteration: {}".format(cur)
-                    random_ds=create_random_ds(prefix, "{}_{}".format(prefix, dataset),cur)
-                    permuted_network_file_name="dip" # _perm
+                    random_ds = "{}_random_{}_{}".format(prefix, dataset, cur)
+                    # random_ds=create_random_ds(prefix, "{}_{}".format(prefix, dataset),cur)
+                    # permuted_network_file_name="dip" # _perm
 
                     if cur==cur_real_from_rand:
                         print "same datasets: {}=={} continue...".format(cur,cur_real_from_rand)
                         continue
-                    if not os.path.exists(
-                            os.path.join(constants.OUTPUT_GLOBAL_DIR, random_ds, algo, "modules_summary.tsv")):
-                        print "inner {} is corrupted. continue...".format(random_ds)
-                        corrupted_datsets.append(random_ds)
-                        continue
+                    
+                    # if not os.path.exists(
+                    #         os.path.join(constants.OUTPUT_GLOBAL_DIR, random_ds, algo, "modules_summary.tsv")):
+                    #     print "inner {} is corrupted. continue...".format(cur)
+                    #     corrupted_datsets.append(cur_real_ds)
+                    #     continue
 
 
 
@@ -143,22 +145,18 @@ if __name__ == "__main__":
                     #             algos=[algo], network_file_name=permuted_network_file_name)
                     cur_pval, df_terms, df_pval_terms = calc_dist([algo], [random_ds.format(prefix, dataset)])
                     pval = np.append(pval, cur_pval)
-                    df_all_terms=pd.concat((df_all_terms, df_pval_terms), axis=1)
+                    df_all_terms=pd.concat((df_all_terms, df_pval_terms.max(axis=1).to_frame()), axis=1)
         #
                 df_all_terms = df_all_terms.apply(lambda x: -np.log10(x))
                 df_all_terms[df_all_terms.isna()]=0
-                df_all_terms_th=df_all_terms.apply(lambda r: np.percentile(r.values, 100, interpolation='higher'), axis=1)
-                df_temp=df_all_terms.apply(lambda r: np.percentile(r.values, 100, interpolation='higher'), axis=1)
-                df_temp=df_temp.to_frame()
-                df_temp.columns=["pval"]
-                df_temp["GO name"] = pd.Series(goids2gonames.get_go_names(list(df_temp.index)),
-                                                   index=df_temp.index)
+#               df_all_terms_th=df_all_terms.apply(lambda r: np.percentile(r.values, 100, interpolation='higher'), axis=1)
+#               df_temp=df_all_terms.apply(lambda r: np.percentile(r.values, 100, interpolation='higher'), axis=1)
+#               df_temp=df_temp.to_frame()
+#               df_temp.columns=["pval"]
+#               df_temp["GO name"] = pd.Series(goids2gonames.get_go_names(list(df_temp.index)),
+#                                                  index=df_temp.index)
 
-                df_temp.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_go_terms_th_values.tsv"), sep='\t', index_label="GO id")
-
-                df_agg_statistic = pd.concat((df_all_terms.mean(axis=1), df_all_terms.std(axis=1, ddof=0)), axis=1)
-                df_agg_statistic.columns = ['mean', 'std']
-                df_agg_statistic.loc[df_agg_statistic['std'].isna().values, 'std'] = 1
+#               df_temp.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_go_terms_th_values.tsv"), sep='\t', index_label="GO id")
 
 
                 pval, df_go, df_agg_pval = calc_dist([algo], [cur_real_ds], is_plot=False, empirical_th=None)
@@ -166,122 +164,21 @@ if __name__ == "__main__":
                 df_max_pval=df_agg_pval.max(axis=1).to_frame()
                 df_pvals = pd.DataFrame()
                 df_max_pval.columns = ['pval']
+                # print "testme: {}".format(df_all_terms.shape)
                 for index, row in df_all_terms.iterrows():
-                    pos = np.size(row) - np.searchsorted(np.sort(row), df_max_pval.loc[index, :].iloc[
-                        0] if index in df_max_pval.index else 0, side='left')
+                    pos = np.size(row) - np.searchsorted(np.sort(row), df_max_pval.loc[index, :].iloc[0] if index in df_max_pval.index else 0, side='left')
                     df_pvals.loc[index, "emp_pval"] = pos / float(np.size(row))
-                    df_pvals.loc[index, "dist_n_samples"] = str(list(row.values))
-                    df_pvals.loc[index, "sample_pos"] = pos
+                    # df_pvals.loc[index, "dist_n_samples"] = str(list(row.values))
+                    # df_pvals.loc[index, "sample_pos"] = pos
                     # print "current pval: {}".format(df_pvals.loc[index, "emp_pval"])
 
                 for index, row in df_max_pval.iterrows():
                     if index not in df_pvals.index:
                         df_pvals.loc[index, "emp_pval"] = 0
-                        df_pvals.loc[index, "dist_n_samples"] = 0
-                        df_pvals.loc[index, "sample_pos"] = 0
+                        # df_pvals.loc[index, "dist_n_samples"] = 0
+                        # df_pvals.loc[index, "sample_pos"] = 0
 
-                df_max_pval["GO name"] = pd.Series(goids2gonames.get_go_names(list(df_max_pval.index)),
-                                                   index=df_max_pval.index)
-
-
-                x = df_all_terms.loc[df_agg_pval.index.values]
-                x[x.isna()]=0
-                x=x.values.flatten()
-                # x = x[x != 0]
-                # sns.distplot(x, kde=False)
-                # fig, ax = plt.subplots(figsize=(12, 10))
-                # ax.set_yscale('log')
-                # sns.distplot(x, kde=False)
-                # plt.title("joint dist real data terms")
-                # plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-                #                          "joint_dist_real_terms_{}.png".format(algo)))
-                # plt.clf()
-
-                joint_dist_mean=x.mean()
-                joint_dist_std = x.std()
-                # x= (x - x.mean()) / x.std()
-                # fig, ax = plt.subplots(figsize=(12, 10))
-                # ax.set_yscale('log')
-                # sns.distplot(x, kde=False)
-                # plt.title("joint dist real data terms")
-                # plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-                #                          "joint_dist_real_terms_normalized_{}.png".format(algo)))
-                # plt.clf()
-
-
-
-
-                print "total # of rows: {}".format(df_max_pval.shape)
-                print "total # rows after 1 filter: {}".format(df_max_pval.loc[~df_max_pval.index.isin(df_all_terms_th.index.values)].shape)
-                df_agg_pval_filtered=df_max_pval.loc[~df_max_pval.index.isin(df_all_terms_th.index.values) | (df_max_pval.iloc[:, 0] > df_all_terms_th.loc[df_max_pval.index]).values]
-                print "total # row after both: {}".format(df_agg_pval_filtered.shape[0])
-
-                df_max_pval["filtered_in"]=pd.Series(df_max_pval.index.isin(df_agg_pval_filtered.index.values), df_max_pval.index)
-                df_max_pval.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_go_terms.tsv"), sep='\t', index_label="GO id")
-                df_agg_pval_filtered.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_filtered_go_terms.tsv"),
-                                            sep='\t', index_label="GO id")
-                df_diff=pd.concat((df_temp.rename(columns={"pval": "th_pval"}), df_max_pval.rename(columns={"pval": "filtered_pval"})) ,axis=1)
-                df_diff.loc[df_diff["th_pval"].isna().values, "th_pval"] = 0
-                df_diff.loc[df_diff["filtered_pval"].isna().values, "filtered_pval"] = 0
-                df_diff["diff"]=df_diff["filtered_pval"]-df_diff["th_pval"]
-                df_diff["emp_pval"] = df_pvals["emp_pval"]
-                df_diff["dist_n_samples"] = df_pvals["dist_n_samples"]
-                df_diff["sample_pos"] = df_pvals["sample_pos"]
-                # df_diff["zscore"] = (df_diff["filtered_pval"] - df_agg_statistic['mean'])/df_agg_statistic['std']
-                df_diff["zscore"] = (df_diff["filtered_pval"] - joint_dist_mean) / joint_dist_std
-                df_diff.loc[df_diff["zscore"].isna().values, "zscore"] = np.inf
-                df_diff=df_diff.sort_values(ascending=False, by=['zscore', 'diff'])
-                df_diff.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_diff.tsv"),
-                                            sep='\t', index_label="GO id")
-
-                # sns.distplot(df_diff["diff"].values, kde=False)
-                # fig, ax = plt.subplots(figsize=(12, 10))
-                # ax.set_yscale('log')
-                # sns.distplot(df_diff["diff"].values, kde=False)
-                # plt.title("diff dist")
-                # txt = "total # terms: {}. # terms passed filter={}. # terms passed 2 OOM: {}".format(len(df_diff.index), np.sum(df_diff["diff"].values >0), np.sum(df_diff["diff"].values>2))
-                # fig.text(.5, .05, txt, ha='center')
-                # plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-                #                          "diff_dist_{}.png".format(algo)))
-                # plt.clf()
-
-                # total_pvals=np.append(total_pvals, cur_pval)
-                # n_terms_filtered_in.append(np.sum(df_diff["diff"].values > 0))
-                emp_pval=np.append(emp_pval, df_diff["emp_pval"].values)
+                emp_pval=np.append(emp_pval, df_pvals["emp_pval"].values)
                 print "current pvals: {}".format(emp_pval)
-                # n_terms_2_oom.append(np.sum(df_diff["diff"].values > 2))
-                # summary.append([len(df_go.index), empirical_th])
-                # print df_go[["GO name","pval"]]
-                # print "percentile: {}".format(empirical_th)
-
-            # print(total_n_terms)
-            # print(np.mean(total_n_terms))
-            # print(np.std(total_n_terms))
-            # print(n_terms_filtered_in)
-            # print(np.mean(n_terms_filtered_in))
-            # print(n_terms_filtered_in)
-            # print(np.mean(n_terms_filtered_in))
-            # print(np.std(n_terms_filtered_in))
-            # print(n_terms_2_oom)
-            # print(np.mean(n_terms_2_oom))
-            # print(np.std(n_terms_2_oom))
-
-
-
-
-
-            # fig, ax = plt.subplots(figsize=(12, 10))
-            # ax.set_yscale('log')
-            # sns.distplot(emp_pval, kde=False)
-            # plt.title("diff dist")
-            txt = "total # diff: {}. 90'th percentile ={}. 95'th percentile : {}".format(np.size(emp_pval), round(np.percentile(emp_pval, 90, interpolation='higher'), 2), round(np.percentile(emp_pval, 95, interpolation='higher'), 2))
-            print txt
-            # fig.text(.5, .05, txt, ha='center')
-            # plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-            #                          "diff_positive_agg_dist_{}_{}.png".format(dataset,algo)))
-            # plt.clf()
-
-        print "numer of corrupted datasets: {}".format(len(corrupted_datsets))
-        print summary
-
-
+                txt = "total # diff: {}. 90'th percentile ={}. 95'th percentile : {}, min: {}".format(np.size(emp_pval), np.percentile(emp_pval, 10, interpolation='lower'), np.percentile(emp_pval, 5, interpolation='lower'), np.min(emp_pval))
+                print txt

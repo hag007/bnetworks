@@ -1,7 +1,8 @@
 import json
 from matplotlib import style
 from pandas._libs.parsers import k
-
+import sys
+sys.path.insert(0, '../')
 import seaborn as sns
 sns.set(color_codes=True)
 import logging
@@ -20,7 +21,7 @@ from datasets_multithread_runner import run_dataset
 from utils.go_pval_dist import create_random_ds
 from utils.go_pval_dist import create_permuted_network
 from multiprocessing import Process
-
+import argparse
 from pandas.errors import EmptyDataError
 
 
@@ -77,9 +78,9 @@ def calc_dist(algos, datasets,is_plot=False,empirical_th=None):
         return pval, df_go, df_go_pvals
 
 
-def empirical_dist_iteration(prefix, dataset, cur):
+def empirical_dist_iteration(prefix, dataset, cur, algo):
     print "starting iteration: {}, {}, {}".format(prefix, dataset, cur)
-    random_ds = create_random_ds(prefix, "{}_{}".format(prefix, dataset), cur)
+    random_ds = create_random_ds(prefix, "{}_{}".format(prefix, dataset), cur, algo)
     permuted_network_file_name = "dip"  # _perm
     # if cur==0:
     #     permuted_network_file_name=create_permuted_network(network_file_name=network_file_name)
@@ -91,19 +92,30 @@ def empirical_dist_iteration(prefix, dataset, cur):
 
 
 if __name__ == "__main__":
-    # prefix="GE"
-    # datasets = ["{}_TNFa_2".format(prefix)]
-    # algos = np.array(["jactivemodules_greedy"])
-    #
-    # calc_dist(algos, datasets)
-    network_file_name="dip"
-    prefix="GE"
-    datasets = ["SOC"] # , "IEM", "IEN", "HC12", "MCF7_2", "TNFa_2"   alzheimers, schizophrenia
-    algos = ["jactivemodules_greedy"] # "bionet"
+
+    parser = argparse.ArgumentParser(description='args')
+    parser.add_argument('--datasets', dest='datasets', default="SOC")
+    parser.add_argument('--prefix', dest='prefix', default="GE")
+    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
+    parser.add_argument('--network', dest='network', default="dip")
+    parser.add_argument('--pf', help="parallelization_factor", dest='pf', default=10)
+    parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n', default=0)
+    parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n', default=100)
+    # parser.add_argument('--max_dist', help="takes max or all samples", dest='max_dist', default="true")
+    args = parser.parse_args()
+
+    datasets=args.datasets.split(",")
+    algos=args.algos.split(",")
+    prefix = args.prefix
+    network_file_name = args.network
+    parallelization_factor = args.pf
+    n_start=args.n_start
+    n_end=args.n_end
+    # max_dist=args.max_dist.lower()=="true"
+
 
     summary = []
     for dataset in datasets:
-
 
         score_method = constants.PREDEFINED_SCORE
         if prefix == "GE":
@@ -111,24 +123,21 @@ if __name__ == "__main__":
             if dataset.startswith("IE"):
                 score_method = constants.DEG_T
 
-        total_n_terms=[]
-        n_terms_filtered_in=[]
-        n_terms_2_oom=[]
-        summary = []
-        diff_values=np.array([0])
         df_all_terms = pd.DataFrame()
-        cur_real_ds= "{}_{}".format(prefix, dataset) # "{}_random_{}_{}".format(prefix, dataset, cur_real_from_rand)
+        cur_real_ds= "{}_{}".format(prefix, dataset)
 
         for algo in algos:
             pval = np.array([])
-            random_ds = "{}_random_{}".format(prefix, dataset)
             prcs = []
-            for cur in range(105, 110):
-                # if cur==cur_real_from_rand: continue
-                prcs.append(Process(target=empirical_dist_iteration,
-                        args=[prefix, dataset, cur]))
-            for cur in prcs:
-                cur.start()
-            for cur in prcs:
-                cur.join()
+            for cur_parallel in range(n_start, n_end):
+                prcs = []
+                print "cur parallel: {}".format(cur_parallel)
+                for cur in range(cur_parallel*parallelization_factor, cur_parallel*parallelization_factor+parallelization_factor):
+                    prcs.append(Process(target=empirical_dist_iteration,
+                            args=[prefix, dataset, cur, algo]))
+
+                for cur in prcs:
+                    cur.start()
+                for cur in prcs:
+                    cur.join()
 

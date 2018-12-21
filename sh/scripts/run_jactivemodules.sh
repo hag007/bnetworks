@@ -1,23 +1,23 @@
-base_folder=/media/hag007/Data/bnet
+base_folder=/specific/netapp5/gaga/hagailevi/evaluation/bnet
 networks_folder=$base_folder/networks
 datasets_folder=$base_folder/datasets
-dataset_folder=/media/hag007/Data/bnet/datasets/GE_random_SOC_109
+dataset_folder=/specific/netapp5/gaga/hagailevi/evaluation/bnet/datasets/GE_random_SOC_6
 data_folder=$dataset_folder/data
 cache_folder=$dataset_folder/cache
 output_folder=$dataset_folder/output
 is_greedy=True
-algo_dir=/home/hag007/repos/bnetworks_alg/jactivemodules
+algo_dir=/specific/netapp5/gaga/hagailevi/evaluation/bnetworks_alg/jactivemodules
 num_of_modules=10
 overlap_threshold=0
 
-echo /media/hag007/Data/bnet/datasets/GE_random_SOC_109/cache/deg_edger.tsv
+echo /specific/netapp5/gaga/hagailevi/evaluation/bnet/datasets/GE_random_SOC_6/cache/deg_edger.tsv
 
 
 java -jar $algo_dir/jactivemodules.jar \
-                                 /media/hag007/Data/bnet/networks/dip.sif \
-                                 /media/hag007/Data/bnet/datasets/GE_random_SOC_109/cache/deg_edger.tsv \
+                                 /specific/netapp5/gaga/hagailevi/evaluation/bnet/networks/dip.sif \
+                                 /specific/netapp5/gaga/hagailevi/evaluation/bnet/datasets/GE_random_SOC_6/cache/deg_edger.tsv \
                                  $is_greedy \
                                  $num_of_modules \
                                  $overlap_threshold \
-                                 /media/hag007/Data/bnet/datasets/GE_random_SOC_109/output/jactivemodules_greedy_results.txt
+                                 /specific/netapp5/gaga/hagailevi/evaluation/bnet/datasets/GE_random_SOC_6/output/jactivemodules_greedy_results.txt
 

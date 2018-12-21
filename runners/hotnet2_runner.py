@@ -113,7 +113,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
                   CACHE_DIR=constants.CACHE_DIR, OUTPUT_DIR=constants.OUTPUT_DIR, NETWORK_NAME=os.path.splitext(os.path.basename(network_file_name))[0])
     print subprocess.Popen("bash {}".format(script_file_name), shell=True,
                            stdout=subprocess.PIPE).stdout.read()  # cwd=dir_path
-
+    os.remove(script_file_name)
     modules, all_bg_genes = extract_modules_and_bg(bg_genes)
     output_base_dir = ""
     if constants.REPORTS:
@@ -127,6 +127,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 if __name__ == "__main__":
     constants.update_dirs(DATASET_NAME_u="TNFa_2")
     main()
+
 
 
 

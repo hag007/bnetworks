@@ -81,6 +81,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
     print subprocess.Popen("bash {}".format(script_file_name), shell=True,
                            stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
 
+    os.remove(script_file_name)
     modules, all_bg_genes = extract_modules_and_bg(bg_genes)
     output_base_dir = ""
     if constants.REPORTS:
@@ -93,6 +94,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 if __name__ == "__main__":
     constants.update_dirs(DATASET_NAME_u="MCF7_2")
     main()
+
 
 
 

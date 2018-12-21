@@ -4,6 +4,7 @@ sys.path.insert(0, '../')
 import json
 from matplotlib import style
 from pandas._libs.parsers import k
+import argparse
 
 style.use("ggplot")
 import seaborn as sns
@@ -25,7 +26,7 @@ from utils.go_pval_dist import create_random_ds
 from utils.go_pval_dist import create_permuted_network
 
 from pandas.errors import EmptyDataError
-
+import scipy
 
 
 
@@ -80,17 +81,37 @@ def calc_dist(algos, datasets,is_plot=False,empirical_th=None):
         return pval, df_go, df_go_pvals
 
 if __name__ == "__main__":
-    # prefix="GE"
-    # datasets = ["{}_TNFa_2".format(prefix)]
-    # algos = np.array(["jactivemodules_greedy"])
-    #
-    # calc_dist(algos, datasets)
-    network_file_name="dip"
-    prefix="GE"
-    datasets = ["SOC"] # , "IEM", "IEN", "HC12", "MCF7_2", "TNFa_2"   alzheimers, schizophrenia
-    algos = ["jactivemodules_greedy"] # "bionet"
 
-    summary = []
+    parser = argparse.ArgumentParser(description='args')
+    parser.add_argument('--datasets', dest='datasets', default="SOC")
+    parser.add_argument('--prefix', dest='prefix', default="GE")
+    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
+    parser.add_argument('--network', dest='network', default="dip")
+    parser.add_argument('--pf', help="parallelization_factor", dest='pf', default=10)
+    parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n', default=0)
+    parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n', default=100)
+    parser.add_argument('--network_permutations', dest='network_perm', default="false")
+    parser.add_argument('--max_dist', help="takes max or all samples", dest='max_dist', default="true")
+    parser.add_argument('--pval_measurement', help="how to calc pval. can be emp or beta", dest='pval_measurement', default="emp")
+    parser.add_argument('--generate_plot', dest='generate_plot', default="false")
+    parser.add_argument('--recalc_true_modules', dest='recalc_true_modules', default="false")
+
+    args = parser.parse_args()
+
+    datasets=args.datasets.split(",")
+    algos=args.algos.split(",")
+    prefix = args.prefix
+    network_file_name = args.network
+    parallelization_factor = args.pf
+    n_start=args.n_start
+    n_end=args.n_end
+    max_dist=args.max_dist.lower()=="true"
+    network_perm=args.network_perm.lower()=="true"
+    generate_plot=args.generate_plot.lower()=="true"
+    recalc_true_modules=args.recalc_true_modules.lower()=="true"
+    pval_measurement=args.pval_measurement
+
+
     for dataset in datasets:
 
 
@@ -100,155 +121,174 @@ if __name__ == "__main__":
             if dataset.startswith("IE"):
                 score_method = constants.DEG_T
 
-        total_n_terms=[]
-        n_terms_filtered_in=[]
-        n_terms_2_oom=[]
-        summary = []
-        diff_values=np.array([0])
-        for cur_real_from_rand in range(0, 1):
+
+        for algo in algos:
+
+            total_n_terms = []
+            n_terms_filtered_in = []
+            n_terms_2_oom = []
+            diff_values = np.array([0])
             df_all_terms = pd.DataFrame()
-            cur_real_ds= "{}_{}".format(prefix, dataset) # "{}_random_{}_{}".format(prefix, dataset, cur_real_from_rand)
 
-            for algo in algos:
-                pval = np.array([])
-                random_ds = "{}_random_{}".format(prefix, dataset)
-                bad_iterations=[]
-                for cur in range(200):
-                    # if cur==cur_real_from_rand: continue
-
-                    print "\ncur iteration: {}".format(cur)
-                    random_ds=create_random_ds(prefix, "{}_{}".format(prefix, dataset),cur)
-                    permuted_network_file_name="dip" # _perm
-                    # if cur==0:
-                    #     permuted_network_file_name=create_permuted_network(network_file_name=network_file_name)
-                    # run_dataset(random_ds, score_method=score_method,
-                    #             algos=[algo], network_file_name=permuted_network_file_name)
-                    try:
-                        cur_pval, df_terms, df_pval_terms = calc_dist([algo], [random_ds.format(prefix, dataset)])
-                        pval = np.append(pval, cur_pval)
-                        df_all_terms=pd.concat((df_all_terms, df_pval_terms), axis=1)
-                    except Exception:
-                        print "cannot read iteration #{}".format(cur)
-                        bad_iterations.append(cur)
-                        pass
-
-                print "total # bad iterations: {}".format(len(bad_iterations))
-                print "bad iterations: {}".format(bad_iterations)
-        #
-                df_all_terms = df_all_terms.apply(lambda x: -np.log10(x))
-                df_all_terms[df_all_terms.isna()]=0
-                df_all_terms_th=df_all_terms.apply(lambda r: np.percentile(r.values, 100, interpolation='higher'), axis=1)
-                df_temp=df_all_terms.apply(lambda r: np.percentile(r.values, 100, interpolation='higher'), axis=1)
-                df_temp=df_temp.to_frame()
-                df_temp.columns=["pval"]
-                df_temp["GO name"] = pd.Series(goids2gonames.get_go_names(list(df_temp.index)),
-                                                   index=df_temp.index)
-
-                df_temp.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_go_terms_th_values.tsv"), sep='\t', index_label="GO id")
-
-                df_agg_statistic = pd.concat((df_all_terms.mean(axis=1), df_all_terms.std(axis=1, ddof=0)), axis=1)
-                df_agg_statistic.columns = ['mean', 'std']
-                df_agg_statistic.loc[df_agg_statistic['std'].isna().values, 'std'] = 1
+            bad_iterations=[]
+            for cur in range(n_start,n_end):
 
 
-                # if os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,  "{}_{}".format(prefix, dataset), algo)):
-                #     shutil.rmtree(os.path.join(constants.OUTPUT_GLOBAL_DIR, "{}_{}".format(prefix, dataset), algo))
-                # run_dataset("{}_{}".format(prefix, dataset), score_method=score_method,
-                #             algos=[algo], network_file_name=network_file_name)
+                random_ds = "{}_random_{}_{}_{}".format(prefix, dataset, algo, cur)
+                print "\ncur ds/n: {}/{}".format(random_ds, cur)
 
-                # plot_dist(pval, [algo, random_ds])
+                run_dataset(random_ds, score_method=score_method,
+                            algos=[algo], network_file_name=network_file_name)
 
-                pval, df_go, df_agg_pval = calc_dist([algo], [cur_real_ds], is_plot=False, empirical_th=None)
-                df_agg_pval=df_agg_pval.apply(lambda x: -np.log10(x))
-                df_max_pval=df_agg_pval.max(axis=1).to_frame()
-                df_pvals = pd.DataFrame()
-                for index, row in df_all_terms.iterrows():
-                    pos = np.size(row) - np.searchsorted(np.sort(row), df_max_pval.loc[index,:].iloc[0] if index in df_max_pval.index else 0, side='left')
-                    df_pvals.loc[index,"emp_pval"]=pos/float(np.size(row))
-                    df_pvals.loc[index, "dist_n_samples"] = str(list(row.values))
+                try:
+                    cur_pval, df_terms, df_pval_terms = calc_dist([algo], [random_ds.format(prefix, dataset)])
+                    if max_dist:
+                        df_pval_terms.max(axis=1).to_frame()
+
+                    df_all_terms=pd.concat((df_all_terms, df_pval_terms), axis=1)
+                except Exception:
+                    print "cannot read iteration #{}".format(cur)
+                    bad_iterations.append(cur)
+                    pass
+
+            print "total # bad iterations: {}".format(len(bad_iterations))
+            print "bad iterations: {}".format(bad_iterations)
+
+
+            # threshold difference
+            df_all_terms = df_all_terms.apply(lambda x: -np.log10(x))
+            df_all_terms[df_all_terms.isna()]=0
+            df_all_terms_th=df_all_terms.apply(lambda r: np.percentile(r.values, 100, interpolation='higher'), axis=1)
+
+            df_temp=df_all_terms.apply(lambda r: np.percentile(r.values, 100, interpolation='higher'), axis=1)
+            df_temp=df_temp.to_frame()
+            df_temp.columns=["pval"]
+            df_temp["GO name"] = pd.Series(goids2gonames.get_go_names(list(df_temp.index)),
+                                               index=df_temp.index)
+            df_temp.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_go_terms_th_values.tsv"), sep='\t', index_label="GO id")
+
+            ## z statistic for each term
+            df_agg_statistic = pd.concat((df_all_terms.mean(axis=1), df_all_terms.std(axis=1, ddof=0)), axis=1)
+            df_agg_statistic.columns = ['mean', 'std']
+            df_agg_statistic.loc[df_agg_statistic['std'].isna().values, 'std'] = 1
+
+
+
+            if recalc_true_modules:
+                if os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,  "{}_{}".format(prefix, dataset), algo)):
+                    shutil.rmtree(os.path.join(constants.OUTPUT_GLOBAL_DIR, "{}_{}".format(prefix, dataset), algo))
+                run_dataset("{}_{}".format(prefix, dataset), score_method=score_method,
+                            algos=[algo], network_file_name=network_file_name)
+                if generate_plot:
+                    plot_dist(pval, [algo, random_ds])
+
+
+            ## empirical pvalues
+            pval, df_go, df_agg_pval = calc_dist([algo], [dataset], is_plot=False, empirical_th=None)
+            df_agg_pval=df_agg_pval.apply(lambda x: -np.log10(x))
+            df_max_pval=df_agg_pval.max(axis=1).to_frame()
+            df_pvals = pd.DataFrame()
+            for index, row in df_all_terms.iterrows():
+
+                if pval_measurement=="emp":
+
+                    bata_params = scipy.stats.beta.fit(row.values)
+                    real_value = df_max_pval.loc[index, :] if index in df_max_pval.index else 0
+                    df_pvals.loc[index, "emp_pval"] = 1 - scipy.stats.beta.cdf(real_value, *bata_params)
                     df_pvals.loc[index, "sample_pos"] = pos
 
-                for index, row in df_max_pval.iterrows():
-                    if index not in df_pvals.index:
-                        df_pvals.loc[index, "emp_pval"] =0
-                        df_pvals.loc[index, "dist_n_samples"] = 0
-                        df_pvals.loc[index, "sample_pos"] = 0
+                elif pval_measurement=="beta":
+                    pos = np.size(row) - np.searchsorted(np.sort(row), df_max_pval.loc[index,:].iloc[0] if index in df_max_pval.index else 0, side='left')
+                    df_pvals.loc[index,"emp_pval"]=pos/float(np.size(row))
 
-                df_max_pval.columns=['pval']
-                df_max_pval["GO name"] = pd.Series(goids2gonames.get_go_names(list(df_max_pval.index)),
-                                                   index=df_max_pval.index)
+                df_pvals.loc[index, "dist_n_samples"] = np.size(row.values)
 
 
-                x = df_all_terms.loc[df_agg_pval.index.values]
-                x[x.isna()]=0
-                x=x.values.flatten()
-                x = x[x != 0]
-                # fig, ax = plt.subplots(figsize=(12, 10))
-                # ax.set_yscale('log')
-                # sns.distplot(x, kde=False)
-                # plt.title("joint dist real data terms")
-                # plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-                #                          "joint_dist_real_terms_{}.png".format(algo)))
-                # plt.clf()
+            for index, row in df_max_pval.iterrows():
+                if index not in df_pvals.index:
+                    df_pvals.loc[index, "emp_pval"] =0
+                    df_pvals.loc[index, "dist_n_samples"] = 0
+                if pval_measurement == "emp":
+                    df_pvals.loc[index, "sample_pos"] = 0
 
-                joint_dist_mean=x.mean()
-                joint_dist_std = x.std()
-                # x= (x - x.mean()) / x.std()
-                # fig, ax = plt.subplots(figsize=(12, 10))
-                # ax.set_yscale('log')
-                # sns.distplot(x, kde=False)
-                # plt.title("joint dist real data terms")
-                # plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-                #                          "joint_dist_real_terms_normalized_{}.png".format(algo)))
-                # plt.clf()
+            df_max_pval.columns=['pval']
+            df_max_pval["GO name"] = pd.Series(goids2gonames.get_go_names(list(df_max_pval.index)),
+                                               index=df_max_pval.index)
 
 
+            ## z statistic for all terms together
+            x = df_all_terms.loc[df_agg_pval.index.values]
+            x[x.isna()]=0
+            x=x.values.flatten()
+            x = x[x != 0]
+            joint_dist_mean = x.mean()
+            joint_dist_std = x.std()
+            if generate_plot:
+                fig, ax = plt.subplots(figsize=(12, 10))
+                ax.set_yscale('log')
+                sns.distplot(x, kde=False)
+                plt.title("joint dist real data terms")
+                plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
+                                         "joint_dist_real_terms_{}.png".format(algo)))
+                plt.clf()
 
 
-                print "total # of rows: {}".format(df_max_pval.shape)
-                print "total # rows after 1 filter: {}".format(df_max_pval.loc[~df_max_pval.index.isin(df_all_terms_th.index.values)].shape)
-                df_agg_pval_filtered=df_max_pval.loc[~df_max_pval.index.isin(df_all_terms_th.index.values) | (df_max_pval.iloc[:, 0] > df_all_terms_th.loc[df_max_pval.index]).values]
-                print "total # row after both: {}".format(df_agg_pval_filtered.shape[0])
+                x= (x - x.mean()) / x.std()
+                fig, ax = plt.subplots(figsize=(12, 10))
+                ax.set_yscale('log')
+                sns.distplot(x, kde=False)
+                plt.title("joint dist real data terms")
+                plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
+                                         "joint_dist_real_terms_normalized_{}.png".format(algo)))
+                plt.clf()
 
-                df_max_pval["filtered_in"]=pd.Series(df_max_pval.index.isin(df_agg_pval_filtered.index.values), df_max_pval.index)
-                df_max_pval.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_go_terms.tsv"), sep='\t', index_label="GO id")
-                df_agg_pval_filtered.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_filtered_go_terms.tsv"),
-                                            sep='\t', index_label="GO id")
-                df_diff=pd.concat((df_temp.rename(columns={"pval": "th_pval"}), df_max_pval.rename(columns={"pval": "filtered_pval"})) ,axis=1)
-                df_diff.loc[df_diff["th_pval"].isna().values, "th_pval"] = 0
-                df_diff.loc[df_diff["filtered_pval"].isna().values, "filtered_pval"] = 0
-                df_diff["diff"]=df_diff["filtered_pval"]-df_diff["th_pval"]
-                df_diff["emp_pval"]=df_pvals["emp_pval"]
-                df_diff["dist_n_samples"] = df_pvals["dist_n_samples"]
-                df_diff["sample_pos"] = df_pvals["sample_pos"]
 
-                # df_diff["zscore"] = (df_diff["filtered_pval"] - df_agg_statistic['mean'])/df_agg_statistic['std']
-                df_diff["zscore"] = (df_diff["filtered_pval"] - joint_dist_mean) / joint_dist_std
-                df_diff.loc[df_diff["zscore"].isna().values, "zscore"] = np.inf
-                df_diff=df_diff.sort_values(ascending=False, by=['zscore', 'diff'])
-                df_diff.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_diff.tsv"),
-                                            sep='\t', index_label="GO id")
+            # filter terms
+            print "total # of rows: {}".format(df_max_pval.shape)
+            print "total # rows after 1 filter: {}".format(df_max_pval.loc[~df_max_pval.index.isin(df_all_terms_th.index.values)].shape)
+            df_agg_pval_filtered=df_max_pval.loc[~df_max_pval.index.isin(df_all_terms_th.index.values) | (df_max_pval.iloc[:, 0] > df_all_terms_th.loc[df_max_pval.index]).values]
+            print "total # row after both: {}".format(df_agg_pval_filtered.shape[0])
 
-                # sns.distplot(df_diff["diff"].values, kde=False)
-                # fig, ax = plt.subplots(figsize=(12, 10))
-                # ax.set_yscale('log')
-                # ax.set_xlabel('-log10(pval)')
-                # ax.set_ylabel('log10(count)')
-                # sns.distplot(df_diff["diff"].values, kde=False)
-                # plt.title("diff dist")
-                # txt = "total # terms: {}. # terms passed filter={}. # terms passed 2 OOM: {}".format(len(df_diff.index), np.sum(df_diff["diff"].values >0), np.sum(df_diff["diff"].values>2))
-                # fig.text(.5, .05, txt, ha='center')
-                # plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-                #                          "diff_dist_{}.png".format(algo)))
-                # plt.clf()
+            # intermediate summary tables
+            df_max_pval["filtered_in"]=pd.Series(df_max_pval.index.isin(df_agg_pval_filtered.index.values), df_max_pval.index)
+            df_max_pval.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_go_terms.tsv"), sep='\t', index_label="GO id")
+            df_agg_pval_filtered.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_filtered_go_terms.tsv"),
+                                        sep='\t', index_label="GO id")
 
-                total_n_terms.append(len(df_diff.index))
-                n_terms_filtered_in.append(np.sum(df_diff["diff"].values > 0))
-                diff_values=np.append(diff_values, df_diff["diff"][df_diff["diff"]>0].values)
-                n_terms_2_oom.append(np.sum(df_diff["diff"].values > 2))
-                # summary.append([len(df_go.index), empirical_th])
-                # print df_go[["GO name","pval"]]
-                # print "percentile: {}".format(empirical_th)
+            # final summary tables
+            df_diff=pd.concat((df_temp.rename(columns={"pval": "th_pval"}), df_max_pval.rename(columns={"pval": "filtered_pval"})) ,axis=1)
+            df_diff.loc[df_diff["th_pval"].isna().values, "th_pval"] = 0
+            df_diff.loc[df_diff["filtered_pval"].isna().values, "filtered_pval"] = 0
+            df_diff["diff"]=df_diff["filtered_pval"]-df_diff["th_pval"]
+            df_diff["emp_pval"]=df_pvals["emp_pval"]
+            df_diff["dist_n_samples"] = df_pvals["dist_n_samples"]
+            df_diff["sample_pos"] = df_pvals["sample_pos"]
+            # zscore for each term separately
+            # df_diff["zscore"] = (df_diff["filtered_pval"] - df_agg_statistic['mean'])/df_agg_statistic['std']
+            df_diff["zscore"] = (df_diff["filtered_pval"] - joint_dist_mean) / joint_dist_std
+            df_diff.loc[df_diff["zscore"].isna().values, "zscore"] = np.inf
+            df_diff=df_diff.sort_values(ascending=False, by=['zscore', 'diff'])
+            df_diff.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_diff.tsv"),
+                                        sep='\t', index_label="GO id")
+
+            if generate_plot:
+                sns.distplot(df_diff["diff"].values, kde=False)
+                fig, ax = plt.subplots(figsize=(12, 10))
+                ax.set_yscale('log')
+                ax.set_xlabel('-log10(pval)')
+                ax.set_ylabel('log10(count)')
+                sns.distplot(df_diff["diff"].values, kde=False)
+                plt.title("diff dist")
+                txt = "total # terms: {}. # terms passed filter={}. # terms passed 2 OOM: {}".format(len(df_diff.index), np.sum(df_diff["diff"].values >0), np.sum(df_diff["diff"].values>2))
+                fig.text(.5, .05, txt, ha='center')
+                plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
+                                         "diff_dist_{}.png".format(algo)))
+                plt.clf()
+
+            total_n_terms.append(len(df_diff.index))
+            n_terms_filtered_in.append(np.sum(df_diff["diff"].values > 0))
+            diff_values=np.append(diff_values, df_diff["diff"][df_diff["diff"]>0].values)
+            n_terms_2_oom.append(np.sum(df_diff["diff"].values > 2))
 
             print(total_n_terms)
             print(np.mean(total_n_terms))
@@ -274,6 +314,6 @@ if __name__ == "__main__":
             #                          "diff_positive_agg_dist_{}_{}.png".format(dataset,algo)))
             # plt.clf()
 
-        print summary
+
 
 

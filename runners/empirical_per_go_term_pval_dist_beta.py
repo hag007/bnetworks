@@ -114,7 +114,7 @@ if __name__ == "__main__":
                 pval = np.array([])
                 random_ds = "{}_random_{}".format(prefix, dataset)
                 bad_iterations=[]
-                for cur in range(100):
+                for cur in range(650):
                     # if cur==cur_real_from_rand: continue
 
                     print "\ncur iteration: {}".format(cur)
@@ -152,10 +152,10 @@ if __name__ == "__main__":
                 df_agg_statistic.loc[df_agg_statistic['std'].isna().values, 'std'] = 1
 
 
-                if os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,  "{}_{}".format(prefix, dataset), algo)):
-                    shutil.rmtree(os.path.join(constants.OUTPUT_GLOBAL_DIR, "{}_{}".format(prefix, dataset), algo))
-                run_dataset("{}_{}".format(prefix, dataset), score_method=score_method,
-                            algos=[algo], network_file_name=network_file_name)
+                # if os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,  "{}_{}".format(prefix, dataset), algo)):
+                #     shutil.rmtree(os.path.join(constants.OUTPUT_GLOBAL_DIR, "{}_{}".format(prefix, dataset), algo))
+                # run_dataset("{}_{}".format(prefix, dataset), score_method=score_method,
+                #             algos=[algo], network_file_name=network_file_name)
 
                 # plot_dist(pval, [algo, random_ds])
 
@@ -277,5 +277,6 @@ if __name__ == "__main__":
             # plt.clf()
 
         print summary
+
 
 

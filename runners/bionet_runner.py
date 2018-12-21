@@ -81,7 +81,7 @@ def run_bionet_for_all_modules(fdr, network_file_name, score_file_name, is_pval_
             small_modules += 1
     return all_bg_genes, modules
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, fdr=0.05, network_file_name="dip"):
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip", fdr=0.05):
     constants.update_dirs(DATASET_NAME_u=dataset_name)
     network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(network_file_name , score_method)
 
@@ -100,6 +100,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
 if __name__ == "__main__":
     main()
+
 
 
 
