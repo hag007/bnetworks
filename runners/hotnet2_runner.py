@@ -42,9 +42,7 @@ from utils.network import output_modules
 ALGO_NAME = "hotnet2"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 
-NETWORK_NAME = "dip"
-
-def sif2hotnet2(network_file_name):
+def sif2hotnet2(network_file_name, script_file_name):
 
     network_df = pd.read_csv(network_file_name, sep="\t")
     src = np.array(network_df["ID_interactor_A"])
@@ -61,16 +59,16 @@ def sif2hotnet2(network_file_name):
     lns = ["{} {} {}".format(cur[0], cur[1], 1) for cur in inds]
     file(os.path.join(constants.CACHE_DIR, "hotnet2_edges.txt"), "w+").write("\n".join(lns))
 
-    print subprocess.Popen("bash {}/prepare_hotnet2.sh".format(constants.SH_DIR) , shell=True, stdout=subprocess.PIPE).stdout.read() # cwd=dir_path
+    print subprocess.Popen("bash {}".format(script_file_name) , shell=True, stdout=subprocess.PIPE).stdout.read() # cwd=dir_path
 
 def run_hotnet2(deg_file_name, network_file_name):
     script = file("scripts/bionet.r").read()
     return run_rscript(script=script, output_vars = ["module_genes", "bg_genes"], network_file_name=network_file_name, deg_file_name=deg_file_name)
 
 
-def init_specific_params(score_file_name, method=constants.DEG_EDGER, network_file_name=os.path.join(constants.NETWORKS_DIR, NETWORK_NAME+".sif")):
+def init_specific_params(score_file_name, method=constants.DEG_EDGER, network_file_name=os.path.join(constants.NETWORKS_DIR, "dip.sif")):
 
-    format_script(os.path.join(constants.SH_DIR, "prepare_hotnet2.sh"), ALGO_DIR=ALGO_DIR,
+    script_file_name=format_script(os.path.join(constants.SH_DIR, "prepare_hotnet2.sh"), ALGO_DIR=ALGO_DIR,
                   CACHE_DIR=constants.CACHE_DIR, cwd=ALGO_DIR)
 
     heat_file_name = os.path.join(constants.CACHE_DIR, "heatfile.txt")
@@ -90,7 +88,7 @@ def init_specific_params(score_file_name, method=constants.DEG_EDGER, network_fi
 
     file(heat_file_name,"w+").write("\n".join(lns))
 
-    sif2hotnet2(network_file_name)
+    sif2hotnet2(network_file_name, script_file_name)
 
     # file(os.path.join(constants.OUTPUT_DIR, "hotnet2_bg_genes.txt"), "w+").write("\n".join(bg_genes))
     return heat_file_name, network_file_name
@@ -104,17 +102,16 @@ def extract_modules_and_bg(bg_genes):
     return modules, all_bg_genes
 
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER):
-    global NETWORK_NAME
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip"):
+
     constants.update_dirs(DATASET_NAME_u=dataset_name)
-    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME,score_method)
+    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(network_file_name,score_method)
 
     heat_file_name, network_file_name = init_specific_params(score_file_name, score_method, network_file_name)
 
-
-    format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), ALGO_DIR=ALGO_DIR,
-                  CACHE_DIR=constants.CACHE_DIR, OUTPUT_DIR=constants.OUTPUT_DIR, NETWORK_NAME=NETWORK_NAME)
-    print subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
+    script_file_name=format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), ALGO_DIR=ALGO_DIR,
+                  CACHE_DIR=constants.CACHE_DIR, OUTPUT_DIR=constants.OUTPUT_DIR, NETWORK_NAME=os.path.splitext(os.path.basename(network_file_name))[0])
+    print subprocess.Popen("bash {}".format(script_file_name), shell=True,
                            stdout=subprocess.PIPE).stdout.read()  # cwd=dir_path
 
     modules, all_bg_genes = extract_modules_and_bg(bg_genes)
@@ -130,6 +127,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 if __name__ == "__main__":
     constants.update_dirs(DATASET_NAME_u="TNFa_2")
     main()
+
 
 
 

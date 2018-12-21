@@ -1,7 +1,8 @@
 import json
 from matplotlib import style
 from pandas._libs.parsers import k
-
+import sys
+sys.path.insert(0, '../')
 import seaborn as sns
 sns.set(color_codes=True)
 import logging
@@ -77,9 +78,9 @@ def calc_dist(algos, datasets,is_plot=False,empirical_th=None):
         return pval, df_go, df_go_pvals
 
 
-def empirical_dist_iteration(prefix, dataset, cur):
+def empirical_dist_iteration(prefix, dataset, cur, algo):
     print "starting iteration: {}, {}, {}".format(prefix, dataset, cur)
-    random_ds = create_random_ds(prefix, "{}_{}".format(prefix, dataset), cur)
+    random_ds = create_random_ds(prefix, "{}_{}".format(prefix, dataset), cur, algo)
     permuted_network_file_name = "dip"  # _perm
     # if cur==0:
     #     permuted_network_file_name=create_permuted_network(network_file_name=network_file_name)
@@ -99,7 +100,7 @@ if __name__ == "__main__":
     network_file_name="dip"
     prefix="GE"
     datasets = ["SOC"] # , "IEM", "IEN", "HC12", "MCF7_2", "TNFa_2"   alzheimers, schizophrenia
-    algos = ["jactivemodules_greedy"] # "bionet"
+    algos = ["bionet"] # "bionet"
 
     summary = []
     for dataset in datasets:
@@ -118,17 +119,20 @@ if __name__ == "__main__":
         diff_values=np.array([0])
         df_all_terms = pd.DataFrame()
         cur_real_ds= "{}_{}".format(prefix, dataset) # "{}_random_{}_{}".format(prefix, dataset, cur_real_from_rand)
-
+        parallelization_factor=15
         for algo in algos:
             pval = np.array([])
             random_ds = "{}_random_{}".format(prefix, dataset)
             prcs = []
-            for cur in range(105, 110):
-                # if cur==cur_real_from_rand: continue
-                prcs.append(Process(target=empirical_dist_iteration,
-                        args=[prefix, dataset, cur]))
-            for cur in prcs:
-                cur.start()
-            for cur in prcs:
-                cur.join()
+            for cur_parallel in range(0, 70):
+                prcs = []
+                print "cur parallel: {}".format(cur_parallel)
+                for cur in range(cur_parallel*parallelization_factor, cur_parallel*parallelization_factor+parallelization_factor):
+                    # if cur==cur_real_from_rand: continue
+                    prcs.append(Process(target=empirical_dist_iteration,
+                            args=[prefix, dataset, cur, algo]))
+                for cur in prcs:
+                    cur.start()
+                for cur in prcs:
+                    cur.join()
 

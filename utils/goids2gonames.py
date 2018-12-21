@@ -1,3 +1,5 @@
+import constants
+import os 
 
 go_dict = None
 
@@ -7,7 +9,7 @@ def get_go_names(GO_ids):
     global go_dict
     if go_dict is None:
         go_dict = {}
-        f = file('/media/hag007/Data/bnet/GO/go-basic.obo')
+        f = file(os.path.join(constants.GO_DIR, 'go-basic.obo'))
         parsed = f.read().split("\n\n")
         for cur_obo in parsed[1:]:
             if cur_obo.split("\n")[0] != "[Term]": continue

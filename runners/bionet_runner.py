@@ -37,7 +37,6 @@ from utils.network import output_modules
 
 ALGO_NAME = "bionet"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
-NETWORK_NAME = "dip"
 
 
 def run_bionet(deg_file_name, is_pval_score, network_file_name, fdr=0.05):
@@ -45,12 +44,12 @@ def run_bionet(deg_file_name, is_pval_score, network_file_name, fdr=0.05):
     return run_rscript(script=script, output_vars = ["module_genes", "bg_genes"], network_file_name=network_file_name, deg_file_name=deg_file_name, fdr=fdr, is_pval_score=is_pval_score)
 
 
-def init_specific_params(network_file_name=os.path.join(constants.NETWORKS_DIR, "{}.sif".format(NETWORK_NAME)), omitted_genes = [], ts=str(time.time())):
+def init_specific_params(network_file_name=os.path.join(constants.NETWORKS_DIR, "dip.sif"), omitted_genes = [], ts=str(time.time())):
     return remove_subgraph_by_nodes(omitted_genes, network_file_name, ts=ts)
 
 
 def get_module(network_file_name, score_file_name, is_pval_score, omitted_genes, ts=str(time.time()),fdr=0.05):
-    network_file_name = init_specific_params(network_file_name=network_file_name, omitted_genes=omitted_genes, ts=ts)
+    network_file_name = init_specific_params(network_file_name=network_file_name, omitted_genes=omitted_genes)
     results = run_bionet(score_file_name, is_pval_score, network_file_name,fdr)
     module_genes = np.array(results["module_genes"])
 
@@ -82,10 +81,9 @@ def run_bionet_for_all_modules(fdr, network_file_name, score_file_name, is_pval_
             small_modules += 1
     return all_bg_genes, modules
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, fdr=0.05):
-    global NETWORK_NAME
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip", fdr=0.05):
     constants.update_dirs(DATASET_NAME_u=dataset_name)
-    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME, score_method)
+    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(network_file_name , score_method)
 
     all_bg_genes, modules = run_bionet_for_all_modules(fdr, network_file_name, score_file_name, constants.IS_PVAL_SCORES)
 
@@ -102,6 +100,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
 if __name__ == "__main__":
     main()
+
 
 
 

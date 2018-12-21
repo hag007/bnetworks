@@ -1,8 +1,8 @@
 hotnet2={ALGO_DIR} # /home/hag007/networks_algo/hotnet2
 cache_folder={CACHE_DIR} # /home/hag007/bnet/datasets/TNFa_2/cache
-num_cores=-1
-num_network_permutations=1 # 100
-num_heat_permutations=1 # 1000
+num_cores=5
+num_network_permutations=10
+num_heat_permutations=100
 
 source $hotnet2/venv/bin/activate
 
