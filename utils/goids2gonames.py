@@ -21,6 +21,6 @@ def get_go_names(GO_ids):
         else:
             GO_names.append(cur_id)
 
-    print "\n".join(GO_names)
+    # print "\n".join(GO_names)
     return GO_names
 

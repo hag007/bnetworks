@@ -14,47 +14,50 @@ import json
 from network import get_network_genes
 
 def get_parameters():
-    parser = argparse.ArgumentParser(description='args from wev client')
-    parser.add_argument('--gene_expression', dest='ge', default="")
-    parser.add_argument('--score', dest='score', default="")
-    parser.add_argument('--classes', dest='classes', default="")
-    parser.add_argument('--network', dest='nw', default="")
-    parser.add_argument('--reports', dest='reports', default=False)
-    parser.add_argument('--server_mode', dest='server_mode', default=False)
-    parser.add_argument('--mode', dest='mode', default=0)
-    args = parser.parse_args()
-    if args.mode==0:
-        return None
+    return None
 
-    NETWORK_NAME = os.path.splitext(os.path.basename(args.nw))[0]
-    dataset_name = "user" + str(time.time())
-    constants.update_dirs(DATASET_NAME_u=dataset_name)
-    os.makedirs(os.path.join(constants.DATA_DIR, "data"))
-    os.makedirs(os.path.join(constants.OUTPUT_DIR, "output"))
-    os.makedirs(os.path.join(constants.CACHE_DIR, "cache"))
-
-    if args.ge != "" and args.ge != os.path.join(constants.DATA_DIR, os.path.basename(args.ge)):
-        shutil.copy(args.ge, os.path.join(constants.DATA_DIR, "ge.tsv"))
-
-    if args.score != "" and  args.score != os.path.join(constants.DATA_DIR, os.path.basename(args.score)):
-        shutil.copy(args.score, os.path.join(constants.DATA_DIR, "score.tsv"))
-
-    if args.classes != "" and args.classes != os.path.join(constants.DATA_DIR, os.path.basename(args.classes)):
-        shutil.copy(args.classes, os.path.join(constants.DATA_DIR,  "classes.tsv"))
-
-    if args.nw != "" and args.nw != os.path.join(constants.NETWORKS_DIR, NETWORK_NAME + ".sif"):
-        NETWORK_NAME = os.path.splitext(os.path.basename(args.nw))[0]
-        shutil.copy(args.nw, os.path.join(constants.NETWORKS_DIR, NETWORK_NAME + ".sif"))
-
-    if args.reports == "true":
-        constants.REPORTS = True
-        constants.HG_MODE = True
-
-    if args.server_mode == "true":
-        constants.SERVER_MODE = True
-
-
-    return args, NETWORK_NAME, dataset_name
+# def get_parameters():
+#     parser = argparse.ArgumentParser(description='args from wev client')
+#     parser.add_argument('--gene_expression', dest='ge', default="")
+#     parser.add_argument('--score', dest='score', default="")
+#     parser.add_argument('--classes', dest='classes', default="")
+#     parser.add_argument('--network', dest='nw', default="")
+#     parser.add_argument('--reports', dest='reports', default=False)
+#     parser.add_argument('--server_mode', dest='server_mode', default=False)
+#     parser.add_argument('--mode', dest='mode', default=0)
+#     args = parser.parse_args()
+#     if args.mode==0:
+#         return None
+# 
+#     NETWORK_NAME = os.path.splitext(os.path.basename(args.nw))[0]
+#     dataset_name = "user" + str(time.time())
+#     constants.update_dirs(DATASET_NAME_u=dataset_name)
+#     os.makedirs(os.path.join(constants.DATA_DIR, "data"))
+#     os.makedirs(os.path.join(constants.OUTPUT_DIR, "output"))
+#     os.makedirs(os.path.join(constants.CACHE_DIR, "cache"))
+# 
+#     if args.ge != "" and args.ge != os.path.join(constants.DATA_DIR, os.path.basename(args.ge)):
+#         shutil.copy(args.ge, os.path.join(constants.DATA_DIR, "ge.tsv"))
+# 
+#     if args.score != "" and  args.score != os.path.join(constants.DATA_DIR, os.path.basename(args.score)):
+#         shutil.copy(args.score, os.path.join(constants.DATA_DIR, "score.tsv"))
+# 
+#     if args.classes != "" and args.classes != os.path.join(constants.DATA_DIR, os.path.basename(args.classes)):
+#         shutil.copy(args.classes, os.path.join(constants.DATA_DIR,  "classes.tsv"))
+# 
+#     if args.nw != "" and args.nw != os.path.join(constants.NETWORKS_DIR, NETWORK_NAME + ".sif"):
+#         NETWORK_NAME = os.path.splitext(os.path.basename(args.nw))[0]
+#         shutil.copy(args.nw, os.path.join(constants.NETWORKS_DIR, NETWORK_NAME + ".sif"))
+# 
+#     if args.reports == "true":
+#         constants.REPORTS = True
+#         constants.HG_MODE = True
+# 
+#     if args.server_mode == "true":
+#         constants.SERVER_MODE = True
+# 
+# 
+#     return args, NETWORK_NAME, dataset_name
 
 def get_score(score_method):
     if score_method != constants.PREDEFINED_SCORE:
@@ -91,3 +94,4 @@ def init_common_params(NETWORK_NAME, score_method = constants.DEG_EDGER):
         score_file_name = get_score(score_method)
     network_genes = get_network_genes()
     return network_file_name, score_file_name, score_method, network_genes
+

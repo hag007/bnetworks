@@ -69,7 +69,13 @@ def run_bionet_for_all_modules(fdr, network_file_name, score_file_name, is_pval_
     all_bg_genes = []
     small_modules=0
     for x in range(40):
-        module_genes, bg_genes = get_module(network_file_name, score_file_name, is_pval_score, omitted_genes, str(x), fdr=fdr)
+        modules_genes=None
+        bg_genes=None
+        try:
+           module_genes, bg_genes = get_module(network_file_name, score_file_name, is_pval_score, omitted_genes, str(x), fdr=fdr)
+        except:
+           print "got an exception while trying to exctract module #{}. breaking...".format(x)
+           break
         if len(module_genes) == 0 or small_modules==5: break
 
         omitted_genes += list(module_genes)

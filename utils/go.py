@@ -101,7 +101,7 @@ def check_group_enrichment_tango(tested_gene_file_name, total_gene_file_name, al
 
 
 
-def check_group_enrichment_goatools(tested_gene_file_name, total_gene_file_name):
+def check_group_enrichment_goatools(tested_gene_file_name, total_gene_file_name, th=1):
     if len(tested_gene_file_name) == 0 or len(total_gene_file_name) == 0: return []
 
     if type(total_gene_file_name) == str:
@@ -134,7 +134,7 @@ def check_group_enrichment_goatools(tested_gene_file_name, total_gene_file_name)
     # GO_results = [(cur.NS, cur.GO, cur.goterm.name, cur.pop_count, cur.p_uncorrected, cur.p_fdr_bh) for cur in g_res if
     #               cur.p_fdr_bh <= 0.05]
     GO_results = [(cur.NS, cur.GO, cur.goterm.name, cur.pop_count, cur.p_uncorrected) for cur in g_res if
-                  cur.p_uncorrected <= 0.05]
+                  cur.p_uncorrected <= th]
 
     hg_report = [{HG_GO_ROOT : cur[0], HG_GO_ID : cur[1], HG_GO_NAME : cur[2], HG_VALUE : cur[3], HG_PVAL : cur[4] , HG_QVAL : 1} for cur in GO_results] # , HG_QVAL : cur[5]
     # hg_report.sort(key=lambda x: x[HG_QVAL])
