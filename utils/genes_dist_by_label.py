@@ -10,9 +10,8 @@ logger.addHandler(sh)
 from constants import *
 from infra import *
 from param_builder import build_gdc_params
-
-DISTANCE = "distance"
-LOGISTIC_REGRESSION = "logistic_regression"
+import matplotlib.pyplot as plt
+import time
 
 def load_gene_expression_by_label(tested_gene_file_name, expression_profile_file_name, phenotype_file_name, gene_filter_file_name=None, group_conditions=None):
     dist_data = []

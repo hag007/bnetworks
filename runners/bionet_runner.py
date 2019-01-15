@@ -70,7 +70,7 @@ def run_bionet_for_all_modules(fdr, network_file_name, score_file_name, is_pval_
     small_modules=0
     for x in range(40):
         module_genes, bg_genes = get_module(network_file_name, score_file_name, is_pval_score, omitted_genes, str(x), fdr=fdr)
-        if len(module_genes) == 0 or small_modules==5: break
+        if len(module_genes) == 0 or small_modules==100: break
 
         omitted_genes += list(module_genes)
         if len(module_genes) > 3:
@@ -99,7 +99,8 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
 
 if __name__ == "__main__":
-    main()
+    constants.update_dirs(DATASET_NAME_u="GE_ERS_1")
+    main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip.sif")
 
 
 

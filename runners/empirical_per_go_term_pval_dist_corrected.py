@@ -87,9 +87,8 @@ if __name__ == "__main__":
     parser.add_argument('--prefix', dest='prefix', default="GE")
     parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
     parser.add_argument('--network', dest='network', default="dip")
-    parser.add_argument('--pf', help="parallelization_factor", dest='pf', default=10)
-    parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n', default=0)
-    parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n', default=100)
+    parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_start', default=0)
+    parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_end', default=1000)
     parser.add_argument('--network_permutations', dest='network_perm', default="false")
     parser.add_argument('--max_dist', help="takes max or all samples", dest='max_dist', default="true")
     parser.add_argument('--pval_measurement', help="how to calc pval. can be emp or beta", dest='pval_measurement', default="emp")
@@ -102,9 +101,8 @@ if __name__ == "__main__":
     algos=args.algos.split(",")
     prefix = args.prefix
     network_file_name = args.network
-    parallelization_factor = args.pf
-    n_start=args.n_start
-    n_end=args.n_end
+    n_start=int(args.n_start)
+    n_end=int(args.n_end)
     max_dist=args.max_dist.lower()=="true"
     network_perm=args.network_perm.lower()=="true"
     generate_plot=args.generate_plot.lower()=="true"
@@ -134,11 +132,8 @@ if __name__ == "__main__":
             for cur in range(n_start,n_end):
 
 
-                random_ds = "{}_random_{}_{}_{}".format(prefix, dataset, algo, cur)
+                random_ds = "{}_random_{}_{}".format(prefix, dataset, cur)
                 print "\ncur ds/n: {}/{}".format(random_ds, cur)
-
-                run_dataset(random_ds, score_method=score_method,
-                            algos=[algo], network_file_name=network_file_name)
 
                 try:
                     cur_pval, df_terms, df_pval_terms = calc_dist([algo], [random_ds.format(prefix, dataset)])
@@ -184,22 +179,22 @@ if __name__ == "__main__":
 
 
             ## empirical pvalues
-            pval, df_go, df_agg_pval = calc_dist([algo], [dataset], is_plot=False, empirical_th=None)
+            pval, df_go, df_agg_pval = calc_dist([algo], ["{}_{}".format(prefix, dataset)], is_plot=False, empirical_th=None)
             df_agg_pval=df_agg_pval.apply(lambda x: -np.log10(x))
             df_max_pval=df_agg_pval.max(axis=1).to_frame()
             df_pvals = pd.DataFrame()
             for index, row in df_all_terms.iterrows():
 
-                if pval_measurement=="emp":
+                if pval_measurement=="beta":
 
                     bata_params = scipy.stats.beta.fit(row.values)
                     real_value = df_max_pval.loc[index, :] if index in df_max_pval.index else 0
                     df_pvals.loc[index, "emp_pval"] = 1 - scipy.stats.beta.cdf(real_value, *bata_params)
-                    df_pvals.loc[index, "sample_pos"] = pos
 
-                elif pval_measurement=="beta":
+                elif pval_measurement=="emp":
                     pos = np.size(row) - np.searchsorted(np.sort(row), df_max_pval.loc[index,:].iloc[0] if index in df_max_pval.index else 0, side='left')
                     df_pvals.loc[index,"emp_pval"]=pos/float(np.size(row))
+                    df_pvals.loc[index, "sample_pos"] = pos
 
                 df_pvals.loc[index, "dist_n_samples"] = np.size(row.values)
 

@@ -73,8 +73,9 @@ def entrez2ensembl_convertor(entrez_ids):
         entrez2ensembl_dict = get_entrez2ensembl_dictionary()
     results = []
     for cur in entrez_ids:
-        if entrez2ensembl_dict.has_key(cur.split(".")[0]):
-            results.append(entrez2ensembl_dict[cur.split(".")[0]])
+        cur=str(cur)
+        if entrez2ensembl_dict.has_key(cur):
+            results.append(entrez2ensembl_dict[cur])
     return results
 
 if __name__ == "__main__":

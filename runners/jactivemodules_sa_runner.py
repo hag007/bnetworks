@@ -57,7 +57,7 @@ def extract_modules_and_bg(bg_genes, results_file_name, modules_genes_file_name)
 def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip"):
     constants.update_dirs(DATASET_NAME_u=dataset_name)
     search_method = "sa"
-    network_file_name, score_file_name, score_method, bg_genes= server.init_common_params(network_file_name, score_method)
+    network_file_name, score_file_name, score_method, bg_genes= server.init_common_params(network_file_name+".sif", score_method)
 
     results_file_name = init_specific_params(search_method)
 

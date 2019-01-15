@@ -1,6 +1,3 @@
-import json
-from matplotlib import style
-from pandas._libs.parsers import k
 import sys
 sys.path.insert(0, '../')
 import seaborn as sns
@@ -9,17 +6,11 @@ import logging
 sh = logging.StreamHandler()
 logger = logging.getLogger("log")
 logger.addHandler(sh)
-from constants import *
 from infra import *
-from utils.param_builder import build_gdc_params
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-import utils.goids2gonames as goids2gonames
-import shutil
-from datasets_multithread_runner import run_dataset
 from utils.go_pval_dist import create_random_ds
-from utils.go_pval_dist import create_permuted_network
 from multiprocessing import Process
 import argparse
 from pandas.errors import EmptyDataError
@@ -79,6 +70,7 @@ def calc_dist(algos, datasets,is_plot=False,empirical_th=None):
 
 
 def empirical_dist_iteration(prefix, dataset, cur, algo):
+    # from datasets_multithread_runner import run_dataset
     print "starting iteration: {}, {}, {}".format(prefix, dataset, cur)
     random_ds = create_random_ds(prefix, "{}_{}".format(prefix, dataset), cur, algo)
     permuted_network_file_name = "dip"  # _perm
