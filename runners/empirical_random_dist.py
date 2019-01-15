@@ -126,7 +126,7 @@ if __name__ == "__main__":
                 prcs = []
                 print "cur parallel: {}".format(cur_parallel)
                 for cur in range(cur_parallel*parallelization_factor, cur_parallel*parallelization_factor+parallelization_factor):
-                    if override_permutations or not os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,"{}_random_{}_{}_{}".format(prefix, dataset, cur, algo),algo,"modules_summary.tsv")):
+                    if override_permutations or not os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,"{}_random_{}_{}_{}".format(prefix, dataset, algo, cur),algo,"modules_summary.tsv")): 
                         prcs.append(Process(target=empirical_dist_iteration,
                                 args=[prefix, dataset, cur, algo]))
 
