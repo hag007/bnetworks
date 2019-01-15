@@ -22,7 +22,7 @@ import subprocess
 import time
 from openpyxl import Workbook
 from openpyxl.styles import Color, PatternFill, Font, Border, Side, Alignment
-
+from utils.stopwatch import Stopwatch
 
 HG_GO_ROOT = "GO root"
 HG_GO_ID = "GO id"
@@ -127,10 +127,12 @@ def check_group_enrichment_goatools(tested_gene_file_name, total_gene_file_name,
 
     assoc = read_ncbi_gene2go(os.path.join(constants.GO_DIR, constants.GO_ASSOCIATION_FILE_NAME), no_top=True)
 
+    sw=Stopwatch()
+    sw.start()
     g = GOEnrichmentStudy([int(cur) for cur in ensembl2entrez_convertor(total_gene_list)],
-                          assoc, obo_dag, methods=[]) # "bonferroni", "fdr_bh"
+                          assoc, obo_dag, methods=[], log=None) # "bonferroni", "fdr_bh"
     g_res = g.run_study([int(cur) for cur in ensembl2entrez_convertor(tested_gene_list)])
-
+    print sw.stop("done GO analysis in ")
     # GO_results = [(cur.NS, cur.GO, cur.goterm.name, cur.pop_count, cur.p_uncorrected, cur.p_fdr_bh) for cur in g_res if
     #               cur.p_fdr_bh <= 0.05]
     GO_results = [(cur.NS, cur.GO, cur.goterm.name, cur.pop_count, cur.p_uncorrected) for cur in g_res if

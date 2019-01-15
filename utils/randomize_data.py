@@ -19,6 +19,7 @@ import networkx as nx
 import shutil
 from pandas.errors import EmptyDataError
 from utils.permute_network import EdgeSwapGraph
+from functools import partial
 
 import random
 

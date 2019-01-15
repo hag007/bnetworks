@@ -17,6 +17,7 @@ import argparse
 from pandas.errors import EmptyDataError
 from datasets_multithread_runner import run_dataset
 from multiprocessing import Pool
+from functools import partial
 
 
 def plot_dist(pval ,algos_filter):
@@ -120,12 +121,17 @@ if __name__ == "__main__":
         df_all_terms = pd.DataFrame()
         cur_real_ds= "{}_{}".format(prefix, dataset)
 
+
         for algo in algos:
             pval = np.array([])
             prcs = []
-            params=[]
+            indices=list(np.arange(int(n_start), int(n_end)))
+            dataset=[dataset for a in np.arange(int(n_start), int(n_end))]
+            prefixes=[prefix for a in np.arange(int(n_start), int(n_end))]
+            algos=[algo for a in np.arange(int(n_start), int(n_end))]
             p = Pool(parallelization_factor)
-            params.append(map(lambda x: [prefix, dataset, x, algo], np.arange(int(n_start), int(n_end))))
-            p.map(empirical_dist_iteration, params)
+            # params.append(map(lambda x: [prefix, dataset, x, algo], np.arange(int(n_start), int(n_end))))
+            # p.starmap(empirical_dist_iteration, params)
+            p.map(empirical_dist_iteration, prefixes, datasets, indices, algos)
 
 
