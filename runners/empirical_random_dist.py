@@ -127,6 +127,6 @@ if __name__ == "__main__":
 
             p = MyPool(parallelization_factor)
             params=[ [empirical_dist_iteration, [prefix, dataset, x, algo]] for x in np.arange(int(n_start), int(n_end)) if override_permutations or not permutation_output_exists(prefix, dataset, algo, x)]
-            p.map((func_star, params))
+            p.map(func_star, params)
 
 
