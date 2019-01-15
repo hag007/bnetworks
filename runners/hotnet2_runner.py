@@ -102,7 +102,7 @@ def extract_modules_and_bg(bg_genes):
     return modules, all_bg_genes
 
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip"):
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip.sif"):
 
     constants.update_dirs(DATASET_NAME_u=dataset_name)
     network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(network_file_name,score_method)

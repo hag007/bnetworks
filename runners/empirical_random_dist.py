@@ -16,7 +16,27 @@ from multiprocessing import Process
 import argparse
 from pandas.errors import EmptyDataError
 from datasets_multithread_runner import run_dataset
+import multiprocessing
 from multiprocessing import Pool
+from functools import partial
+
+
+
+
+class NoDaemonProcess(multiprocessing.Process):
+    # make 'daemon' attribute always return False
+    def _get_daemon(self):
+        return False
+    def _set_daemon(self, value):
+        pass
+    daemon = property(_get_daemon, _set_daemon)
+
+# We sub-class multiprocessing.pool.Pool instead of multiprocessing.Pool
+# because the latter is only a wrapper function, not a proper class.
+class MyPool(multiprocessing.pool.Pool):
+    Process = NoDaemonProcess
+
+
 
 
 def plot_dist(pval ,algos_filter):
@@ -83,6 +103,10 @@ def empirical_dist_iteration(prefix, dataset, cur, algo):
     print "done iteration: {}, {}, {}".format(prefix, dataset, cur)
     return cur_pval, df_pval_terms
 
+def func_star(a_b):
+    """Convert `f([1,2])` to `f(1,2)` call."""
+    return empirical_dist_iteration(*a_b)
+
 
 if __name__ == "__main__":
 
@@ -120,12 +144,19 @@ if __name__ == "__main__":
         df_all_terms = pd.DataFrame()
         cur_real_ds= "{}_{}".format(prefix, dataset)
 
+
         for algo in algos:
             pval = np.array([])
             prcs = []
-            params=[]
-            p = Pool(parallelization_factor)
-            params.append(map(lambda x: [prefix, dataset, x, algo], np.arange(int(n_start), int(n_end))))
-            p.map(empirical_dist_iteration, params)
+            # indices=list(np.arange(int(n_start), int(n_end)))
+            # datasets=[dataset for a in np.arange(int(n_start), int(n_end))]
+            # prefixes=[prefix for a in np.arange(int(n_start), int(n_end))]
+            # algos=[algo for a in np.arange(int(n_start), int(n_end))]
+            
+            p = MyPool(parallelization_factor)
+            params=[ [prefix, dataset, x, algo] for x in np.arange(int(n_start), int(n_end)) if override_permutations or not permutation_output_exists(prefix, dataset, algo, x)]            # p.starmap(empirical_dist_iteration, params)
+            
+            p.map(func_star, params)
+
 
 
