@@ -10,11 +10,11 @@ from infra import *
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-from utils.go_pval_dist import create_random_ds
+from utils.randomize_data import create_random_ds
 from multiprocessing import Process
 import argparse
 from pandas.errors import EmptyDataError
-
+from datasets_multithread_runner import run_dataset
 
 
 
@@ -70,7 +70,7 @@ def calc_dist(algos, datasets,is_plot=False,empirical_th=None):
 
 
 def empirical_dist_iteration(prefix, dataset, cur, algo):
-    # from datasets_multithread_runner import run_dataset
+
     print "starting iteration: {}, {}, {}".format(prefix, dataset, cur)
     random_ds = create_random_ds(prefix, "{}_{}".format(prefix, dataset), cur, algo)
     permuted_network_file_name = "dip.sif"  # _perm
@@ -126,7 +126,7 @@ if __name__ == "__main__":
                 prcs = []
                 print "cur parallel: {}".format(cur_parallel)
                 for cur in range(cur_parallel*parallelization_factor, cur_parallel*parallelization_factor+parallelization_factor):
-                    if override_permutations or not os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,"{}_random_{}_{}".format(prefix, dataset, cur),algo,"modules_summary.tsv")):
+                    if override_permutations or not os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,"{}_random_{}_{}_{}".format(prefix, dataset, cur, algo),algo,"modules_summary.tsv")):
                         prcs.append(Process(target=empirical_dist_iteration,
                                 args=[prefix, dataset, cur, algo]))
 

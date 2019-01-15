@@ -22,8 +22,6 @@ import numpy as np
 import utils.goids2gonames as goids2gonames
 import shutil
 from datasets_multithread_runner import run_dataset
-from utils.go_pval_dist import create_random_ds
-from utils.go_pval_dist import create_permuted_network
 
 from pandas.errors import EmptyDataError
 import scipy
