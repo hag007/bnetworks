@@ -73,7 +73,7 @@ def empirical_dist_iteration(prefix, dataset, cur, algo):
     # from datasets_multithread_runner import run_dataset
     print "starting iteration: {}, {}, {}".format(prefix, dataset, cur)
     random_ds = create_random_ds(prefix, "{}_{}".format(prefix, dataset), cur, algo)
-    permuted_network_file_name = "dip"  # _perm
+    permuted_network_file_name = "dip.sif"  # _perm
     # if cur==0:
     #     permuted_network_file_name=create_permuted_network(network_file_name=network_file_name)
     run_dataset(random_ds, score_method=score_method,
@@ -91,19 +91,20 @@ if __name__ == "__main__":
     parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
     parser.add_argument('--network', dest='network', default="dip")
     parser.add_argument('--pf', help="parallelization_factor", dest='pf', default=10)
-    parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n', default=0)
-    parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n', default=100)
-    # parser.add_argument('--max_dist', help="takes max or all samples", dest='max_dist', default="true")
+    parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_start', default=0)
+    parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_end', default=100)
+    parser.add_argument('--override_permutations', help="takes max or all samples", dest='override_permutations', default="false")
+
     args = parser.parse_args()
 
     datasets=args.datasets.split(",")
     algos=args.algos.split(",")
     prefix = args.prefix
     network_file_name = args.network
-    parallelization_factor = args.pf
+    parallelization_factor = int(args.pf)
     n_start=args.n_start
     n_end=args.n_end
-    # max_dist=args.max_dist.lower()=="true"
+    override_permutations=args.override_permutations.lower()=="true"
 
 
     summary = []
@@ -121,12 +122,13 @@ if __name__ == "__main__":
         for algo in algos:
             pval = np.array([])
             prcs = []
-            for cur_parallel in range(n_start, n_end):
+            for cur_parallel in range(int(n_start), int(n_end)):
                 prcs = []
                 print "cur parallel: {}".format(cur_parallel)
                 for cur in range(cur_parallel*parallelization_factor, cur_parallel*parallelization_factor+parallelization_factor):
-                    prcs.append(Process(target=empirical_dist_iteration,
-                            args=[prefix, dataset, cur, algo]))
+                    if override_permutations or not os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,"{}_random_{}_{}".format(prefix, dataset, cur),algo,"modules_summary.tsv")):
+                        prcs.append(Process(target=empirical_dist_iteration,
+                                args=[prefix, dataset, cur, algo]))
 
                 for cur in prcs:
                     cur.start()

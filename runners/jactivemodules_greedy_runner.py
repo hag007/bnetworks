@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Calculate differentially expressed genes using EdgeR from bioconductor.
 http://bioconductor.org/packages/2.5/bioc/html/edgeR.html
 Usage:
@@ -65,11 +64,11 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
                   DATASET_DIR=constants.DATASET_DIR,
                   ALGO_DIR=ALGO_DIR, NETWORK_NAME=network_file_name, SCORE_FILE_NAME=score_file_name,
                   IS_GREEDY=str(search_method == "greedy"), OUTPUT_FILE=results_file_name, NUM_OF_MODULES=10, OVERLAP_THRESHOLD=0)
-
+    print "running :{}".format(script_file_name)
     subprocess.Popen("bash {}".format(script_file_name), shell=True,
                      stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
 
-    os.remove(script_file_name)
+    # os.remove(script_file_name)
     modules_genes_file_name = os.path.join(constants.OUTPUT_DIR, "{}_{}_module_genes.txt".format(ALGO_NAME, search_method))
     all_bg_genes, modules = extract_modules_and_bg(bg_genes, results_file_name, modules_genes_file_name)
 
@@ -85,6 +84,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 if __name__ == "__main__":
     constants.update_dirs(DATASET_NAME_u="GE_SHEZH_1")
     main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip")
+
 
 
 

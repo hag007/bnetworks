@@ -86,7 +86,7 @@ if __name__ == "__main__":
     parser.add_argument('--datasets', dest='datasets', default="SOC")
     parser.add_argument('--prefix', dest='prefix', default="GE")
     parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
-    parser.add_argument('--network', dest='network', default="dip")
+    parser.add_argument('--network', dest='network', default="dip.sif")
     parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_start', default=0)
     parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_end', default=1000)
     parser.add_argument('--network_permutations', dest='network_perm', default="false")
@@ -132,13 +132,14 @@ if __name__ == "__main__":
             for cur in range(n_start,n_end):
 
 
-                random_ds = "{}_random_{}_{}".format(prefix, dataset, cur)
+                random_ds = "{}_random_{}_{}_{}".format(prefix, dataset, algo,  cur)
+
                 print "\ncur ds/n: {}/{}".format(random_ds, cur)
 
                 try:
                     cur_pval, df_terms, df_pval_terms = calc_dist([algo], [random_ds.format(prefix, dataset)])
                     if max_dist:
-                        df_pval_terms.max(axis=1).to_frame()
+                        df_pval_terms=df_pval_terms.min(axis=1).to_frame()
 
                     df_all_terms=pd.concat((df_all_terms, df_pval_terms), axis=1)
                 except Exception:
@@ -182,28 +183,42 @@ if __name__ == "__main__":
             pval, df_go, df_agg_pval = calc_dist([algo], ["{}_{}".format(prefix, dataset)], is_plot=False, empirical_th=None)
             df_agg_pval=df_agg_pval.apply(lambda x: -np.log10(x))
             df_max_pval=df_agg_pval.max(axis=1).to_frame()
+            print "total # real enriched terms: {}".format(len(df_max_pval.index))
             df_pvals = pd.DataFrame()
-            for index, row in df_all_terms.iterrows():
-
+            df_counter=0
+            df_agg_pval_filtered = df_agg_pval.loc[df_max_pval.iloc[:,0].values > 1.3, :]
+            for index, row in df_agg_pval_filtered.iterrows():
+                print "current dist_index: {}/{}".format(df_counter, len(df_agg_pval_filtered.index))
+                df_counter+=1
+                # if df_agg_pval.loc[index,"filtered_pval"] < 1.3:
+                #     df_pvals.loc[index, "emp_pval"] =0
+                #     df_pvals.loc[index, "dist_n_samples"] = 0
+                #     df_pvals.loc[index, "sample_pos"] = 0
+                row=df_all_terms.loc[index,:].values if index in df_all_terms.index  else np.array([0])
+ 
+                # row=row[row!=0]
+                if row.shape[0]==0:
+                   row=np.array([0])
+                print "shape: {}".format(row.shape)
                 if pval_measurement=="beta":
 
-                    bata_params = scipy.stats.beta.fit(row.values)
+                    bata_params = scipy.stats.chi2.fit(row)
                     real_value = df_max_pval.loc[index, :] if index in df_max_pval.index else 0
-                    df_pvals.loc[index, "emp_pval"] = 1 - scipy.stats.beta.cdf(real_value, *bata_params)
+                    df_pvals.loc[index, "emp_pval"] = 1 - scipy.stats.chi2.cdf(real_value, *bata_params)
+                    df_pvals.loc[index, "sample_pos"] = 0
 
                 elif pval_measurement=="emp":
                     pos = np.size(row) - np.searchsorted(np.sort(row), df_max_pval.loc[index,:].iloc[0] if index in df_max_pval.index else 0, side='left')
                     df_pvals.loc[index,"emp_pval"]=pos/float(np.size(row))
                     df_pvals.loc[index, "sample_pos"] = pos
 
-                df_pvals.loc[index, "dist_n_samples"] = np.size(row.values)
+                df_pvals.loc[index, "dist_n_samples"] = str(list(row))
 
 
             for index, row in df_max_pval.iterrows():
                 if index not in df_pvals.index:
                     df_pvals.loc[index, "emp_pval"] =0
                     df_pvals.loc[index, "dist_n_samples"] = 0
-                if pval_measurement == "emp":
                     df_pvals.loc[index, "sample_pos"] = 0
 
             df_max_pval.columns=['pval']
@@ -263,7 +278,7 @@ if __name__ == "__main__":
             df_diff["zscore"] = (df_diff["filtered_pval"] - joint_dist_mean) / joint_dist_std
             df_diff.loc[df_diff["zscore"].isna().values, "zscore"] = np.inf
             df_diff=df_diff.sort_values(ascending=False, by=['zscore', 'diff'])
-            df_diff.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_diff.tsv"),
+            df_diff.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_diff_{}_{}.tsv".format(dataset, algo)),
                                         sep='\t', index_label="GO id")
 
             if generate_plot:
@@ -308,6 +323,7 @@ if __name__ == "__main__":
             # plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
             #                          "diff_positive_agg_dist_{}_{}.png".format(dataset,algo)))
             # plt.clf()
+
 
 
 
