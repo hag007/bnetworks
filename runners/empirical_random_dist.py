@@ -11,11 +11,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from utils.randomize_data import create_random_ds
+from utils.randomize_data import permutation_output_exists
 from multiprocessing import Process
 import argparse
 from pandas.errors import EmptyDataError
 from datasets_multithread_runner import run_dataset
-
+from multiprocessing import Pool
 
 
 def plot_dist(pval ,algos_filter):
@@ -122,16 +123,9 @@ if __name__ == "__main__":
         for algo in algos:
             pval = np.array([])
             prcs = []
-            for cur_parallel in range(int(n_start), int(n_end)):
-                prcs = []
-                print "cur parallel: {}".format(cur_parallel)
-                for cur in range(cur_parallel*parallelization_factor, cur_parallel*parallelization_factor+parallelization_factor):
-                    if override_permutations or not os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,"{}_random_{}_{}_{}".format(prefix, dataset, algo, cur),algo,"modules_summary.tsv")): 
-                        prcs.append(Process(target=empirical_dist_iteration,
-                                args=[prefix, dataset, cur, algo]))
+            params=[]
+            p = Pool(parallelization_factor)
+            params.append(map(lambda x: [prefix, dataset, x, algo], np.arange(int(n_start), int(n_end))))
+            p.map(empirical_dist_iteration, params)
 
-                for cur in prcs:
-                    cur.start()
-                for cur in prcs:
-                    cur.join()
 

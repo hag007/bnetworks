@@ -23,16 +23,27 @@ from utils.permute_network import EdgeSwapGraph
 import random
 
 
+def get_permutation_name(prefix, dataset, algo, index):
+    random_ds_name=prefix + "_random_" + dataset
+    if algo is not None:
+        random_ds_name += "_{}".format(algo)
+    if index is not None:
+        random_ds_name += "_{}".format(index)
+
+    return random_ds_name
+
+
+def permutation_output_exists(prefix, dataset, algo, index):
+    return os.path.exists(
+        os.path.join(constants.OUTPUT_GLOBAL_DIR, get_permutation_name(prefix, dataset, algo, index), algo,
+                     "modules_summary.tsv"))
+
 def create_random_ds(prefix, cur_ds, index=None, algo=None):
     data_type = "score.tsv"
     if prefix=="GE":
         data_type="ge.tsv"
     cur_ds = cur_ds[len(prefix)+1:]
-    random_ds_name=prefix + "_random_" + cur_ds
-    if algo is not None:
-        random_ds_name+="_{}".format(algo)
-    if index is not None:
-        random_ds_name+="_{}".format(index)
+    random_ds_name=get_permutation_name(prefix, cur_ds, algo, index)
     root_random_dir=os.path.join(constants.DATASETS_DIR, random_ds_name)
     if os.path.exists(root_random_dir):
         shutil.rmtree(root_random_dir)
