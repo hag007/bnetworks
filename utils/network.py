@@ -304,7 +304,7 @@ def generate_algo_report(algo_name, modules, bg_genes, all_hg_reports, disease_n
                          modules_summary, score_file_name, network_file_name, report_name, dataset_name):
     hg_report = []
     module_genes = list(set([gene for module in modules for gene in module]))
-    if constants.HG_MODE or constants.EMB_MODE:
+    if (constants.HG_MODE or constants.EMB_MODE) and constants.ALGO_HG_MODE:
         hg_report = check_group_enrichment(module_genes, bg_genes, algo_name)
     cy = draw_network(modules, score_file_name, network_file_name)
     generate_report_from_template(report_name, cy, algo_name, hg_report, dataset_name, [], modules_summary)
