@@ -12,12 +12,11 @@ import pandas as pd
 import numpy as np
 from utils.randomize_data import create_random_ds
 from utils.randomize_data import permutation_output_exists
-from multiprocessing import Process
 import argparse
 from pandas.errors import EmptyDataError
 from datasets_multithread_runner import run_dataset
-from multiprocessing import Pool
-from functools import partial
+from utils.daemon_multiprocessing import MyPool, func_star
+
 
 
 def plot_dist(pval ,algos_filter):
@@ -125,13 +124,9 @@ if __name__ == "__main__":
         for algo in algos:
             pval = np.array([])
             prcs = []
-            indices=list(np.arange(int(n_start), int(n_end)))
-            dataset=[dataset for a in np.arange(int(n_start), int(n_end))]
-            prefixes=[prefix for a in np.arange(int(n_start), int(n_end))]
-            algos=[algo for a in np.arange(int(n_start), int(n_end))]
-            p = Pool(parallelization_factor)
-            # params.append(map(lambda x: [prefix, dataset, x, algo], np.arange(int(n_start), int(n_end))))
-            # p.starmap(empirical_dist_iteration, params)
-            p.map(empirical_dist_iteration, prefixes, datasets, indices, algos)
+
+            p = MyPool(parallelization_factor)
+            params=[ [empirical_dist_iteration, [prefix, dataset, x, algo]] for x in np.arange(int(n_start), int(n_end)) if override_permutations or not permutation_output_exists(prefix, dataset, algo, x)]
+            p.map((func_star, params))
 
 

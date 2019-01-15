@@ -17,7 +17,7 @@ import zipfile
 from utils.go import check_group_enrichment
 import go
 import multiprocessing
-
+from daemon_multiprocessing import func_star
 
 SH_MODULE_NAME = "module"
 SH_NUM_GENES = "#_genes"
@@ -242,9 +242,7 @@ def generate_report_from_template(output_file_name, cy, algo_name="", hg_report=
 
 
 
-def module_report_star(a_b):
 
-    return module_report(*a_b)
 
 
 def build_all_reports(algo_name, dataset_name, modules, all_bg_genes, score_file_name, network_file_name, disease_name=None, expected_genes=None):
@@ -258,13 +256,13 @@ def build_all_reports(algo_name, dataset_name, modules, all_bg_genes, score_file
     modules_summary = manager.list()
 
     params=[]
-    p=multiprocessing.Pool(10)
+    p=multiprocessing.Pool()
     for i, module in enumerate(modules):
-        params.append([algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports,
-             modules_summary])
+        params.append([module_report, [algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports,
+             modules_summary]])
         # module_report_star([algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports, modules_summary])
 
-    p.map(module_report_star, params)
+    p.map(func_star, params)
 
     modules_summary=list(modules_summary)
     all_hg_reports=list(all_hg_reports)

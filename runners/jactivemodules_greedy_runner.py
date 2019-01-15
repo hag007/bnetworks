@@ -68,7 +68,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
     subprocess.Popen("bash {}".format(script_file_name), shell=True,
                      stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
 
-    os.remove(script_file_name)
+    # os.remove(script_file_name)
     modules_genes_file_name = os.path.join(constants.OUTPUT_DIR, "{}_{}_module_genes.txt".format(ALGO_NAME, search_method))
     all_bg_genes, modules = extract_modules_and_bg(bg_genes, results_file_name, modules_genes_file_name)
 
