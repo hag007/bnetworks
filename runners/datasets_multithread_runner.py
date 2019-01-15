@@ -11,7 +11,7 @@ from runners import netbox_runner
 from runners import reactomefi_runner
 from runners import matisse_runner
 import shutil
-from utils.go_pval_dist import create_random_ds
+from utils.randomize_data import create_random_ds
 
 
 algo_by_names = {"reactomefi":reactomefi_runner.main,
