@@ -256,7 +256,7 @@ def build_all_reports(algo_name, dataset_name, modules, all_bg_genes, score_file
     modules_summary = manager.list()
 
     params=[]
-    p=multiprocessing.Pool(10)
+    p=multiprocessing.Pool(5)
     for i, module in enumerate(modules):
         params.append([module_report, [algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports,
              modules_summary]])

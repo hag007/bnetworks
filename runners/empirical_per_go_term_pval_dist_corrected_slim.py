@@ -29,13 +29,14 @@ def calc_dist(algos, datasets, shared_list=None, is_max=True):
             df_go_pvals = pd.DataFrame()
             df_go_pvals.index.name="GO id"
             for cur_ds in datasets:
+                print "fetch permutation {}".format(cur_ds)
                 n_modules=len(pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo, "modules_summary.tsv"), sep='\t').index)
                 go_results = [os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo, cur_module) for cur_algo in
                               os.listdir(os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds))
                               if os.path.isdir(
                         os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo)) and cur_algo in algos_filter for
                               cur_module in os.listdir(os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo)) if
-                              "separated_modules" in cur_module and int(cur_module.split("_")[-1]) < n_modules]
+                              "separated_modules" in cur_module and int(cur_module.split("_")[1]) < n_modules]
 
                 for cur in go_results:
                     try:
@@ -51,10 +52,13 @@ def calc_dist(algos, datasets, shared_list=None, is_max=True):
             if not is_max:
                 df_go_pvals[df_go_pvals.isna()] = 1
 
-            shared_list.append(df_go_pvals)
+            if shared_list is not None:
+                shared_list.append(df_go_pvals)
+                print "done aggregate {} permutations".format(len(shared_list)) 
             return df_go_pvals
-    except ValueError:
-        pass
+    except Exception, e:
+       print Exception, e 
+       pass
 
 
 if __name__ == "__main__":
@@ -81,8 +85,7 @@ if __name__ == "__main__":
     n_start=int(args.n_start)
     n_end=int(args.n_end)
     max_dist=args.max_dist.lower()=="true"
-    network_perm=args.network_perm.lower()=="true"
-    generate_plot=args.generate_plot.lower()=="true"
+    network_perm=args.network_perm.lower()=="true" 
     recalc_true_modules=args.recalc_true_modules.lower()=="true"
     pval_measurement=args.pval_measurement
     pf=args.pf
@@ -103,7 +106,7 @@ if __name__ == "__main__":
             manager = multiprocessing.Manager()
             pvals = manager.list()
             params = []
-            p = multiprocessing.Pool(pf)
+            p = multiprocessing.Pool(int(pf))
 
             total_n_terms = []
             n_terms_filtered_in = []
@@ -111,14 +114,14 @@ if __name__ == "__main__":
             diff_values = np.array([0])
             df_all_terms = pd.DataFrame()
 
-            bad_iterations=[]
+            
             params=[[calc_dist, [[algo], [get_permutation_name(prefix, dataset, algo,  cur)], pvals]] for cur in range(n_start,n_end)]
             p.map(func_star, params)
-            df_all_terms = pd.DataFrame(list(pvals), axis=1)
+            pvals=list(pvals)
+            df_all_terms = pd.concat(pvals, axis=1)
 
-            print "total # bad iterations: {}".format(len(bad_iterations))
-            print "bad iterations: {}".format(bad_iterations)
-
+            print "total # permutations: {}/{}".format(len(pvals), n_end-n_start)
+            
             if recalc_true_modules:
                 if os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,  "{}_{}".format(prefix, dataset), algo)):
                     shutil.rmtree(os.path.join(constants.OUTPUT_GLOBAL_DIR, "{}_{}".format(prefix, dataset), algo))
@@ -127,10 +130,10 @@ if __name__ == "__main__":
 
 
             ## empirical pvalues
-            df_real_agg_pval = calc_dist([algo], ["{}_{}".format(prefix, dataset)], is_plot=False, empirical_th=None)
+            df_real_agg_pval = calc_dist([algo], ["{}_{}".format(prefix, dataset)])
             df_real_agg_pval=df_real_agg_pval.apply(lambda x: -np.log10(x))
             df_real_max_pval=df_real_agg_pval.max(axis=1).to_frame()
-            print "total # real enriched terms: {}".format(len(df_real_max_pval.index))
+            print "total # real terms: {}".format(len(df_real_max_pval.index))
             df_counter=0
             df_results=df_all_terms.apply(lambda row : str(list(row)), axis=1).to_frame()
             df_results.columns = ['dist_n_samples']
