@@ -275,7 +275,7 @@ def build_all_reports(algo_name, dataset_name, modules, all_bg_genes, score_file
     df_summary.index.name="module"
     bg_genes = []
     if len(modules) > 0:
-        df_summary=pd.DataFrame(list(modules_summary)).set_index("module")
+        df_summary=pd.DataFrame(modules_summary).set_index("module")
         bg_genes = all_bg_genes[0]
 
     df_summary.to_csv(

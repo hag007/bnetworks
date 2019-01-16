@@ -19,10 +19,12 @@ import subprocess
 import constants
 import os
 from utils.ensembl2entrez import entrez2ensembl_convertor
+
 dict_result, go2geneids, geneids2go, entrez2ensembl = go_hierarcies.build_hierarcy(
             roots=['GO:0008150'])
 vertices=dict_result.values()[0]['vertices']
 
+N_PERMUTATIONS=300
 
 def mean_difference(row, dataset_data, classes_data):
     try:
@@ -34,6 +36,19 @@ def mean_difference(row, dataset_data, classes_data):
         print "no gene were found for {}, {} (pval={})".format(row["index"], row["GO name"],
                                                                         row["filtered_pval"])
 
+def calc_empirical_pval(row):
+
+    pval = np.array([float(x) for x in row["dist_n_samples"][1:-1].split(", ")])
+
+    if len(pval) < N_PERMUTATIONS:
+        raise ValueError
+
+    else:
+        pval = pval[:N_PERMUTATIONS]
+        pos = np.size(pval) - np.searchsorted(np.sort(pval), row["filtered_pval"], side='left')
+        emp_pval = pos / float(np.size(pval))
+
+    return emp_pval
 
 
 def get_all_genes_for_term(vertices, cur_root, term, in_subtree):
@@ -47,18 +62,10 @@ def get_all_genes_for_term(vertices, cur_root, term, in_subtree):
     return all_genes
 
 
-def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr","{dataset}_MAX/emp_diff_{dataset}_{algo}_md.tsv" )):
-
-    df_hg_cutoffs=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "hg_cutoffs_summary.tsv"), sep='\t')
-    df_emp_cutoffs=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "emp_cutoffs_summary.tsv"), sep='\t')
-    df_n_terms=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "n_terms_summary.tsv"), sep='\t')
-
-    print "dataset: {}".format(dataset)
+def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr","{dataset}_MAX/emp_diff_{dataset}_{algo}.tsv" )):
 
     dataset_data=pd.read_csv(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset),"data", "ge.tsv"), sep='\t', index_col=0)
     classes_data=np.array(file(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset), "data", "classes.tsv")).readlines()[0].strip().split("\t")).astype(np.int)
-
-
 
     csv_file_name=csv_file_name.format(dataset=dataset, algo=algo)
     df=None
@@ -68,6 +75,10 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
         return None
     df=df.dropna()
 
+    n_genes=[len(get_all_genes_for_term(vertices, cur_go_id, cur_go_id, cur_go_id==cur_go_id)) for i, cur_go_id in enumerate(df.index.values)]
+    depth=[dict_result.values()[0]['vertices'][cur_go_id]['D'] for i, cur_go_id in enumerate(df.index.values)]
+    df["n_genes"]=pd.Series(n_genes, index=df.index)
+    df["depth"]=pd.Series(depth, index=df.index)
 
     n_genes_pvals=df.loc[np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500]), "filtered_pval"].values
 
@@ -76,51 +87,33 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     n_genes_pvals = [10**(-x) for x in n_genes_pvals]
     fdr_results = fdrcorrection0(n_genes_pvals, alpha=0.05, method='indep', is_sorted=False)
     true_counter = len([cur for cur in fdr_results[0] if cur == True])
-    HG_CUTOFF=np.sort(n_genes_pvals)[true_counter-1]
-    print "HG cutoff: {}".format(HG_CUTOFF)
-
-    n_genes_pvals = df["emp_pval"].values
-    fdr_results = fdrcorrection0(n_genes_pvals, alpha=0.05, method='indep', is_sorted=False)
-    true_counter = len([cur for cur in fdr_results[0] if cur == True])
-    EMP_CUTOFF = np.sort(n_genes_pvals)[true_counter-1] if true_counter>0 else 0
-    print "emp cutoff: {}".format(EMP_CUTOFF)
+    HG_CUTOFF=-np.log10(n_genes_pvals[true_counter])
+    print "cutoff: {}".format(HG_CUTOFF)
 
     df_filtered_in=df.loc[np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["filtered_pval"].values > HG_CUTOFF]), :]
-    df_filtered_out=df.loc[~np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["filtered_pval"].values > HG_CUTOFF]), :]
+    df_filtered_out = df.loc[~np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["filtered_pval"].values > HG_CUTOFF]), :]
 
-    counter=0
-    oob_params_counter=0
+    df_filtered_in["index"] = df_filtered_in.index.values
+    df_filtered_in["emp_pval"] = df_filtered_in.apply(calc_empirical_pval, axis=1)
+    df_filtered_in["mean_difference"] = df_filtered_in.apply(lambda x: mean_difference(x, dataset_data, classes_data), axis=1)
 
-
-
-
-    pvals_corrected=df_filtered_in["emp_pval"].values
-    fdr_results = fdrcorrection0(pvals_corrected , alpha=0.05, method='indep', is_sorted=False)
+    pvals_corrected = df_filtered_in["emp_pval"].values
+    fdr_results = fdrcorrection0(pvals_corrected, alpha=0.05, method='indep', is_sorted=False)
     true_counter = len([cur for cur in fdr_results[0] if cur == True])
-    emp_cutoff=np.sort(pvals_corrected)[true_counter-1] if true_counter > 0 else 0
-    print "emp true hypothesis: {} (emp cutoff: {})".format(true_counter, emp_cutoff)
+    emp_cutoff = np.sort(pvals_corrected)[true_counter - 1] if true_counter > 0 else 0
+    print "emp true hypothesis: {} (emp cutoff: {}, n={})".format(true_counter, emp_cutoff, len(
+        df_filtered_in["dist_n_samples"].iloc[0][1:-1].split(", ")))
 
-    # fdr_results = fdrcorrection0(df_filtered_in["chi2_pval"].values, alpha=0.05, method='indep', is_sorted=False)
-    # true_counter = len([cur for cur in fdr_results[0] if cur == True])
-    # print "chi2 true hypothesis: {}".format(true_counter)
+    df_filtered_in["passed_fdr"]=df_filtered_in["emp_pval"].apply(lambda x: x<=emp_cutoff)
 
-    # fdr_results = fdrcorrection0(df_filtered_in["beta_pval"].values, alpha=0.05, method='indep', is_sorted=False)
-    # true_counter = len([cur for cur in fdr_results[0] if cur == True])
-    # print "beta true hypothesis: {}".format(true_counter)
+    df_filtered_in["emp_rank"]=df_filtered_in["emp_pval"].rank(ascending=1)
+    df_filtered_in["hg_rank"]=df_filtered_in["filtered_pval"].rank(ascending=0)
 
-    # fdr_results = fdrcorrection0(df_filtered_in["mixture_pval"].values, alpha=0.05, method='indep', is_sorted=False)
-    # true_counter = len([cur for cur in fdr_results[0] if cur == True])
-    # print "mixture true hypothesis: {}".format(true_counter)
+    df_filtered_in=df_filtered_in.sort_values(by=["emp_rank", "hg_rank"])
 
-
-    pd.concat((df_filtered_in, df_filtered_out), axis=0).loc[df["filtered_pval"].values > 0, :][["GO name", "filtered_pval", "emp_pval", "hg_rank", "emp_rank", "passed_fdr", "mean_difference", "n_genes", "depth", "diff", "th_pval"]].to_csv(csv_file_name[:-4]+"_x.tsv",sep='\t') #
-
+    pd.concat((df_filtered_in, df_filtered_out), axis=0).loc[df["filtered_pval"].values > 0, :][["GO name", "filtered_pval", "emp_pval", "hg_rank", "emp_rank",  "n_genes", "depth", "diff", "th_pval", "mean_difference", "passed_fdr"]].to_csv(csv_file_name[:-4]+"_md.tsv",sep='\t')
     return len(df_filtered_in.index), true_counter, HG_CUTOFF, emp_cutoff
 
-
-    # "emp_pval", "beta_pval", "chi2_pval", "mixture_pval", "hg_rank", "emp_rank", "beta_rank", "chi2_rank", "mixture_rank",
-
-
 if __name__ == "__main__":
-    csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","SOC_MAX", "emp_diff_{dataset}_{algo}_md.tsv")
-    main(dataset="SOC2", algo="jactivemodules_greedy_5000", csv_file_name=csv_file_name)
+    csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","300", "TNFa_2_MAX", "emp_diff_{dataset}_{algo}.tsv")
+    main(dataset="TNFa_2", algo="jactivemodules_sa", csv_file_name=csv_file_name)
