@@ -23,7 +23,8 @@ import scipy
 from scipy.optimize import least_squares
 import random
 from statsmodels.sandbox.stats.multicomp import fdrcorrection0
-
+import multiprocessing
+from utils.daemon_multiprocessing import func_star
 def calc_emp_pval(cur_rv, cur_dist):
     pos = np.size(cur_dist) - np.searchsorted(np.sort(cur_dist), cur_rv, side='left')
 
@@ -32,14 +33,13 @@ def calc_emp_pval(cur_rv, cur_dist):
 
 
 
-def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_total_samples = None, limit = 10000):
-
+def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_total_samples = None, shared_list=None, limit = 10000):
     output_md = pd.read_csv(
         os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "{}_MAX".format(dataset_sample), "emp_diff_{}_{}_md.tsv".format(dataset_sample, algo_sample)),
         sep='\t', index_col=0).dropna()
 
-
-    n_genes_pvals=output_md.loc[np.logical_and.reduce([output_md["n_genes"].values > 5, output_md["n_genes"].values < 500]), "filtered_pval"].values
+    # output_md = output_md.rename(columns={"filtered_pval": "hg_pval"})
+    n_genes_pvals=output_md.loc[np.logical_and.reduce([output_md["n_genes"].values > 5, output_md["n_genes"].values < 500]), "hg_pval"].values
 
     print "total n_genes with pval:{}/{}".format(np.size(n_genes_pvals), 7435)
     n_genes_pvals=np.append(n_genes_pvals,np.zeros(7435-np.size(n_genes_pvals)))
@@ -51,11 +51,12 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
 
     output_md = output_md.loc[np.logical_and.reduce(
         [output_md["n_genes"].values > 5, output_md["n_genes"].values < 500,
-         output_md["filtered_pval"].values > HG_CUTOFF]), :]
+         output_md["hg_pval"].values > HG_CUTOFF]), :]
 
     output = pd.read_csv(
         os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "{}_MAX".format(dataset_sample), "emp_diff_{}_{}.tsv".format(dataset_sample, algo_sample)),
         sep='\t', index_col=0).dropna()
+    output = output.rename(columns={"filtered_pval": "hg_pval"})
     output = output.loc[output_md.index.values, :]
     counter = 0
     emp_dists = []
@@ -72,7 +73,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
         # print "cur iteration in real data: {}/{}".format(counter, len(output.index))
         pval = np.array([float(x) for x in cur["dist_n_samples"][1:-1].split(", ")])[i_dist]
 
-        emp_pvals.append(calc_emp_pval(cur["filtered_pval"], pval))
+        emp_pvals.append(calc_emp_pval(cur["hg_pval"], pval))
         emp_dists.append(pval)
         counter += 1
     dist_name = "emp"
@@ -80,27 +81,28 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
     df_dists["emp"] = pd.Series(emp_dists, index=output.index[:limit])
 
     zero_bool=[x<=0.004 for x in emp_pvals]
-    fdr_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)
-    mask_terms=zero_bool
+    fdr_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
+    mask_terms=fdr_results
     go_ids_result=output.index.values[mask_terms]
     go_names_result=output["GO name"].values[mask_terms]
     n_emp_true =sum(mask_terms)
     BH_TH = np.sort(emp_pvals)[n_emp_true - 1]
 
     print "BH cutoff: {} # true terms passed BH cutoff: {}".format(BH_TH, n_emp_true)
+    if shared_list is not None:
+        shared_list.append((BH_TH, n_emp_true, HG_CUTOFF, n_hg_true, go_ids_result, go_names_result))
     return BH_TH, n_emp_true, HG_CUTOFF, n_hg_true, go_ids_result, go_names_result
 
 
 if __name__ == "__main__":
 
-    n_iteration = 100
+    n_iteration = 200
     n_total_samples=1000
     n_dist_samples = 300
     sig_terms_summary=pd.DataFrame()
     full_report=pd.DataFrame()
-    datasets = ["TNFa_2", "HC12", "SHERA",
-                "ROR_1", "SHEZH_1"]  # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
-    algos = ["jactivemodules_greedy", "jactivemodules_sa", "bionet"]  # , "bionet" # "hotnet2"
+    datasets = ["TNFa_2", "HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"]  # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
+    algos = ["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"]  # , "bionet" # "hotnet2"
 
     for cur_ds in datasets:
         for cur_alg in algos:
@@ -114,9 +116,17 @@ if __name__ == "__main__":
             go_names_results=[]
             ys1=[]
             ys2=[]
+            print "{}_{}".format(cur_alg, cur_alg)
 
+            shared_list = multiprocessing.Manager().list()
+            params=[]
             for cur in range(n_iteration):
-                BH_TH, n_emp_true, HG_CUTOFF, n_hg_true, go_ids_result, go_names_result = main(n_dist_samples = n_dist_samples, dataset_sample=cur_ds, algo_sample=cur_alg, n_total_samples=n_total_samples)
+                params.append([main, [cur_alg, cur_ds, n_dist_samples, n_total_samples, shared_list]])
+
+            p = multiprocessing.Pool(3)
+            p.map(func_star, params)
+
+            for BH_TH, n_emp_true, HG_CUTOFF, n_hg_true, go_ids_result, go_names_result in list(shared_list):
                 l_emp_cutoff.append(str(BH_TH))
                 l_n_emp_true.append(str(n_emp_true))
                 l_hg_cutoff.append(str(HG_CUTOFF))

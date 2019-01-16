@@ -1,5 +1,5 @@
 import multiprocessing
-
+from multiprocessing.pool import Pool
 
 def func_star(a_b):
     """Convert `f([1,2])` to `f(1,2)` call."""
@@ -19,7 +19,7 @@ class NoDaemonProcess(multiprocessing.Process):
 
 # We sub-class multiprocessing.pool.Pool instead of multiprocessing.Pool
 # because the latter is only a wrapper function, not a proper class.
-class MyPool(multiprocessing.pool.Pool):
+class MyPool(Pool):
     Process = NoDaemonProcess
 
 

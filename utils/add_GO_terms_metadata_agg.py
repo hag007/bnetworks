@@ -34,7 +34,7 @@ def mean_difference(row, dataset_data, classes_data):
                                                                              True)), classes_data == 1].dropna().values.mean()
     except:
         print "no gene were found for {}, {} (pval={})".format(row["index"], row["GO name"],
-                                                                        row["filtered_pval"])
+                                                                        row["hg_pval"])
 
 def calc_empirical_pval(row):
 
@@ -45,7 +45,7 @@ def calc_empirical_pval(row):
 
     else:
         pval = pval[:N_PERMUTATIONS]
-        pos = np.size(pval) - np.searchsorted(np.sort(pval), row["filtered_pval"], side='left')
+        pos = np.size(pval) - np.searchsorted(np.sort(pval), row["hg_pval"], side='left')
         emp_pval = pos / float(np.size(pval))
 
     return emp_pval
@@ -79,8 +79,9 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     depth=[dict_result.values()[0]['vertices'][cur_go_id]['D'] for i, cur_go_id in enumerate(df.index.values)]
     df["n_genes"]=pd.Series(n_genes, index=df.index)
     df["depth"]=pd.Series(depth, index=df.index)
+    df=df.rename(columns={"filtered_pval" : "hg_pval"})
 
-    n_genes_pvals=df.loc[np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500]), "filtered_pval"].values
+    n_genes_pvals=df.loc[np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500]), "hg_pval"].values
 
     print "total n_genes with pval:{}/{}".format(np.size(n_genes_pvals), 7435)
     n_genes_pvals=np.append(n_genes_pvals,np.zeros(7435-np.size(n_genes_pvals)))
@@ -90,8 +91,8 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     HG_CUTOFF=-np.log10(n_genes_pvals[true_counter])
     print "cutoff: {}".format(HG_CUTOFF)
 
-    df_filtered_in=df.loc[np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["filtered_pval"].values > HG_CUTOFF]), :]
-    df_filtered_out = df.loc[~np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["filtered_pval"].values > HG_CUTOFF]), :]
+    df_filtered_in=df.loc[np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["hg_pval"].values > HG_CUTOFF]), :]
+    df_filtered_out = df.loc[~np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["hg_pval"].values > HG_CUTOFF]), :]
 
     df_filtered_in["index"] = df_filtered_in.index.values
     df_filtered_in["emp_pval"] = df_filtered_in.apply(calc_empirical_pval, axis=1)
@@ -107,11 +108,11 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     df_filtered_in["passed_fdr"]=df_filtered_in["emp_pval"].apply(lambda x: x<=emp_cutoff)
 
     df_filtered_in["emp_rank"]=df_filtered_in["emp_pval"].rank(ascending=1)
-    df_filtered_in["hg_rank"]=df_filtered_in["filtered_pval"].rank(ascending=0)
+    df_filtered_in["hg_rank"]=df_filtered_in["hg_pval"].rank(ascending=0)
 
     df_filtered_in=df_filtered_in.sort_values(by=["emp_rank", "hg_rank"])
 
-    pd.concat((df_filtered_in, df_filtered_out), axis=0).loc[df["filtered_pval"].values > 0, :][["GO name", "filtered_pval", "emp_pval", "hg_rank", "emp_rank",  "n_genes", "depth", "diff", "th_pval", "mean_difference", "passed_fdr"]].to_csv(csv_file_name[:-4]+"_md.tsv",sep='\t')
+    pd.concat((df_filtered_in, df_filtered_out), axis=0).loc[df["hg_pval"].values > 0, :][["GO name", "hg_pval", "emp_pval", "hg_rank", "emp_rank",  "n_genes", "depth", "mean_difference", "passed_fdr"]].to_csv(csv_file_name[:-4]+"_md.tsv",sep='\t')
     return len(df_filtered_in.index), true_counter, HG_CUTOFF, emp_cutoff
 
 if __name__ == "__main__":
