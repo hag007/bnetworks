@@ -100,7 +100,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
 
 if __name__ == "__main__":
 
-    n_iteration = 1000
+    n_iteration = 20
     n_total_samples=1000
     n_dist_samples = 300
     sig_terms_summary=pd.DataFrame()
@@ -143,19 +143,27 @@ if __name__ == "__main__":
                     go_names_results.append(go_names_result)
                     go_names_intersection = list(set(go_names_results[0]).intersection(*go_names_results))
 
+
                     print "total intersection size : {}".format(len(go_names_intersection))
                     ys1.append(len(go_names_intersection))
                     ys2.append(len(go_names_result))
 
             plt.clf()
 
+            go_ids_intersection = list(set(go_ids_results[0]).intersection(*go_ids_results))
+
             output_md = pd.read_csv(
                 os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
                              "emp_diff_{}_{}_md.tsv".format(cur_ds, cur_alg)),
                 sep='\t', index_col=0)
 
-            output_md.loc[go_ids_results,"passed_oob_permutation_test"]=True
-            output_md.loc[~np.isin(output_md.index.values, np.array(go_ids_results)), "passed_oob_permutation_test"] = False
+            output_md.loc[go_ids_intersection,"passed_oob_permutation_test"]=True
+            output_md.loc[~np.isin(output_md.index.values, np.array(go_ids_intersection)), "passed_oob_permutation_test"] = False
+
+            output_md.to_csv(
+                os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr",
+                             "emp_diff_{}_{}_passed_oob.tsv".format(cur_ds, cur_alg)),
+                sep='\t')
 
             sig_terms_summary.loc[cur_alg,cur_ds]=len(go_names_intersection)
             modules_summary=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"GE_{}".format(cur_ds),cur_alg,"modules_summary.tsv"), sep='\t')

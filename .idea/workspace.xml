@@ -8,7 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env/config/conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/env/config/conf.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/fdr_consistent_terms.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/fdr_consistent_terms.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +27,8 @@
       <file leaf-file-name="add_GO_terms_metadata_agg.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="28" column="58" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="58" />
+            <state relative-caret-position="181">
+              <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -38,8 +39,8 @@
       <file leaf-file-name="conf.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/env/config/conf.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="1" column="44" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="44" />
+            <state relative-caret-position="95">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -77,8 +78,8 @@
       <file leaf-file-name="fdr_consistent_terms.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utils/fdr_consistent_terms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="158" column="124" selection-start-line="158" selection-start-column="124" selection-end-line="158" selection-end-column="124" />
+            <state relative-caret-position="114">
+              <caret line="109" column="31" selection-start-line="109" selection-start-column="31" selection-end-line="109" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -163,9 +164,9 @@
       <find>emp true hypothesis:</find>
       <find>HG</find>
       <find>n_dist</find>
-      <find>HG_CUTOFF</find>
-      <find>100</find>
       <find>n_di</find>
+      <find>100</find>
+      <find>HG_CUTOFF</find>
     </findStrings>
     <replaceStrings>
       <replace>ALGO_DIR</replace>
@@ -239,9 +240,9 @@
         <option value="$PROJECT_DIR$/runners/summarize_GO_terms_md_agg.py" />
         <option value="$PROJECT_DIR$/utils/daemon_multiprocessing.py" />
         <option value="$PROJECT_DIR$/utils/randomize_data.py" />
-        <option value="$PROJECT_DIR$/env/config/conf.json" />
-        <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" />
         <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py" />
+        <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" />
+        <option value="$PROJECT_DIR$/env/config/conf.json" />
         <option value="$PROJECT_DIR$/utils/fdr_consistent_terms.py" />
       </list>
     </option>
@@ -321,7 +322,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.add_GO_terms_metadata_fix">
+  <component name="RunManager" selected="Python.fdr_consistent_terms">
     <configuration name="add_GO_terms_metadata_agg" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -592,9 +593,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.add_GO_terms_metadata_fix" />
         <item itemvalue="Python.fdr_consistent_terms" />
         <item itemvalue="Python.add_GO_terms_metadata_agg" />
+        <item itemvalue="Python.add_GO_terms_metadata_fix" />
         <item itemvalue="Python.summarize_GO_terms_md_agg" />
         <item itemvalue="Python.mail" />
       </list>
@@ -683,24 +684,14 @@
           <option name="timeStamp" value="1371" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/fdr_consistent_terms.py</url>
-          <line>97</line>
-          <option name="timeStamp" value="1383" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/fdr_consistent_terms.py</url>
-          <line>55</line>
-          <option name="timeStamp" value="1386" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/fdr_consistent_terms.py</url>
-          <line>82</line>
-          <option name="timeStamp" value="1390" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py</url>
           <line>78</line>
           <option name="timeStamp" value="1396" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/fdr_consistent_terms.py</url>
+          <line>159</line>
+          <option name="timeStamp" value="1397" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -713,7 +704,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1397" />
+      <option name="time" value="1398" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -884,6 +875,11 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>go_ids_results</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>-np.log10(np.sort(n_genes_pvals))[true_counter]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -920,11 +916,6 @@
       </expression>
       <expression>
         <expression-string>len([cur for cur in fdr_results[0] if cur == True])</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>pd.Series(emp_dists, index=output.index[:limit])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -1238,13 +1229,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/env/config/conf.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="44" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/runners/summarize_GO_terms_md_agg.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
@@ -1269,16 +1253,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="28" column="58" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
@@ -1286,10 +1260,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/env/config/conf.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils/fdr_consistent_terms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="158" column="124" selection-start-line="158" selection-start-column="124" selection-end-line="158" selection-end-column="124" />
+        <state relative-caret-position="114">
+          <caret line="109" column="31" selection-start-line="109" selection-start-column="31" selection-end-line="109" selection-end-column="31" />
         </state>
       </provider>
     </entry>

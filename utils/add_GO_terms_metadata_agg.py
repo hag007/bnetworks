@@ -103,8 +103,8 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     return len(df_filtered_in.index), true_counter, HG_CUTOFF, emp_cutoff
 
 if __name__ == "__main__":
-    csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "HC12_MAX", "emp_diff_{dataset}_{algo}.tsv")
-    main(dataset="HC12", algo="hotnet2", csv_file_name=csv_file_name)
-    csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","MAX", "emp_diff_{dataset}_{algo}.tsv")
-    main(dataset="TNFa_2", algo="jactivemodules_sa", csv_file_name=csv_file_name)
+    csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "MAX", "emp_diff_{dataset}_{algo}.tsv")
+    main(dataset="ERS_1", algo="hotnet2", csv_file_name=csv_file_name)
+    # csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","MAX", "emp_diff_{dataset}_{algo}.tsv")
+    # main(dataset="TNFa_2", algo="jactivemodules_sa", csv_file_name=csv_file_name)
 
