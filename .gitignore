@@ -1,2 +1,3 @@
 *.pyc
 /runners/empirical_random_dist_status.py
+/env/config/conf.json
