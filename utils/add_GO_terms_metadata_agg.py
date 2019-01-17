@@ -5,16 +5,6 @@ import pandas as pd
 import numpy as np
 import scipy
 from statsmodels.sandbox.stats.multicomp import fdrcorrection0
-import utils.mixture_dist
-
-from symfit import Parameter, Variable, Fit, sqrt, pi, Equality, Abs, GreaterThan
-from sympy.functions.elementary.exponential import exp
-from sympy.functions.elementary.piecewise import Piecewise
-from sympy.core.add import Add
-from sympy.core.mul import Mul
-from sympy.core.power import Pow
-from sympy.functions.special.gamma_functions import gamma
-from symfit.core.objectives import LogLikelihood
 import subprocess
 import constants
 import os
@@ -62,7 +52,7 @@ def get_all_genes_for_term(vertices, cur_root, term, in_subtree):
     return all_genes
 
 
-def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr","{dataset}_MAX/emp_diff_{dataset}_{algo}.tsv" )):
+def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr","MAX/emp_diff_{dataset}_{algo}.tsv" )):
 
     dataset_data=pd.read_csv(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset),"data", "ge.tsv"), sep='\t', index_col=0)
     classes_data=np.array(file(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset), "data", "classes.tsv")).readlines()[0].strip().split("\t")).astype(np.int)
@@ -116,5 +106,5 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     return len(df_filtered_in.index), true_counter, HG_CUTOFF, emp_cutoff
 
 if __name__ == "__main__":
-    csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","300", "TNFa_2_MAX", "emp_diff_{dataset}_{algo}.tsv")
+    csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","MAX", "emp_diff_{dataset}_{algo}.tsv")
     main(dataset="TNFa_2", algo="jactivemodules_sa", csv_file_name=csv_file_name)
