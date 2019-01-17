@@ -54,18 +54,20 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
 
     # dataset_data=pd.read_csv(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset),"data", "ge.tsv"), sep='\t', index_col=0)
     # classes_data=np.array(file(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset), "data", "classes.tsv")).readlines()[0].strip().split("\t")).astype(np.int)
-
     csv_file_name=csv_file_name.format(dataset=dataset, algo=algo)
+    print csv_file_name
     df=None
     try:
         df=pd.read_csv(csv_file_name, sep='\t',index_col=0)
     except:
         return None
-
-    df["dist_n_samples"]=df["dist_n_samples"].apply(lambda x: str(list(-np.log10(np.array(x[1:-1].split(", ")).astype(np.float)))))
-
-    df.to_csv(csv_file_name, sep='\t',index_label="GO id")
-
+    if np.max(np.array(df["dist_n_samples"].iloc[0][1:-1].split(", ")).astype(np.float)) <=1: 
+       df["dist_n_samples"]=df["dist_n_samples"].apply(lambda x: str(list(-np.log10(np.array(x[1:-1].split(", ")).astype(np.float)))))
+       df.to_csv(csv_file_name, sep='\t',index_label="GO id")
+       print "transformation completed"
+    else:
+       print "already in -log10 transform"
+    
 
 
 if __name__ == "__main__":
