@@ -88,7 +88,7 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     n_genes_pvals = [10**(-x) for x in n_genes_pvals]
     fdr_results = fdrcorrection0(n_genes_pvals, alpha=0.05, method='indep', is_sorted=False)
     true_counter = len([cur for cur in fdr_results[0] if cur == True])
-    HG_CUTOFF=-np.log10(n_genes_pvals[true_counter])
+    HG_CUTOFF=-np.log10(np.sort(n_genes_pvals))[true_counter]
     print "cutoff: {}".format(HG_CUTOFF)
 
     df_filtered_in=df.loc[np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["hg_pval"].values > HG_CUTOFF]), :]
@@ -102,8 +102,7 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     fdr_results = fdrcorrection0(pvals_corrected, alpha=0.05, method='indep', is_sorted=False)
     true_counter = len([cur for cur in fdr_results[0] if cur == True])
     emp_cutoff = np.sort(pvals_corrected)[true_counter - 1] if true_counter > 0 else 0
-    print "emp true hypothesis: {} (emp cutoff: {}, n={})".format(true_counter, emp_cutoff, len(
-        df_filtered_in["dist_n_samples"].iloc[0][1:-1].split(", ")))
+    print "emp true hypothesis: {} (emp cutoff: {}, n={})".format(true_counter, emp_cutoff, len(fdr_results[0]))
 
     df_filtered_in["passed_fdr"]=df_filtered_in["emp_pval"].apply(lambda x: x<=emp_cutoff)
 
@@ -116,5 +115,5 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     return len(df_filtered_in.index), true_counter, HG_CUTOFF, emp_cutoff
 
 if __name__ == "__main__":
-    csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","300", "TNFa_2_MAX", "emp_diff_{dataset}_{algo}.tsv")
-    main(dataset="TNFa_2", algo="jactivemodules_sa", csv_file_name=csv_file_name)
+    csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "HC12_MAX", "emp_diff_{dataset}_{algo}.tsv")
+    main(dataset="HC12", algo="hotnet2", csv_file_name=csv_file_name)
