@@ -8,12 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.151932953025.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.679995013057.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_hotnet2_0.140967802975.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/summarize_GO_terms_md_agg.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/summarize_GO_terms_md_agg.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/fdr_consistent_terms.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/fdr_consistent_terms.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -42,7 +37,8 @@
       <file leaf-file-name="add_GO_terms_metadata_agg.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="141">
+              <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -145,8 +141,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>stopwatch</find>
-      <find>HG</find>
       <find>start</find>
       <find>Stopwatch</find>
       <find>import</find>
@@ -175,6 +169,8 @@
       <find>shared_list</find>
       <find>print &quot;c</find>
       <find>emp true hypothesis:</find>
+      <find>HG</find>
+      <find>HG_CUTOFF</find>
     </findStrings>
     <replaceStrings>
       <replace>ALGO_DIR</replace>
@@ -1291,7 +1287,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="141">
+          <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

@@ -76,11 +76,11 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     n_genes_pvals = [10**(-x) for x in n_genes_pvals]
     fdr_results = fdrcorrection0(n_genes_pvals, alpha=0.05, method='indep', is_sorted=False)
     true_counter = len([cur for cur in fdr_results[0] if cur == True])
-    HG_CUTOFF=-np.log10(np.sort(n_genes_pvals))[true_counter]
+    HG_CUTOFF=-np.log10(np.sort(n_genes_pvals))[true_counter - 1] if true_counter > 0 else 0
     print "cutoff: {}".format(HG_CUTOFF)
 
-    df_filtered_in=df.loc[np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["hg_pval"].values > HG_CUTOFF]), :]
-    df_filtered_out = df.loc[~np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["hg_pval"].values > HG_CUTOFF]), :]
+    df_filtered_in=df.loc[np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["hg_pval"].values >= HG_CUTOFF]), :]
+    df_filtered_out = df.loc[~np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["hg_pval"].values >= HG_CUTOFF]), :]
 
     df_filtered_in["index"] = df_filtered_in.index.values
     df_filtered_in["emp_pval"] = df_filtered_in.apply(calc_empirical_pval, axis=1)
@@ -89,7 +89,7 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
     pvals_corrected = df_filtered_in["emp_pval"].values
     fdr_results = fdrcorrection0(pvals_corrected, alpha=0.05, method='indep', is_sorted=False)
     true_counter = len([cur for cur in fdr_results[0] if cur == True])
-    emp_cutoff = np.sort(pvals_corrected)[true_counter - 1] if true_counter > 0 else 0
+    emp_cutoff = np.sort(np.sort(pvals_corrected))[true_counter - 1] if true_counter > 0 else 0
     print "emp true hypothesis: {} (emp cutoff: {}, n={})".format(true_counter, emp_cutoff, len(fdr_results[0]))
 
     df_filtered_in["passed_fdr"]=df_filtered_in["emp_pval"].apply(lambda x: x<=emp_cutoff)
