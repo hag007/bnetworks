@@ -70,4 +70,4 @@ def main(dataset="SOC", algo="jactivemodules_sa", csv_file_name=os.path.join(con
 
 if __name__ == "__main__":
     csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "MAX", "emp_diff_{dataset}_{algo}.tsv")
-    main(dataset="HC12", algo="hotnet2", csv_file_name=csv_file_name)
+    main(dataset="ERS_1", algo="hotnet2", csv_file_name=csv_file_name)

@@ -149,8 +149,14 @@ if __name__ == "__main__":
                     ys2.append(len(go_names_result))
 
             plt.clf()
-            file(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-                                                 "fdr_go_terms_{}_{}.tsv".format(cur_ds, cur_alg)), 'w+').write("\n".join(go_names_intersection))
+
+            output_md = pd.read_csv(
+                os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
+                             "emp_diff_{}_{}_md.tsv".format(cur_ds, cur_alg)),
+                sep='\t', index_col=0)
+
+            output_md.loc[go_ids_results,"passed_oob_permutation_test"]=True
+            output_md.loc[~np.isin(output_md.index.values, np.array(go_ids_results)), "passed_oob_permutation_test"] = False
 
             sig_terms_summary.loc[cur_alg,cur_ds]=len(go_names_intersection)
             modules_summary=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"GE_{}".format(cur_ds),cur_alg,"modules_summary.tsv"), sep='\t')

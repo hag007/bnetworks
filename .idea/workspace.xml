@@ -8,8 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/fdr_consistent_terms.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/fdr_consistent_terms.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -75,11 +74,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fdr_consistent_terms.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="fdr_consistent_terms.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utils/fdr_consistent_terms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="707">
-              <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
+            <state relative-caret-position="385">
+              <caret line="158" column="124" selection-start-line="158" selection-start-column="124" selection-end-line="158" selection-end-column="124" />
             </state>
           </provider>
         </entry>
@@ -96,11 +95,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add_GO_terms_metadata_fix.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="add_GO_terms_metadata_fix.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="276">
-              <caret line="66" column="56" selection-start-line="66" selection-start-column="56" selection-end-line="66" selection-end-column="56" />
+              <caret line="66" column="18" selection-start-line="66" selection-start-column="18" selection-end-line="66" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -242,8 +241,8 @@
         <option value="$PROJECT_DIR$/utils/randomize_data.py" />
         <option value="$PROJECT_DIR$/env/config/conf.json" />
         <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" />
-        <option value="$PROJECT_DIR$/utils/fdr_consistent_terms.py" />
         <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py" />
+        <option value="$PROJECT_DIR$/utils/fdr_consistent_terms.py" />
       </list>
     </option>
   </component>
@@ -1280,17 +1279,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/fdr_consistent_terms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="707">
-          <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
-          <caret line="66" column="56" selection-start-line="66" selection-start-column="56" selection-end-line="66" selection-end-column="56" />
+          <caret line="66" column="18" selection-start-line="66" selection-start-column="18" selection-end-line="66" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/fdr_consistent_terms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="158" column="124" selection-start-line="158" selection-start-column="124" selection-end-line="158" selection-end-column="124" />
         </state>
       </provider>
     </entry>
