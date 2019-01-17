@@ -1,8 +1,12 @@
 import json
-from matplotlib import style
-from pandas._libs.parsers import k
+import matplotlib
+matplotlib.use('Agg') 
 
-style.use("ggplot")
+from pandas._libs.parsers import k
+import sys
+sys.path.insert(0, '../')
+
+
 import seaborn as sns
 sns.set(color_codes=True)
 import logging
@@ -35,7 +39,7 @@ def calc_emp_pval(cur_rv, cur_dist):
 
 def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_total_samples = None, shared_list=None, limit = 10000):
     output_md = pd.read_csv(
-        os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "{}_MAX".format(dataset_sample), "emp_diff_{}_{}_md.tsv".format(dataset_sample, algo_sample)),
+        os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", "emp_diff_{}_{}_md.tsv".format(dataset_sample, algo_sample)),
         sep='\t', index_col=0).dropna()
 
     # output_md = output_md.rename(columns={"filtered_pval": "hg_pval"})
@@ -54,7 +58,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
          output_md["hg_pval"].values > HG_CUTOFF]), :]
 
     output = pd.read_csv(
-        os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "{}_MAX".format(dataset_sample), "emp_diff_{}_{}.tsv".format(dataset_sample, algo_sample)),
+        os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", "emp_diff_{}_{}.tsv".format(dataset_sample, algo_sample)),
         sep='\t', index_col=0).dropna()
     output = output.rename(columns={"filtered_pval": "hg_pval"})
     output = output.loc[output_md.index.values, :]
@@ -96,13 +100,15 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
 
 if __name__ == "__main__":
 
-    n_iteration = 200
+    n_iteration = 1000
     n_total_samples=1000
     n_dist_samples = 300
     sig_terms_summary=pd.DataFrame()
     full_report=pd.DataFrame()
     datasets = ["TNFa_2", "HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"]  # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
     algos = ["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"]  # , "bionet" # "hotnet2"
+
+    p = multiprocessing.Pool(20)
 
     for cur_ds in datasets:
         for cur_alg in algos:
@@ -123,9 +129,8 @@ if __name__ == "__main__":
             for cur in range(n_iteration):
                 params.append([main, [cur_alg, cur_ds, n_dist_samples, n_total_samples, shared_list]])
 
-            p = multiprocessing.Pool(3)
-            p.map(func_star, params)
-
+            p.map(func_star, params)            
+           
             for BH_TH, n_emp_true, HG_CUTOFF, n_hg_true, go_ids_result, go_names_result in list(shared_list):
                 l_emp_cutoff.append(str(BH_TH))
                 l_n_emp_true.append(str(n_emp_true))
@@ -145,7 +150,7 @@ if __name__ == "__main__":
 
             plt.clf()
             file(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-                                                 "fdr_go terms_{}_{}.tsv".format(cur_ds, cur_alg)), 'w+').write("\n".join(go_names_intersection))
+                                                 "fdr_go_terms_{}_{}.tsv".format(cur_ds, cur_alg)), 'w+').write("\n".join(go_names_intersection))
 
             sig_terms_summary.loc[cur_alg,cur_ds]=len(go_names_intersection)
             modules_summary=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"GE_{}".format(cur_ds),cur_alg,"modules_summary.tsv"), sep='\t')
