@@ -86,7 +86,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
 
     zero_bool=[x<=0.004 for x in emp_pvals]
     fdr_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
-    mask_terms=fdr_results
+    mask_terms=zero_bool
     go_ids_result=output.index.values[mask_terms]
     go_names_result=output["GO name"].values[mask_terms]
     n_emp_true =sum(mask_terms)
@@ -100,15 +100,15 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
 
 if __name__ == "__main__":
 
-    n_iteration = 1000
+    n_iteration = 20
     n_total_samples=1000
     n_dist_samples = 300
     sig_terms_summary=pd.DataFrame()
     full_report=pd.DataFrame()
-    datasets = ["TNFa_2", "HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"]  # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
-    algos = ["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"]  # , "bionet" # "hotnet2"
+    datasets = ["ERS_1"]#["TNFa_2", "HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"]  # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
+    algos = ["hotnet2"]#["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"]  # , "bionet" # "hotnet2"
 
-    p = multiprocessing.Pool(20)
+    p = multiprocessing.Pool(3)
 
     for cur_ds in datasets:
         for cur_alg in algos:
