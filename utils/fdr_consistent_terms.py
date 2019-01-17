@@ -86,7 +86,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
 
     zero_bool=[x<=0.004 for x in emp_pvals]
     fdr_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
-    mask_terms=fdr_results
+    mask_terms=zero_bool # fdr_results
     go_ids_result=output.index.values[mask_terms]
     go_names_result=output["GO name"].values[mask_terms]
     n_emp_true =sum(mask_terms)
@@ -100,7 +100,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
 
 if __name__ == "__main__":
 
-    n_iteration = 20
+    n_iteration = 1000
     n_total_samples=1000
     n_dist_samples = 300
     sig_terms_summary=pd.DataFrame()
