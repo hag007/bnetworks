@@ -8,9 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/empirical_per_go_term_pval_dist_corrected_slim.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/empirical_per_go_term_pval_dist_corrected_slim.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/friedman_test_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/friedman_test_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env/config/conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/env/config/conf.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runners/modules_go_clustring_analysis_corrected_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/modules_go_clustring_analysis_corrected_runner.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,11 +26,8 @@
       <file leaf-file-name="add_GO_terms_metadata_agg.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+            <state>
+              <caret column="4" selection-start-column="4" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -39,8 +35,8 @@
       <file leaf-file-name="conf.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/env/config/conf.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="19">
+              <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -66,11 +62,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="empirical_per_go_term_pval_dist_corrected_slim.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="empirical_per_go_term_pval_dist_corrected_slim.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runners/empirical_per_go_term_pval_dist_corrected_slim.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="137" column="104" selection-start-line="137" selection-start-column="104" selection-end-line="137" selection-end-column="104" />
+            <state relative-caret-position="122">
+              <caret line="105" column="12" selection-start-line="105" selection-start-column="12" selection-end-line="108" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modules_go_clustring_analysis_corrected_runner.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/runners/modules_go_clustring_analysis_corrected_runner.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="217">
+              <caret line="170" column="12" selection-start-line="170" selection-start-column="12" selection-end-line="170" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -117,15 +122,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add_GO_terms_metadata.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-694">
-              <caret line="145" column="17" selection-start-line="145" selection-start-column="17" selection-end-line="145" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -137,11 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>func_</find>
-      <find>GO ids in assc</find>
-      <find>done GO analysis</find>
-      <find>star</find>
-      <find>MyPool</find>
       <find>modules_summary</find>
       <find>calc_empirical_pval</find>
       <find>emp_pval</find>
@@ -154,7 +145,6 @@
       <find>EMP_CUTOFF</find>
       <find>filtered_pval</find>
       <find>Array</find>
-      <find>pool</find>
       <find>shared</find>
       <find>300</find>
       <find>emp_diff</find>
@@ -167,6 +157,12 @@
       <find>HG_CUTOFF</find>
       <find>go_ids_intersection</find>
       <find>n_di</find>
+      <find>calc distance between</find>
+      <find>calc_similarity</find>
+      <find>poo</find>
+      <find>func_star</find>
+      <find>pool</find>
+      <find>multiprocessing</find>
     </findStrings>
     <replaceStrings>
       <replace>ALGO_DIR</replace>
@@ -211,7 +207,6 @@
         <option value="$PROJECT_DIR$/utils/genes_dist_by_label.py" />
         <option value="$PROJECT_DIR$/utils/score_pval_dist.py" />
         <option value="$PROJECT_DIR$/utils/ensembl2entrez.py" />
-        <option value="$PROJECT_DIR$/runners/modules_go_clustring_analysis_corrected_runner.py" />
         <option value="$PROJECT_DIR$/utils/fdr_cutoff_test.py" />
         <option value="$PROJECT_DIR$/utils/ex4.py" />
         <option value="$PROJECT_DIR$/utils/pval_dist.py" />
@@ -238,12 +233,13 @@
         <option value="$PROJECT_DIR$/utils/daemon_multiprocessing.py" />
         <option value="$PROJECT_DIR$/utils/randomize_data.py" />
         <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py" />
-        <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" />
-        <option value="$PROJECT_DIR$/env/config/conf.json" />
         <option value="$PROJECT_DIR$/utils/fdr_consistent_terms.py" />
         <option value="$PROJECT_DIR$/runners/friedman_test_runner.py" />
         <option value="$PROJECT_DIR$/runners/empirical_random_dist.py" />
+        <option value="$PROJECT_DIR$/env/config/conf.json" />
+        <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" />
         <option value="$PROJECT_DIR$/runners/empirical_per_go_term_pval_dist_corrected_slim.py" />
+        <option value="$PROJECT_DIR$/runners/modules_go_clustring_analysis_corrected_runner.py" />
       </list>
     </option>
   </component>
@@ -327,7 +323,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.friedman_test_runner">
+  <component name="RunManager" selected="Python.modules_go_clustring_analysis_corrected_runner">
     <configuration name="add_GO_terms_metadata_agg" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -526,6 +522,24 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="modules_go_clustring_analysis_corrected_runner" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="bnetworks" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/runners" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/runners/modules_go_clustring_analysis_corrected_runner.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="netbox_runner" type="PythonConfigurationType" factoryName="Python">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -562,24 +576,6 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="summarize_GO_terms_md_agg" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="bnetworks" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/runners" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/runners/summarize_GO_terms_md_agg.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
     <list>
       <item itemvalue="Python.aggregate_reports" />
       <item itemvalue="Python.jactivemodules_greedy_runner" />
@@ -592,17 +588,17 @@
       <item itemvalue="Python.go_to_modules_plt" />
       <item itemvalue="Python.fdr_consistent_terms" />
       <item itemvalue="Python.add_GO_terms_metadata_agg" />
-      <item itemvalue="Python.summarize_GO_terms_md_agg" />
       <item itemvalue="Python.add_GO_terms_metadata_fix" />
       <item itemvalue="Python.friedman_test_runner" />
+      <item itemvalue="Python.modules_go_clustring_analysis_corrected_runner" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.modules_go_clustring_analysis_corrected_runner" />
         <item itemvalue="Python.friedman_test_runner" />
         <item itemvalue="Python.fdr_consistent_terms" />
         <item itemvalue="Python.add_GO_terms_metadata_agg" />
         <item itemvalue="Python.add_GO_terms_metadata_fix" />
-        <item itemvalue="Python.summarize_GO_terms_md_agg" />
       </list>
     </recent_temporary>
   </component>
@@ -632,12 +628,12 @@
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.8311037" visible="true" weight="0.23665768" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.8311037" visible="true" weight="0.23665768" />
       <window_info anchor="bottom" id="TODO" order="9" sideWeight="0.49973047" weight="0.32991803" />
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.19042437" side_tool="true" weight="0.56540084" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32991803" />
       <window_info anchor="bottom" id="Python Console" order="0" />
-      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.7407008" visible="true" weight="0.3329918" />
+      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.7407008" visible="true" weight="0.3329918" />
       <window_info anchor="right" id="Structure" order="3" sideWeight="0.5020492" side_tool="true" weight="0.23072776" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.4989224" weight="0.32684427" />
       <window_info id="Favorites" order="0" sideWeight="0.16889632" side_tool="true" weight="0.18544474" />
@@ -703,6 +699,11 @@
           <line>32</line>
           <option name="timeStamp" value="1402" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/runners/modules_go_clustring_analysis_corrected_runner.py</url>
+          <line>134</line>
+          <option name="timeStamp" value="1403" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -714,7 +715,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1403" />
+      <option name="time" value="1404" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -932,13 +933,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/utils/pval_dist.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/symfit/core/fit.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
@@ -1235,23 +1229,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/env/config/conf.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/fdr_consistent_terms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1791">
@@ -1293,10 +1270,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/env/config/conf.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="4" selection-start-column="4" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/runners/empirical_per_go_term_pval_dist_corrected_slim.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="137" column="104" selection-start-line="137" selection-start-column="104" selection-end-line="137" selection-end-column="104" />
+        <state relative-caret-position="122">
+          <caret line="105" column="12" selection-start-line="105" selection-start-column="12" selection-end-line="108" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runners/modules_go_clustring_analysis_corrected_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="170" column="12" selection-start-line="170" selection-start-column="12" selection-end-line="170" selection-end-column="12" />
         </state>
       </provider>
     </entry>

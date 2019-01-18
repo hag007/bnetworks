@@ -30,6 +30,9 @@ import utils.go_hierarcies
 import matplotlib.cm as cm
 import matplotlib.colors as ml_colors
 
+import multiprocessing
+
+from utils.daemon_multiprocessing import func_star
 ENABLE_GO_GRAPH = False
 IS_GO_GRAPH_ONLY=False
 GO_PCA=False
@@ -69,6 +72,12 @@ if ENABLE_GO_GRAPH:
 
 #################
 
+def calc_similarity(adj, i_x, i_y, x, y):
+    if adj[i_x, i_y] != -2: return
+    adj[i_x, i_y] = semsim.SemSim(x, y)  # , ResnikSemSim(ontology,ac))
+    if np.isnan(adj[i_x, i_y]):
+        adj[i_x, i_y] = -1
+    adj[i_y, i_x] = adj[i_x, i_y]
 
 def main(dataset_name, algos = ["keypathwayminer_INES_GREEDY", "netbox", "hotnet2", "jactivemodules_greedy", "bionet",
              "jactivemodules_sa"]):
@@ -97,10 +106,10 @@ def main(dataset_name, algos = ["keypathwayminer_INES_GREEDY", "netbox", "hotnet
     df_module2avg_rows = []
     df_algo2best_rows = []
     df_algo2avg_rows = []
-
-    n_terms_summary = pd.read_csv(
-        os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "n_terms_summary.tsv"),
-        sep='\t', index_col=0)
+    #
+    # n_terms_summary = pd.read_csv(
+    #     os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "n_terms_summary.tsv"),
+    #     sep='\t', index_col=0)
 
 
 
@@ -108,10 +117,14 @@ def main(dataset_name, algos = ["keypathwayminer_INES_GREEDY", "netbox", "hotnet
         df_all_hg_qval = pd.DataFrame()
         print "current algo: {}".format(algo)
         try:
+            # emp_results = pd.read_csv(
+            #     os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr",
+            #                  "MAX",
+            #                  "emp_diff_{}_{}_passed_oob.tsv".format(dataset_name[dataset_name.index("_") + 1:], algo)), sep='\t', index_col=0)
             emp_results = pd.read_csv(
-                os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr",
-                             "{}_MAX".format(dataset_name[dataset_name.index("_") + 1:]),
-                             "emp_diff_{}_{}_md.tsv".format(dataset_name[dataset_name.index("_") + 1:], algo)), sep='\t', index_col=0)
+                os.path.join("/home/hag007/Desktop/fdr_terms/fdr_005_i_1000/terms/emp_diff_{}_{}_passed_oob.tsv"
+                             .format(dataset_name[dataset_name.index("_") + 1:], algo)),
+                sep='\t', index_col=0)
         except:
             total_num_genes.append(0)
             algos_signals.append(0)
@@ -119,7 +132,7 @@ def main(dataset_name, algos = ["keypathwayminer_INES_GREEDY", "netbox", "hotnet
             continue
 
         emp_results=emp_results.sort_values(by='emp_rank')
-        emp_results_fdr=emp_results.iloc[:int(n_terms_summary.loc[algo,dataset_name[dataset_name.index("_")+1:]].split("/")[0]),:]["GO name"]
+        emp_results_fdr=emp_results.loc[emp_results["passed_oob_permutation_test"].values,:]["GO name"]
 
         homogeneity = []
         separability = []
@@ -153,14 +166,15 @@ def main(dataset_name, algos = ["keypathwayminer_INES_GREEDY", "netbox", "hotnet
         adj = np.ones((len(all_go_terms), len(all_go_terms))) * (-2)
 
         if TERMS_SIMILARITY_TO_NUM_OF_TERMS:
+            # manager = multiprocessing.Manager()
+            # pvals = manager.list()
+            p = multiprocessing.Pool(10)
+            params=[]
             for i_x, x in enumerate(all_go_terms):
                 print "calc distance between terms {}/ {}".format(i_x, len(all_go_terms))
                 for i_y, y in enumerate(all_go_terms):
-                    if adj[i_x, i_y] != -2: continue
-                    adj[i_x, i_y] = semsim.SemSim(x, y)  # , ResnikSemSim(ontology,ac))
-                    if np.isnan(adj[i_x, i_y]):
-                        adj[i_x, i_y] = -1
-                    adj[i_y, i_x] = adj[i_x, i_y]
+                    params.append([calc_similarity, [adj, i_x, i_y, x, y]])
+            p.map(func_star,params)
 
             algo_go_sim_score.append(
                 [1 if np.isnan(x) else x for x in [np.sum(adj[adj != -1]) / (np.size(adj) - np.sum(adj == -1))]][0])
