@@ -89,7 +89,7 @@ def init_specific_params(score_file_name, method=constants.DEG_EDGER, network_fi
     file(heat_file_name,"w+").write("\n".join(lns))
 
     sif2hotnet2(network_file_name, script_file_name)
-
+    os.remove(script_file_name)
     # file(os.path.join(constants.OUTPUT_DIR, "hotnet2_bg_genes.txt"), "w+").write("\n".join(bg_genes))
     return heat_file_name, network_file_name
 
