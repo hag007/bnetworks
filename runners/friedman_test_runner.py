@@ -8,25 +8,26 @@ from scipy.stats import wilcoxon
 
 if __name__ == "__main__":
 
-    df=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "ds_go_rank_summary.tsv"), sep='\t', index_col=0)
+    df=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "/home/hag007/Desktop/fdr_terms/fdr_005_i_200_2/full_report.tsv"), sep='\t', index_col=0)
 
-    df.groupby(by="algo")["sig_terms", "sig_terms_rank", "variability", "variability_rank"].agg(['sum', 'mean', 'std'])\
-    .to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "go_rank_sum.tsv"), sep='\t')
+    # df.groupby(by="algo")["n_mutual_sig_terms", "mutual_sig_terms_rank"].agg(['sum', 'mean', 'std'])\
+    # .to_csv("/home/hag007/Desktop/fdr_terms/fdr_005_i_200_2/full_report.tsv", sep='\t')
 
 
+    rank_col_name="n_mutual_sig_terms"
 
     dataset_ranks=[]
     datasets = df[df["algo"] == "bionet"]["dataset"].values
     for cur_dataset in datasets:
-        dataset_ranks.append(df.loc[df["dataset"].values == cur_dataset, "sig_terms"].values)
+        dataset_ranks.append(df.loc[df["dataset"].values == cur_dataset, rank_col_name].values)
 
     print dataset_ranks
 
     algo_ranks=[]
-    algos = df[df["dataset"] == "GE_TNFa_2"]["algo"].values
+    algos = df[df["dataset"] == "TNFa_2"]["algo"].values
     n_algos = np.size(algos)
     for cur_algo in algos:
-        algo_ranks.append(df.loc[df["algo"].values==cur_algo, "sig_terms"].values)
+        algo_ranks.append(df.loc[df["algo"].values==cur_algo, rank_col_name].values)
 
 
     fried=friedmanchisquare(*algo_ranks)

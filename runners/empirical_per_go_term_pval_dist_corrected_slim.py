@@ -135,7 +135,7 @@ if __name__ == "__main__":
             df_real_max_pval=df_real_agg_pval.max(axis=1).to_frame()
             print "total # real terms: {}".format(len(df_real_max_pval.index))
             df_counter=0
-            df_results=df_all_terms.apply(lambda row : str(list(row)), axis=1).to_frame()
+            df_results=df_all_terms.apply(lambda row : str(list(-np.log10(row.values.astype(np.float)))), axis=1).to_frame()
             df_results.columns = ['dist_n_samples']
             missing_indices=set(df_real_max_pval.index).difference(df_results.index)
             df_results.loc[missing_indices, "dist_n_samples"]=str([0])
