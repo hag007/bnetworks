@@ -9,14 +9,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/utils/5000_200_intersection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/datasets_multithread_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/datasets_multithread_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/friedman_test_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/friedman_test_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/hotnet2_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/hotnet2_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env/config/conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/env/config/conf.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runners/netbox_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/netbox_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/fdr_consistent_terms.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/fdr_consistent_terms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/refactor_raw_ge.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/refactor_raw_ge.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -42,11 +37,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fdr_consistent_terms.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="conf.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/env/config/conf.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="1" column="69" selection-start-line="1" selection-start-column="69" selection-end-line="1" selection-end-column="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fdr_consistent_terms.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/fdr_consistent_terms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="98" column="96" selection-start-line="98" selection-start-column="96" selection-end-line="98" selection-end-column="96" />
+            <state relative-caret-position="289">
+              <caret line="96" column="31" selection-start-line="96" selection-start-column="31" selection-end-line="96" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -63,23 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="friedman_test_runner.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runners/friedman_test_runner.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="netbox_runner.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runners/netbox_runner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="83" column="4" lean-forward="true" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
+            <state relative-caret-position="243">
+              <caret line="97" column="32" lean-forward="true" selection-start-line="97" selection-start-column="32" selection-end-line="97" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -238,17 +230,17 @@
         <option value="$PROJECT_DIR$/utils/randomize_data.py" />
         <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py" />
         <option value="$PROJECT_DIR$/runners/empirical_random_dist.py" />
-        <option value="$PROJECT_DIR$/env/config/conf.json" />
         <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" />
         <option value="$PROJECT_DIR$/runners/empirical_per_go_term_pval_dist_corrected_slim.py" />
         <option value="$PROJECT_DIR$/runners/modules_go_clustring_analysis_corrected_runner.py" />
         <option value="$PROJECT_DIR$/utils/5000_200_intersection.py" />
         <option value="$PROJECT_DIR$/runners/friedman_test_runner.py" />
-        <option value="$PROJECT_DIR$/runners/netbox_runner.py" />
         <option value="$PROJECT_DIR$/runners/hotnet2_runner.py" />
         <option value="$PROJECT_DIR$/utils/refactor_raw_ge.py" />
         <option value="$PROJECT_DIR$/runners/datasets_multithread_runner.py" />
         <option value="$PROJECT_DIR$/utils/fdr_consistent_terms.py" />
+        <option value="$PROJECT_DIR$/runners/netbox_runner.py" />
+        <option value="$PROJECT_DIR$/env/config/conf.json" />
       </list>
     </option>
   </component>
@@ -269,6 +261,17 @@
             <path>
               <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
               <item name="bnetworks" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bnetworks" type="462c0819:PsiDirectoryNode" />
+              <item name="env" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bnetworks" type="462c0819:PsiDirectoryNode" />
+              <item name="env" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
@@ -631,7 +634,7 @@
     <frame x="1985" y="24" width="1855" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.8311037" visible="true" weight="0.2851752" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.8311037" visible="true" weight="0.2851752" />
       <window_info anchor="bottom" id="TODO" order="9" sideWeight="0.49973047" weight="0.32991803" />
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.19042437" side_tool="true" weight="0.56540084" />
       <window_info anchor="right" x="0" y="0" width="413" height="856" id="Documentation" order="5" side_tool="true" visible="true" weight="0.07385445" />
@@ -641,7 +644,7 @@
       <window_info anchor="right" id="Structure" order="3" sideWeight="0.5020492" side_tool="true" weight="0.23072776" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.4989224" weight="0.32684427" />
       <window_info id="Favorites" order="0" sideWeight="0.16889632" side_tool="true" weight="0.18544474" />
-      <window_info active="true" anchor="bottom" id="Debug" order="6" sideWeight="0.69326144" visible="true" weight="0.3850211" />
+      <window_info anchor="bottom" id="Debug" order="6" sideWeight="0.69326144" visible="true" weight="0.3850211" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32991803" />
       <window_info content_ui="combo" id="Project" order="1" sideWeight="0.8311037" visible="true" weight="0.23665768" />
@@ -714,7 +717,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/runners/modules_go_clustring_analysis_corrected_runner.py</url>
-          <line>134</line>
+          <line>139</line>
           <option name="timeStamp" value="1403" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -1215,13 +1218,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/env/config/conf.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/runners/empirical_per_go_term_pval_dist_corrected_slim.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="122">
@@ -1274,13 +1270,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sh/scripts/run_netbox.sh.format">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runners/netbox_runner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="83" column="4" lean-forward="true" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/runners/hotnet2_runner.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1338,8 +1327,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/fdr_consistent_terms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="98" column="96" selection-start-line="98" selection-start-column="96" selection-end-line="98" selection-end-column="96" />
+        <state relative-caret-position="289">
+          <caret line="96" column="31" selection-start-line="96" selection-start-column="31" selection-end-line="96" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runners/netbox_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="97" column="32" lean-forward="true" selection-start-line="97" selection-start-column="32" selection-end-line="97" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/env/config/conf.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="69" selection-start-line="1" selection-start-column="69" selection-end-line="1" selection-end-column="69" />
         </state>
       </provider>
     </entry>

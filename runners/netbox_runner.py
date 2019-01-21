@@ -59,8 +59,8 @@ def init_specific_params(score_file_name, dest_algo_dir):
     conf_file_name=format_script(os.path.join(dest_algo_dir, conf_file), pval_threshold=0.05, sp_threshold=2, gene_file=ge_list_file_name)
     return conf_file_name
 
-def extract_modules_and_bg(bg_genes):
-    results = file(os.path.join(ALGO_DIR, "modules.txt")).readlines()
+def extract_modules_and_bg(bg_genes, dest_algo_dir):
+    results = file(os.path.join(dest_algo_dir, "modules.txt")).readlines()
     modules = [[] for x in range(max([int(x.strip().split(" =")[1]) for x in results[1:]]) + 1)]
     for x in results[1:]:
         if int(x.strip().split(" =")[1]) != -1:
@@ -87,10 +87,10 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
     print subprocess.Popen("bash {}".format(script_file_name), shell=True,
                            stdout=subprocess.PIPE, cwd=dest_algo_dir).stdout.read()
 
+    modules, all_bg_genes = extract_modules_and_bg(bg_genes, dest_algo_dir)
     os.remove(script_file_name)
     os.remove(conf_file_name)
     shutil.rmtree(dest_algo_dir)
-    modules, all_bg_genes = extract_modules_and_bg(bg_genes)
     output_base_dir = ""
     if constants.REPORTS:
         output_base_dir = build_all_reports(ALGO_NAME, dataset_name, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
