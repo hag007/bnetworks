@@ -6,7 +6,7 @@ from pandas._libs.parsers import k
 import sys
 sys.path.insert(0, '../')
 
-
+import argparse
 import seaborn as sns
 sns.set(color_codes=True)
 import logging
@@ -15,7 +15,7 @@ logger = logging.getLogger("log")
 logger.addHandler(sh)
 from constants import *
 from infra import *
-from param_builder import build_gdc_params
+from utils.param_builder import build_gdc_params
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -102,14 +102,29 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
 
 if __name__ == "__main__":
 
-    n_iteration = 100
-    n_total_samples=1000
-    n_dist_samples=200
+    parser = argparse.ArgumentParser(description='args')
+    parser.add_argument('--datasets', dest='datasets', default="SOC")
+    parser.add_argument('--prefix', dest='prefix', default="GE")
+    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
+    parser.add_argument('--n_iteration', dest='n_iteration', default=100)
+    parser.add_argument('--n_total_samples', help="n_total_samples", dest='n_start', default=1000)
+    parser.add_argument('--n_dist_samples', help="n_dist_samples", dest='n_end', default=200)
+    parser.add_argument('--pf', dest='pf', help="parallelization factor", default=20)
+
+    args = parser.parse_args()
+
+    datasets=args.datasets.split(",")
+    algos=args.algos.split(",")
+    prefix = args.prefix
+    n_iteration=int(args.n_iteration)
+    n_total_samples=int(args.n_total_samples)
+    n_dist_samples = int(args.n_dist_samples)
+    pf=int(args.pf)
+
+    terms_limit = 0
     sig_terms_summary=pd.DataFrame()
     full_report=pd.DataFrame()
-    datasets =  ["TNFa_2"] # ["TNFa_2", "HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"]  # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
-    algos =  ["netbox"] # ["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"]  # , "bionet" # "hotnet2"
-    p = multiprocessing.Pool(2)
+    p = multiprocessing.Pool(pf)
 
     for cur_ds in datasets:
         for cur_alg in algos:
@@ -138,7 +153,6 @@ if __name__ == "__main__":
                 l_hg_cutoff.append(str(HG_CUTOFF))
                 l_n_hg_true.append(str(n_hg_true))
 
-                terms_limit=0
 
                 if len(go_names_result) >terms_limit:
                     go_ids_results.append(go_ids_result)
@@ -154,18 +168,18 @@ if __name__ == "__main__":
                  'w+').write("\n".join(go_names_intersection))
             go_ids_intersection = list(set(go_ids_results[0]).intersection(*go_ids_results))
 
-            # output_md = pd.read_csv(
-            #     os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
-            #                  "emp_diff_{}_{}_md.tsv".format(cur_ds, cur_alg)),
-            #     sep='\t', index_col=0)
-            #
-            # output_md.loc[go_ids_intersection,"passed_oob_permutation_test"]=True
-            # output_md.loc[~np.isin(output_md.index.values, np.array(go_ids_intersection)), "passed_oob_permutation_test"] = False
-            #
-            # output_md.to_csv(
-            #     os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr",
-            #                  "emp_diff_{}_{}_passed_oob.tsv".format(cur_ds, cur_alg)),
-            #     sep='\t')
+            output_md = pd.read_csv(
+                os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
+                             "emp_diff_{}_{}_md.tsv".format(cur_ds, cur_alg)),
+                sep='\t', index_col=0)
+
+            output_md.loc[go_ids_intersection,"passed_oob_permutation_test"]=True
+            output_md.loc[~np.isin(output_md.index.values, np.array(go_ids_intersection)), "passed_oob_permutation_test"] = False
+
+            output_md.to_csv(
+                os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
+                             "emp_diff_{}_{}_passed_oob.tsv".format(cur_ds, cur_alg)),
+                sep='\t')
 
             sig_terms_summary.loc[cur_alg,cur_ds]=len(go_names_intersection)
             modules_summary=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"GE_{}".format(cur_ds),cur_alg,"modules_summary.tsv"), sep='\t')
