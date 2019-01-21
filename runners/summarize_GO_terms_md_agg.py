@@ -6,8 +6,8 @@ import numpy as np
 import os
 import constants
 
-datasets=["TNFa_2","HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"] # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
-algos=["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"] # , "bionet" # "hotnet2"
+datasets=["TNFa_2"] # ["TNFa_2","HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"] # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
+algos=["netbox"] # ["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"] # , "bionet" # "hotnet2"
 
 
 n_terms = pd.DataFrame(index=algos, columns=datasets)
