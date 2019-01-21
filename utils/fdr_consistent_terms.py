@@ -85,8 +85,8 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
     df_dists["emp"] = pd.Series(emp_dists, index=output.index[:limit])
 
     zero_bool=[x<=0.004 for x in emp_pvals]
-    fdr_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
-    mask_terms=zero_bool # fdr_results
+    fdr_results = fdrcorrection0(np.array(emp_pvals)+0.0033333, alpha=0.05, method='indep', is_sorted=False)[0]
+    mask_terms=fdr_results
     go_ids_result=output.index.values[mask_terms]
     go_names_result=output["GO name"].values[mask_terms]
     n_emp_true =sum(mask_terms)
@@ -105,9 +105,9 @@ if __name__ == "__main__":
     n_dist_samples = 300
     sig_terms_summary=pd.DataFrame()
     full_report=pd.DataFrame()
-    datasets =  ["TNFa_2", "HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"]  # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
-    algos =  ["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"]  # , "bionet" # "hotnet2"
-    p = multiprocessing.Pool(15)
+    datasets =  ["TNFa_2"] # ["TNFa_2", "HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"]  # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
+    algos =  ["netbox"] # ["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"]  # , "bionet" # "hotnet2"
+    p = multiprocessing.Pool(5)
 
     for cur_ds in datasets:
         for cur_alg in algos:
@@ -119,6 +119,7 @@ if __name__ == "__main__":
 
             go_ids_results=[]
             go_names_results=[]
+            go_names_intersection=[]
             ys1=[]
             ys2=[]
             print "{}_{}".format(cur_alg, cur_alg)
@@ -150,7 +151,7 @@ if __name__ == "__main__":
 
             plt.clf()
 
-            go_ids_intersection = list(set(go_ids_results[0]).intersection(*go_ids_results))
+            go_ids_intersection = list(set(go_ids_results[0]).intersection(*go_ids_results)) if len(go_ids_results) > 0 else []
 
             output_md = pd.read_csv(
                 os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
@@ -167,13 +168,13 @@ if __name__ == "__main__":
 
             sig_terms_summary.loc[cur_alg,cur_ds]=len(go_names_intersection)
             modules_summary=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"GE_{}".format(cur_ds),cur_alg,"modules_summary.tsv"), sep='\t')
-            full_report=full_report.append({"index" : "{}_{}".format(cur_alg, cur_ds), "dataset" : cur_ds, "algo" : cur_alg, "n_mutual_sig_terms" : len(go_names_intersection), "mean_sig_terms" : np.mean(ys2) , "n_genes" : modules_summary["#_genes"].sum() , "n_modules" : modules_summary["#_genes"].count(), "modules_size_mean" : modules_summary["#_genes"].mean(), "module_size_std" : modules_summary["#_genes"].sum()}, ignore_index=True)
+            full_report=full_report.append({"index" : "{}_{}".format(cur_alg, cur_ds), "dataset" : cur_ds, "algo" : cur_alg, "n_mutual_sig_terms" : len(go_names_intersection), "mean_sig_terms" : np.mean(ys2) if len(ys2) > 0 else 0, "n_genes" : modules_summary["#_genes"].sum() , "n_modules" : modules_summary["#_genes"].count(), "modules_size_mean" : modules_summary["#_genes"].mean(), "module_size_std" : modules_summary["#_genes"].sum()}, ignore_index=True)
 
             fig,ax = plt.subplots()
             plt.plot(np.arange(len(ys1)),ys1, label='# intersected terms')
             plt.plot(np.arange(len(ys2)), ys2, label='# sig. terms in permutation')
-            plt.title("min # terms above threshold ({}):  ({}/{}). ratio: {}/{}".format(terms_limit, len(ys1), n_iteration, ys1[-1],
-                                                                                min([len(x) for x in go_names_results])))
+            plt.title("min # terms above threshold ({}):  ({}/{}). ratio: {}/{}".format(terms_limit, len(ys1), n_iteration, ys1[-1] if len(ys1) > 0 else 0,
+                                                                                min([len(x) for x in go_names_results]) if len(go_names_results) > 0 else 0 ))
             ax.set_xlabel("iteration index")
             ax.set_ylabel("# terms")
 
