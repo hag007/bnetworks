@@ -61,10 +61,6 @@ def sif2hotnet2(network_file_name, script_file_name):
 
     print subprocess.Popen("bash {}".format(script_file_name) , shell=True, stdout=subprocess.PIPE).stdout.read() # cwd=dir_path
 
-def run_hotnet2(deg_file_name, network_file_name):
-    script = file("scripts/bionet.r").read()
-    return run_rscript(script=script, output_vars = ["module_genes", "bg_genes"], network_file_name=network_file_name, deg_file_name=deg_file_name)
-
 
 def init_specific_params(score_file_name, method=constants.DEG_EDGER, network_file_name=os.path.join(constants.NETWORKS_DIR, "dip.sif")):
 

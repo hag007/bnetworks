@@ -8,13 +8,13 @@ from scipy.stats import wilcoxon
 
 if __name__ == "__main__":
 
-    df=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "/home/hag007/Desktop/fdr_terms/fdr_005_i_200_2/full_report.tsv"), sep='\t', index_col=0)
+    df=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "/home/hag007/Desktop/fdr_terms/fdr_005_i_1000_strigent/full_report.tsv"), sep='\t', index_col=0)
 
     # df.groupby(by="algo")["n_mutual_sig_terms", "mutual_sig_terms_rank"].agg(['sum', 'mean', 'std'])\
     # .to_csv("/home/hag007/Desktop/fdr_terms/fdr_005_i_200_2/full_report.tsv", sep='\t')
 
 
-    rank_col_name="n_mutual_sig_terms"
+    rank_col_name="mutual_sig_terms_rank"
 
     dataset_ranks=[]
     datasets = df[df["algo"] == "bionet"]["dataset"].values
@@ -45,7 +45,7 @@ if __name__ == "__main__":
         for j in np.arange(n_algos):
             df_pw_signed_test.loc[i,j]=-1 if i==j else wilcoxon(algo_ranks[i],algo_ranks[j])[1]
 
-    # print df[df["dataset"]=="GE_TNFa_2"]["algo"].values
+    print df[df["dataset"]=="TNFa_2"]["algo"].values
     print fried
     # print posthoc_conover
     # print posthoc_nemenyi
@@ -54,7 +54,8 @@ if __name__ == "__main__":
     # print posthoc_dunn
     print manwhitney_posthoc
     print wilcoxon_posthoc
-    # print df_pw_signed_test
+    print "==="
+    print df_pw_signed_test
 
 
     # ranks = []
