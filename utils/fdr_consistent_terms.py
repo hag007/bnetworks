@@ -37,12 +37,12 @@ def calc_emp_pval(cur_rv, cur_dist):
 
 
 
-def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_total_samples = None, shared_list=None, limit = 10000):
+def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_total_samples = None, shared_list=None, n_start_i=None, limit = 10000):
     output_md = pd.read_csv(
         os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", "emp_diff_{}_{}_md.tsv".format(dataset_sample, algo_sample)),
         sep='\t', index_col=0).dropna()
-
-    # output_md = output_md.rename(columns={"filtered_pval": "hg_pval"})
+    # constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", "emp_diff_{}_{}_md.tsv"
+    output_md = output_md.rename(columns={"filtered_pval": "hg_pval"})
     n_genes_pvals=output_md.loc[np.logical_and.reduce([output_md["n_genes"].values > 5, output_md["n_genes"].values < 500]), "hg_pval"].values
 
     print "total n_genes with pval:{}/{}".format(np.size(n_genes_pvals), 7435)
@@ -57,8 +57,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
         [output_md["n_genes"].values > 5, output_md["n_genes"].values < 500,
          output_md["hg_pval"].values > HG_CUTOFF]), :]
 
-    output = pd.read_csv(
-        os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", "emp_diff_{}_{}.tsv".format(dataset_sample, algo_sample)),
+    output = pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", "emp_diff_{}_{}.tsv").format(dataset_sample, algo_sample),
         sep='\t', index_col=0).dropna()
     output = output.rename(columns={"filtered_pval": "hg_pval"})
     output = output.loc[output_md.index.values, :]
@@ -67,8 +66,11 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
     emp_pvals = []
 
     n_total_samples=n_total_samples if n_total_samples is not None else len(output.iloc[0].loc["dist_n_samples"][1:-1].split(", "))
-    i_choice=np.random.choice(n_total_samples, n_dist_samples, replace=False)
-    i_dist=i_choice[:n_dist_samples]
+    if n_start_i is None:
+        i_choice=np.random.choice(n_total_samples, n_dist_samples, replace=False)
+        i_dist=i_choice[:n_dist_samples]
+    else:
+        i_dist=np.arange(n_start_i, n_start_i+n_dist_samples)
 
 
 
@@ -85,8 +87,8 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
     df_dists["emp"] = pd.Series(emp_dists, index=output.index[:limit])
 
     zero_bool=[x<=0.004 for x in emp_pvals]
-    fdr_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
-    mask_terms=zero_bool # fdr_results
+    fdr_results = fdrcorrection0(np.array(emp_pvals)+0.00333333, alpha=0.05, method='indep', is_sorted=False)[0]
+    mask_terms=fdr_results
     go_ids_result=output.index.values[mask_terms]
     go_names_result=output["GO name"].values[mask_terms]
     n_emp_true =sum(mask_terms)
@@ -100,14 +102,14 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
 
 if __name__ == "__main__":
 
-    n_iteration = 1000
+    n_iteration = 100
     n_total_samples=1000
-    n_dist_samples = 300
+    n_dist_samples=200
     sig_terms_summary=pd.DataFrame()
     full_report=pd.DataFrame()
-    datasets =  ["TNFa_2", "HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"]  # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
-    algos =  ["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"]  # , "bionet" # "hotnet2"
-    p = multiprocessing.Pool(15)
+    datasets =  ["TNFa_2"] # ["TNFa_2", "HC12", "SHERA", "ROR_1", "SHEZH_1", "ERS_1", "IEM"]  # , "IEM" , "IES", "ROR_2", "SHEZH_1", "SHEZH_2", "ERS_1", "ERS_2"] # "SOC"
+    algos =  ["netbox"] # ["jactivemodules_greedy", "jactivemodules_sa", "bionet", "hotnet2"]  # , "bionet" # "hotnet2"
+    p = multiprocessing.Pool(2)
 
     for cur_ds in datasets:
         for cur_alg in algos:
@@ -126,7 +128,7 @@ if __name__ == "__main__":
             shared_list = multiprocessing.Manager().list()
             params=[]
             for cur in range(n_iteration):
-                params.append([main, [cur_alg, cur_ds, n_dist_samples, n_total_samples, shared_list]])
+                params.append([main, [cur_alg, cur_ds, n_dist_samples, n_total_samples, shared_list]]) # , n_dist_samples*cur
 
             p.map(func_star, params)            
            
@@ -143,27 +145,27 @@ if __name__ == "__main__":
                     go_names_results.append(go_names_result)
                     go_names_intersection = list(set(go_names_results[0]).intersection(*go_names_results))
 
-
                     print "total intersection size : {}".format(len(go_names_intersection))
                     ys1.append(len(go_names_intersection))
                     ys2.append(len(go_names_result))
 
             plt.clf()
-
+            file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "intersection_names_{}_{}.txt".format(cur_ds, cur_alg)),
+                 'w+').write("\n".join(go_names_intersection))
             go_ids_intersection = list(set(go_ids_results[0]).intersection(*go_ids_results))
 
-            output_md = pd.read_csv(
-                os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
-                             "emp_diff_{}_{}_md.tsv".format(cur_ds, cur_alg)),
-                sep='\t', index_col=0)
-
-            output_md.loc[go_ids_intersection,"passed_oob_permutation_test"]=True
-            output_md.loc[~np.isin(output_md.index.values, np.array(go_ids_intersection)), "passed_oob_permutation_test"] = False
-
-            output_md.to_csv(
-                os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr",
-                             "emp_diff_{}_{}_passed_oob.tsv".format(cur_ds, cur_alg)),
-                sep='\t')
+            # output_md = pd.read_csv(
+            #     os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
+            #                  "emp_diff_{}_{}_md.tsv".format(cur_ds, cur_alg)),
+            #     sep='\t', index_col=0)
+            #
+            # output_md.loc[go_ids_intersection,"passed_oob_permutation_test"]=True
+            # output_md.loc[~np.isin(output_md.index.values, np.array(go_ids_intersection)), "passed_oob_permutation_test"] = False
+            #
+            # output_md.to_csv(
+            #     os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr",
+            #                  "emp_diff_{}_{}_passed_oob.tsv".format(cur_ds, cur_alg)),
+            #     sep='\t')
 
             sig_terms_summary.loc[cur_alg,cur_ds]=len(go_names_intersection)
             modules_summary=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"GE_{}".format(cur_ds),cur_alg,"modules_summary.tsv"), sep='\t')

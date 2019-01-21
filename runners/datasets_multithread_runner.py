@@ -67,44 +67,20 @@ def run_dataset(dataset_name, expected_genes=None, disease_name=None, score_meth
 
 
 if __name__ == "__main__":
-    # run_dataset("MCF7_2")
-    # aggregate_reports.aggregate_datasets("MCF7_2")
-    # run_dataset("TNFa_2")
-    # aggregate_reports.aggregate_datasets("TNFa_2")
+    # datasets=["GE_SOC", "GE_MCF7_2", "GE_TNFa_2", "GE_HC12", "GE_IES", "GE_IEM", "GE_IEN"]
+    datasets=["EN_CML", "EN_LICH", "EN_BRCA", "EN_KIRC"] # ["EN_LUNG", "EN_PRAD", "EN_PAAD"]
+    algos = ["hotnet2", "bionet", "jactivemodules_greedy", "jactivemodules_sa"]
 
-    # run_dataset("IEM", score_method=constants.PREDEFINED_SCORE)
-    # run_dataset("IEN", score_method=constants.DEG_T)
-    # aggregate_reports.aggregate_datasets("HC12")
-    prefix = "GE"
-    datasets = [name for name in os.listdir(constants.DATASETS_DIR) if
-                os.path.isdir(os.path.join(constants.DATASETS_DIR, name)) and name.startswith("GE_random")]
-    for cur_ds in datasets:
-        shutil.rmtree(os.path.join(constants.DATASETS_DIR, cur_ds))
-
-    # datasets = [name for name in os.listdir(constants.DATASETS_DIR) if
-    #             os.path.isdir(os.path.join(constants.DATASETS_DIR, name)) and name.startswith("GWAS_")]
-    datasets=["GE_SOC", "GE_MCF7_2", "GE_TNFa_2", "GE_HC12", "GE_IES", "GE_IEM", "GE_IEN"]
-    for cur_ds in datasets:
-        create_random_ds(prefix, cur_ds)
-
-
-
-
-    # datasets = [name for name in os.listdir(constants.DATASETS_DIR) if
-    #               os.path.isdir(os.path.join(constants.DATASETS_DIR, name)) and name.startswith(prefix+"_random") ]
-    # datasets = ["TNFa_2", "MCF7_2", "SOC", "HC12", "IEM", "IES"]
-    datasets=['GWAS_scz_updated']
-    algos = ["bionet", "keypathwayminer_INES_GREEDY", "netbox", "hotnet2", "jactivemodules_greedy", "jactivemodules_sa"]
     for cur_ds in datasets: # datasets: # [1:2]
         print "current folder : {}".format(os.path.basename(cur_ds))
         score_method = constants.PREDEFINED_SCORE
         if cur_ds.startswith("GE"):
             score_method = constants.DEG_EDGER
-            if cur_ds.startswith(prefix+"_random_IE"):
+            if cur_ds.startswith("GE_IE"):
                 score_method=constants.DEG_T
 
         run_dataset(cur_ds, score_method=score_method,
-                    algos=["hotnet2"]) #
+                    algos=algos, network_file_name="dip.sif") #
 
         # aggregate_reports.aggregate_datasets(os.path.basename(cur_ds))
 
