@@ -39,7 +39,10 @@ from utils.network import output_modules
 ALGO_NAME = "netbox"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 
-def init_specific_params(score_file_name):
+import shutil
+import random
+
+def init_specific_params(score_file_name, dest_algo_dir):
 
     deg = infra.load_gene_expression_profile_by_genes(gene_expression_path=score_file_name)
     h_rows, h_cols, deg_data = infra.separate_headers(deg)
@@ -53,7 +56,7 @@ def init_specific_params(score_file_name):
     file(ge_list_file_name, "w+").write("\n".join([x for x in h_rows[:last_q_index] if len(ensembl2entrez_convertor([x]))>0 ])) # ensembl2entrez_convertor([x])[0]
 
     conf_file = "conf.props"
-    conf_file_name=format_script(os.path.join(ALGO_DIR, conf_file), pval_threshold=0.05, sp_threshold=2, gene_file=ge_list_file_name)
+    conf_file_name=format_script(os.path.join(dest_algo_dir, conf_file), pval_threshold=0.05, sp_threshold=2, gene_file=ge_list_file_name)
     return conf_file_name
 
 def extract_modules_and_bg(bg_genes):
@@ -74,21 +77,26 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
     constants.update_dirs(DATASET_NAME_u=dataset_name)
     network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(network_file_name, score_method)
 
-    conf_file_name=init_specific_params(score_file_name)
+    
     script_name = "run_{}.sh".format(ALGO_NAME)
+    dest_algo_dir="{}_{}".format(ALGO_DIR,random.random())
+    shutil.copytree(ALGO_DIR, dest_algo_dir)
+    conf_file_name=init_specific_params(score_file_name, dest_algo_dir)
     script_file_name=format_script(os.path.join(constants.SH_DIR, script_name), BASE_FOLDER=constants.BASE_PROFILE,
-                  DATASET_DIR=constants.DATASET_DIR, CONFIG_FILE_NAME=conf_file_name, NETBOX_DIR=os.path.join(constants.ALGO_BASE_DIR, "netbox"))
+                  DATASET_DIR=constants.DATASET_DIR, CONFIG_FILE_NAME=conf_file_name, NETBOX_DIR=dest_algo_dir)
     print subprocess.Popen("bash {}".format(script_file_name), shell=True,
-                           stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
+                           stdout=subprocess.PIPE, cwd=dest_algo_dir).stdout.read()
 
     os.remove(script_file_name)
+    os.remove(conf_file_name)
+    shutil.rmtree(dest_algo_dir)
     modules, all_bg_genes = extract_modules_and_bg(bg_genes)
     output_base_dir = ""
     if constants.REPORTS:
         output_base_dir = build_all_reports(ALGO_NAME, dataset_name, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
     output_file_name = os.path.join(constants.OUTPUT_DIR,
                                     "{}_client_output.txt".format(ALGO_NAME))
-    output_modules(output_file_name, modules, score_file_name, output_base_dir )
+    # output_modules(output_file_name, modules, score_file_name, output_base_dir )
 
 
 if __name__ == "__main__":
