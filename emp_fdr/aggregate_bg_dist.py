@@ -49,8 +49,8 @@ def calc_dist(algos, datasets, shared_list=None, is_max=True):
                     except EmptyDataError,e:
                         print e
                         pass
-                if len(go_results)==0:
-                    df_go_pvals=pd.DataFrame(data=np.array([[1]]),index=["GO:0008150"])
+                # if len(go_results)==0:
+                #     df_go_pvals=pd.DataFrame(data=np.array([[1]]),index=["GO:0008150"])
  
             if not is_max:
                 df_go_pvals[df_go_pvals.isna()] = 1

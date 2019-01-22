@@ -23,15 +23,15 @@ def mean_difference(row, dataset_data, classes_data):
         print "no gene were found for {}, {} (pval={})".format(row["index"], row["GO name"],
                                                                         row["hg_pval"])
 
-def calc_empirical_pval(row, n_permutations):
+def calc_empirical_pval(row, n_permutation):
 
     pval = np.array([float(x) for x in row["dist_n_samples"][1:-1].split(", ")])
 
-    if len(pval) < n_permutations:
-       raise ValueError, "too few samples: {} (expected at least {})".format(len(pval), n_permutations) 
+    if len(pval) < n_permutation:
+        raise ValueError, "too few samples: {} (expected at least {})".format(len(pval, n_permutation))
 
     else:
-        pval = pval[:n_permutations]
+        pval = pval[:n_permutation]
         pos = np.size(pval) - np.searchsorted(np.sort(pval), row["hg_pval"], side='left')
         emp_pval = pos / float(np.size(pval))
 
@@ -49,7 +49,7 @@ def get_all_genes_for_term(vertices, cur_root, term, in_subtree):
     return all_genes
 
 
-def main(dataset="SOC", algo="jactivemodules_sa", n_permutations=300, csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr","MAX", "emp_diff_{dataset}_{algo}.tsv")):
+def main(dataset="SOC", algo="jactivemodules_sa", n_permutation=300, csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr","MAX/emp_diff_{dataset}_{algo}.tsv" )):
 
     dataset_data=pd.read_csv(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset),"data", "ge.tsv"), sep='\t', index_col=0)
     classes_data=np.array(file(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset), "data", "classes.tsv")).readlines()[0].strip().split("\t")).astype(np.int)
@@ -82,7 +82,7 @@ def main(dataset="SOC", algo="jactivemodules_sa", n_permutations=300, csv_file_n
     df_filtered_out = df.loc[~np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["hg_pval"].values >= HG_CUTOFF]), :]
 
     df_filtered_in["index"] = df_filtered_in.index.values
-    df_filtered_in["emp_pval"] = df_filtered_in.apply(lambda row: calc_empirical_pval(row, n_permutations), axis=1)
+    df_filtered_in["emp_pval"] = df_filtered_in.apply(lambda row: calc_empirical_pval(row, n_permutation), axis=1)
     df_filtered_in["mean_difference"] = df_filtered_in.apply(lambda x: mean_difference(x, dataset_data, classes_data), axis=1)
 
     pvals_corrected = df_filtered_in["emp_pval"].values
@@ -98,7 +98,8 @@ def main(dataset="SOC", algo="jactivemodules_sa", n_permutations=300, csv_file_n
 
     df_filtered_in=df_filtered_in.sort_values(by=["emp_rank", "hg_rank"])
 
-    pd.concat((df_filtered_in, df_filtered_out), axis=0).loc[df["hg_pval"].values > 0, :][["GO name", "hg_pval", "emp_pval", "hg_rank", "emp_rank",  "n_genes", "depth", "mean_difference", "passed_fdr"]].to_csv(csv_file_name[:-4]+"_md.tsv",sep='\t')
+    df_all=pd.concat((df_filtered_in, df_filtered_out), axis=0)
+    df_all.loc[df_all["hg_pval"].values > 0, :][["GO name", "hg_pval", "emp_pval", "hg_rank", "emp_rank",  "n_genes", "depth", "mean_difference", "passed_fdr"]].to_csv(csv_file_name[:-4]+"_md.tsv",sep='\t')
     return len(df_filtered_in.index), true_counter, HG_CUTOFF, emp_cutoff
 
 if __name__ == "__main__":
@@ -106,4 +107,5 @@ if __name__ == "__main__":
     main(dataset="ERS_1", algo="hotnet2", csv_file_name=csv_file_name)
     # csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","MAX", "emp_diff_{dataset}_{algo}.tsv")
     # main(dataset="TNFa_2", algo="jactivemodules_sa", csv_file_name=csv_file_name)
+
 

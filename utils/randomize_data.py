@@ -35,6 +35,13 @@ def get_permutation_name(prefix, dataset, algo, index):
 
 
 def permutation_output_exists(prefix, dataset, algo, index):
+    # print "try to find results for {}... {}".format(
+    #         os.path.join(constants.OUTPUT_GLOBAL_DIR, get_permutation_name(prefix, dataset, algo, index), algo,
+    #                      "modules_summary.tsv"),
+    #     os.path.exists(
+    #         os.path.join(constants.OUTPUT_GLOBAL_DIR, get_permutation_name(prefix, dataset, algo, index), algo,
+    #                      "modules_summary.tsv"))
+    # )
     return os.path.exists(
         os.path.join(constants.OUTPUT_GLOBAL_DIR, get_permutation_name(prefix, dataset, algo, index), algo,
                      "modules_summary.tsv"))
@@ -152,6 +159,7 @@ if __name__ == "__main__":
         #     pval = pd.read_csv(os.path.join(constants.DATASETS_DIR, cur_ds, "cache", "deg_t.tsv"), sep='\t')["pval"]
         #     sns.distplot(pval, kde=False)
         #     plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "pval_dist_microarray.png"))
+
 
 
 

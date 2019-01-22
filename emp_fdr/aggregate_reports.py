@@ -27,32 +27,35 @@ import argparse
 
 def main(datasets, algos):
 
+    colormap = cm.rainbow
+    colorlist = [ml_colors.rgb2hex(colormap(i)) for i in
+                 np.array(list(range(len(algos)))) / float(len(algos) - 1)]
+    df_matrix = pd.DataFrame()
+    df_summary = pd.DataFrame()
     for cur_ds in datasets:
 
-        colormap = cm.rainbow
         constants.update_dirs(DATASET_NAME_u=cur_ds)
         total_num_genes=[]
         algos_signals=[]
         algo_go_sims = []
 
         for i_algo, cur_algo in enumerate(algos):
+            print "current aggregation: {}, {}".format(cur_ds,cur_algo)
             try:
                 total_num_genes.append(pd.read_csv(
                     os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME, cur_algo, "all_modules_general.tsv"),
                     sep="\t")["total_num_genes"][0])
             except:
+                print "no genes were found for: {}, {}".format(cur_ds, cur_algo)
                 total_num_genes.append(0)
-
-                algos_signals.append(int(file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores",
-                                  "{}_{}_{}".format(cur_ds, cur_algo, "n_sig.txt"))).read()))
-                algo_go_sims.append(int(file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores",
-                                                           "{}_{}_{}".format(cur_ds, cur_algo, "var.txt"))).read()))
-
-        colorlist = [ml_colors.rgb2hex(colormap(i)) for i in
-                     np.array(list(range(len(algos)))) / float(len(algos) - 1)]
+            algos_signals.append(float(file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores",
+                              "{}_{}_{}".format(cur_ds, cur_algo, "n_sig.txt"))).read()))
+            algo_go_sims.append(float(file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores",
+                                                       "{}_{}_{}".format(cur_ds, cur_algo, "var.txt"))).read()))
 
         fig, ax = plt.subplots(figsize=(10, 10))
-        df_summary = pd.DataFrame()
+
+        print "all data: \n{}\n{}\n{}\n{}".format(algos_signals, algo_go_sims, algos, total_num_genes)
         for h, s, c, a, gene_size in zip(algos_signals, algo_go_sims, colorlist, algos,
                                          total_num_genes):  # [0 for x in range(len(algo_go_sim_score))]
             print (h, s)
@@ -65,6 +68,7 @@ def main(datasets, algos):
                            np.where((np.array(algo_go_sims)) == s)[0][0]], "n_genes": gene_size})
             df_series.name = "{}_{}".format(cur_ds, a)
             df_summary=df_summary.append(df_series)
+            df_matrix.loc[a, cur_ds]=h
             colorlist = [ml_colors.rgb2hex(colormap(i)) for i in
                          np.array(list(range(len(algos)))) / float(len(algos) - 1)]
             patches = [Line2D([0], [0], marker='o', color='gray', label=a,
@@ -75,7 +79,7 @@ def main(datasets, algos):
             ax.grid(True)
         plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
                                  "hs_plot_terms_signal_algo_{}.png".format(constants.DATASET_NAME)))
-        return df_summary
+    return df_summary, df_matrix
 
 
 if __name__ == "__main__":
@@ -93,11 +97,10 @@ if __name__ == "__main__":
     algos = args.algos.split(",")
 
     go_ratio_ds_summary = pd.DataFrame()
-    ds_summary=pd.DataFrame()
-    for cur_ds in datasets:
-        print "current dataset: {}".format(cur_ds)
-        df_results=main(datasets=datasets, algos=algos)
-        ds_summary=pd.concat([ds_summary, df_results])
-    ds_summary.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "ds_go_rank_summary.tsv"), sep='\t')
+    df_summary=pd.DataFrame()
+    df_summary, df_matrix=main(datasets=datasets, algos=algos)
+    df_summary.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "ds_go_rank_summary.tsv"), sep='\t')
+    df_matrix.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "ds_go_matrix.tsv"), sep='\t')
+
 
 

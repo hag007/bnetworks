@@ -93,36 +93,44 @@ def extract_module_genes(bg_genes, STRATEGY, algorithm, dest_algo_dir):
 def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip.sif"):
     constants.update_dirs(DATASET_NAME_u=dataset_name)
     network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(network_file_name, score_method)
-    STRATEGY = "INES"
+    strategy = "INES"
     algorithm = "GREEDY"
     omitted_genes = []
     modules = []
     all_bg_genes = []
     dest_algo_dir = "{}_{}".format(ALGO_DIR, random.random())
     shutil.copytree(ALGO_DIR, dest_algo_dir)
-    for cur_i_module in range(20):
+    empty_counter = 0
+    for cur_i_module in range(40):
         binary_score_file_name, cur_network_file_name = init_specific_params(score_file_name, score_method, omitted_genes,
                                                                          network_file_name, str(random.random()), dest_algo_dir)
 
         script_file_name=format_scripts(score_file_name=binary_score_file_name, network_name=cur_network_file_name,
-                       STRATEGY=STRATEGY, algorithm=algorithm, algo_dir=dest_algo_dir, dataset_name=dataset_name)
+                       STRATEGY=strategy, algorithm=algorithm, algo_dir=dest_algo_dir, dataset_name=dataset_name)
         print subprocess.Popen("bash {}".format(script_file_name), shell=True,
                                stdout=subprocess.PIPE, cwd=dest_algo_dir).stdout.read()
-        module, all_bg_gene = extract_module_genes(bg_genes, STRATEGY, algorithm, dest_algo_dir)
+        module, all_bg_gene = extract_module_genes(bg_genes, strategy, algorithm, dest_algo_dir)
+
         if len(module[0]) > 3:
+            empty_counter=0
             modules.append(module[0])
             all_bg_genes.append(all_bg_gene[0])
+        else:
+            empty_counter+=1
         omitted_genes += list(module[0])
-
         os.remove(script_file_name)
+
+        if empty_counter>3:
+            print "got more that 3 smalle modules in row. continue..."
+            break
 
     shutil.rmtree(dest_algo_dir)
 
     output_base_dir = ""
     if constants.REPORTS:
-        output_base_dir = build_all_reports(ALGO_NAME, dataset_name, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
+        output_base_dir = build_all_reports("{}_{}_{}".format(ALGO_NAME,strategy, algorithm), dataset_name, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
     output_file_name = os.path.join(constants.OUTPUT_DIR,
-                                    "{}_client_output.txt".format(ALGO_NAME))
+                                    "{}_client_output.txt".format("{}_{}_{}".format(ALGO_NAME,strategy, algorithm)))
     output_modules(output_file_name, modules, score_file_name, output_base_dir )
 
 
