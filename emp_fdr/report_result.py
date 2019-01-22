@@ -56,8 +56,7 @@ def calc_similarity(mat_adj, i_x, i_y, x, y):
         mat_adj[key] = -1
     mat_adj[key_inv] = mat_adj[key]
 
-def main(datasets, algos = ["keypathwayminer_INES_GREEDY", "netbox", "hotnet2", "jactivemodules_greedy", "bionet",
-             "jactivemodules_sa"], pf=10):
+def main(datasets, algos, pf=10):
 
 
     if not os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "ds_2_alg_scores")):
@@ -76,7 +75,7 @@ def main(datasets, algos = ["keypathwayminer_INES_GREEDY", "netbox", "hotnet2", 
             print "current cur_algo: {}".format(cur_algo)
             try:
                 emp_results = pd.read_csv(
-                    os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr",
+                    os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", 
                                  "emp_diff_{}_{}_passed_oob.tsv".format(cur_ds[cur_ds.index("_") + 1:], cur_algo)), sep='\t', index_col=0)
                 # emp_results = pd.read_csv(
                 #     os.path.join("/home/hag007/Desktop/fdr_terms/fdr_005_i_1000/terms/emp_diff_{}_{}_passed_oob.tsv"
@@ -123,8 +122,8 @@ def main(datasets, algos = ["keypathwayminer_INES_GREEDY", "netbox", "hotnet2", 
 
             p.close()
             p.join()
-            file(os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds,cur_algo, "n_sig.txt"), 'w+')).write(len(all_go_terms))
-            file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds, cur_algo, "var.txt"), 'w+')).write(1 - adj_sum / adj_count)
+            file(os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds,cur_algo, "n_sig.txt")), 'w+').write(str(len(all_go_terms)))
+            file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds, cur_algo, "var.txt")), 'w+').write(str(1 - adj_sum / adj_count) if adj_count>0 else str(0) )
 
 
 if __name__ == "__main__":
@@ -133,14 +132,15 @@ if __name__ == "__main__":
     parser.add_argument('--datasets', dest='datasets', default="SOC")
     parser.add_argument('--prefix', dest='prefix', default="GE")
     parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
-
+    parser.add_argument('--pf', dest='pf', default=10)
     args = parser.parse_args()
 
     prefix = args.prefix
     datasets=["{}_{}".format(prefix,x) for x in args.datasets.split(",")]
     algos = args.algos.split(",")
-
+    pf=int(args.pf)
+    print "test" 
     ds_summary=pd.DataFrame()
     for cur_ds in datasets:
         print "current dataset: {}".format(cur_ds)
-        main(datasets=datasets, algos=algos)
+        main(datasets=datasets, algos=algos, pf=pf)

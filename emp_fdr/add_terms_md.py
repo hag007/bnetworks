@@ -17,12 +17,13 @@ if __name__=="__main__":
     parser.add_argument('--datasets', dest='datasets', default="SOC")
     parser.add_argument('--prefix', dest='prefix', default="GE")
     parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
-
+    parser.add_argument('--n_permutations', dest='n_permutations', default=300) 
     args = parser.parse_args()
 
     datasets=args.datasets.split(",")
     algos=args.algos.split(",")
     prefix = args.prefix
+    n_permutations=int(args.n_permutations)
 
     n_terms = pd.DataFrame(index=algos, columns=datasets)
     hg_cutoffs = pd.DataFrame(index=algos, columns=datasets)
@@ -30,7 +31,7 @@ if __name__=="__main__":
     for cur_ds in datasets:
         for cur_alg in algos:
             print "{}_{}".format(cur_ds, cur_alg)
-            results=utils.add_GO_terms_metadata_agg.main(cur_ds, cur_alg)
+            results=utils.add_GO_terms_metadata_agg.main(cur_ds, cur_alg, n_permutations)
             if results is None:
                 continue
             n_filtered_terms, n_corrected_terms, hg_cutoff, emp_cutoff=results
