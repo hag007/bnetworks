@@ -17,7 +17,8 @@ if __name__=="__main__":
     parser.add_argument('--datasets', dest='datasets', default="SOC")
     parser.add_argument('--prefix', dest='prefix', default="GE")
     parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
-    parser.add_argument('--n_permutations', dest='n_permutations', default=300) 
+    parser.add_argument('--n_permutations', dest='n_permutations', default=1000)
+
     args = parser.parse_args()
 
     datasets=args.datasets.split(",")
@@ -43,6 +44,7 @@ if __name__=="__main__":
         hg_cutoffs.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "hg_cutoffs_summary.tsv"), sep='\t')
         emp_cutoffs.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr","emp_cutoffs_summary.tsv"), sep='\t')
         n_terms.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr","n_terms_summary.tsv"), sep='\t')
+
 
 
 

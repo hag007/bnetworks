@@ -87,11 +87,11 @@ if __name__=="__main__":
                # py_script = "generate_bg_dist.py"
                # execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, override_permutations_param])
 
-               py_script = "aggregate_bg_dist.py"
-               execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, recalc_true_modules_param])
+               # py_script = "aggregate_bg_dist.py"
+               # execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, recalc_true_modules_param])
 
-               py_script = "add_terms_md.py"
-               execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_permutations_param])
+               # py_script = "add_terms_md.py"
+               # execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_permutations_param])
 
                py_script = "fdr_consistent_terms.py"
                execute_stage(py_script, [datasets_param, algos_param, prefix_param, pf_param, n_iteration_param, n_total_samples_param, n_dist_samples_param, n_iteration_param])
