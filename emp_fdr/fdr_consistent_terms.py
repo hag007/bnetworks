@@ -67,6 +67,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
 
     n_total_samples=n_total_samples if n_total_samples is not None else len(output.iloc[0].loc["dist_n_samples"][1:-1].split(", "))
     if n_start_i is None:
+        np.random.seed(int(random.random()*1000))        
         i_choice=np.random.choice(n_total_samples, n_dist_samples, replace=False)
         i_dist=i_choice[:n_dist_samples]
     else:
@@ -87,7 +88,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
     df_dists["emp"] = pd.Series(emp_dists, index=output.index[:limit])
 
     zero_bool=[x<=0.004 for x in emp_pvals]
-    # emp_pvals=np.array(emp_pvals) # + 0.00333333
+    emp_pvals=[x if x!=0 else 1.0/n_dist_samples for x in emp_pvals] # + 0.00333333
     fdr_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
     mask_terms=fdr_results
     go_ids_result=output.index.values[mask_terms]

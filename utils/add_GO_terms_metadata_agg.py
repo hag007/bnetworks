@@ -28,7 +28,7 @@ def calc_empirical_pval(row, n_permutation):
     pval = np.array([float(x) for x in row["dist_n_samples"][1:-1].split(", ")])
 
     if len(pval) < n_permutation:
-        raise ValueError, "too few samples: {} (expected at least {})".format(len(pval, n_permutation))
+        raise ValueError, "too few samples: {} (expected at least {})".format(len(pval), n_permutation)
 
     else:
         pval = pval[:n_permutation]
@@ -49,7 +49,7 @@ def get_all_genes_for_term(vertices, cur_root, term, in_subtree):
     return all_genes
 
 
-def main(dataset="SOC", algo="jactivemodules_sa", n_permutation=300, csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr","MAX/emp_diff_{dataset}_{algo}.tsv" )):
+def main(dataset="SOC", algo="jactivemodules_sa", n_permutations=300, csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX/emp_diff_{dataset}_{algo}.tsv")):
 
     dataset_data=pd.read_csv(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset),"data", "ge.tsv"), sep='\t', index_col=0)
     classes_data=np.array(file(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset), "data", "classes.tsv")).readlines()[0].strip().split("\t")).astype(np.int)
@@ -82,7 +82,7 @@ def main(dataset="SOC", algo="jactivemodules_sa", n_permutation=300, csv_file_na
     df_filtered_out = df.loc[~np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500, df["hg_pval"].values >= HG_CUTOFF]), :]
 
     df_filtered_in["index"] = df_filtered_in.index.values
-    df_filtered_in["emp_pval"] = df_filtered_in.apply(lambda row: calc_empirical_pval(row, n_permutation), axis=1)
+    df_filtered_in["emp_pval"] = df_filtered_in.apply(lambda row: calc_empirical_pval(row, n_permutations), axis=1)
     df_filtered_in["mean_difference"] = df_filtered_in.apply(lambda x: mean_difference(x, dataset_data, classes_data), axis=1)
 
     pvals_corrected = df_filtered_in["emp_pval"].values

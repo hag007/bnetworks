@@ -70,11 +70,11 @@ def calc_dist(algos, datasets,is_plot=False,empirical_th=None):
         return pval, df_go, df_go_pvals
 
 
-def empirical_dist_iteration(prefix, dataset, cur, algo):
+def empirical_dist_iteration(prefix, dataset, cur, algo, network_file_name="dip.sif"):
 
     print "starting iteration: {}, {}, {}".format(prefix, dataset, cur)
     random_ds = create_random_ds(prefix, "{}_{}".format(prefix, dataset), cur, algo)
-    permuted_network_file_name = "dip.sif"  # _perm
+    permuted_network_file_name = network_file_name #   # _perm
     # if cur==0:
     #     permuted_network_file_name=create_permuted_network(network_file_name=network_file_name)
     run_dataset(random_ds, score_method=score_method,
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     parser.add_argument('--datasets', dest='datasets', default="SOC")
     parser.add_argument('--prefix', dest='prefix', default="GE")
     parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
-    parser.add_argument('--network', dest='network', default="dip")
+    parser.add_argument('--network', dest='network', default="dip.sif")
     parser.add_argument('--pf', help="parallelization_factor", dest='pf', default=10)
     parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_start', default=0)
     parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_end', default=100)
@@ -126,7 +126,7 @@ if __name__ == "__main__":
             prcs = []
 
             p = MyPool(parallelization_factor)
-            params=[ [empirical_dist_iteration, [prefix, dataset, x, algo]] for x in np.arange(int(n_start), int(n_end)) if override_permutations or not permutation_output_exists(prefix, dataset, algo, x)]
+            params=[ [empirical_dist_iteration, [prefix, dataset, x, algo, network_file_name]] for x in np.arange(int(n_start), int(n_end)) if override_permutations or not permutation_output_exists(prefix, dataset, algo, x)]
             p.map(func_star, params)
 
 
