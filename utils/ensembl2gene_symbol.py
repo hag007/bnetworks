@@ -56,6 +56,9 @@ def get_e2g_dictionary():
 
 
 def e2g_convertor(e_ids):
+    if type(e_ids) is str:
+        e_ids=[e_ids]
+
     global e2g_dict
     if e2g_dict is None:
         e2g_dict = get_e2g_dictionary()
@@ -69,6 +72,9 @@ def e2g_convertor(e_ids):
 
 
 def g2e_convertor(g_ids):
+    if type(g_ids) is str:
+        g_ids=[g_ids]
+
     global g2e_dict
     if g2e_dict is None:
         g2e_dict = get_g2e_dictionary()

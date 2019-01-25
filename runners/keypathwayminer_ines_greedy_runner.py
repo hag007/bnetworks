@@ -42,9 +42,11 @@ ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 
 NETWORK_NAME = "dip"
 
-def init_specific_params(score_file_name, score_method, omitted_genes, network_file_name, ts):
-    if os.path.exists(os.path.join(ALGO_DIR, "results")):
-        shutil.rmtree(os.path.join(ALGO_DIR, "results"))
+import random
+
+def init_specific_params(score_file_name, score_method, omitted_genes, network_file_name, ts, dest_algo_dir):
+    if os.path.exists(os.path.join(dest_algo_dir, "results")):
+        shutil.rmtree(os.path.join(dest_algo_dir, "results"))
 
     if score_method != constants.PREDEFINED_SCORE:
         deg = infra.load_gene_expression_profile_by_genes(gene_expression_path=score_file_name)
@@ -62,20 +64,20 @@ def init_specific_params(score_file_name, score_method, omitted_genes, network_f
     return score_file_name, new_network_file_name
 
 
+def format_scripts(score_file_name, network_name="dip", STRATEGY="INES", algorithm="GREEDY", algo_dir=None, dataset_name=None):
+    script_file_name=format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE, DATASET_DIR=os.path.join(constants.DATASETS_DIR,dataset_name), STRATEGY=STRATEGY, ALGORITHM=algorithm)
+    format_script(os.path.join(algo_dir, "kpm.properties"), uid=False, base_folder=constants.BASE_PROFILE, network_name=network_name, algo_dir=algo_dir, algorithm=algorithm)
+    format_script(os.path.join(algo_dir, "datasets_file.txt"), uid=False, base_folder=constants.BASE_PROFILE, dataset=dataset_name, score_file_name=score_file_name)
+
+    return script_file_name
 
 
-def format_scripts(algo_name, score_file_name, network_name="dip", STRATEGY="INES", algorithm="GREEDY"):
-    format_script(os.path.join(constants.SH_DIR, "run_{}.sh".format(ALGO_NAME)), BASE_FOLDER=constants.BASE_PROFILE, DATASET_DIR=constants.DATASET_DIR, STRATEGY=STRATEGY, ALGORITHM=algorithm)
-    format_script(os.path.join(constants.ALGO_BASE_DIR,algo_name, "kpm.properties"), base_folder=constants.BASE_PROFILE, network_name=network_name, algo_dir=ALGO_DIR, algorithm=algorithm)
-    format_script(os.path.join(constants.ALGO_BASE_DIR, algo_name, "datasets_file.txt"), base_folder=constants.BASE_PROFILE, dataset=constants.DATASET_NAME, score_file_name=score_file_name)
-
-
-def extract_module_genes(bg_genes, STRATEGY, algorithm):
+def extract_module_genes(bg_genes, STRATEGY, algorithm, dest_algo_dir):
     i = 1
     modules = []
-    while os.path.exists(os.path.join(ALGO_DIR, "results", "Pathway-{}-NODES-.txt".format("%02d" % (i,)))) and i<2:
+    while os.path.exists(os.path.join(dest_algo_dir, "results", "Pathway-{}-NODES-.txt".format("%02d" % (i,)))) and i<2:
         results = file(
-            os.path.join(ALGO_DIR, "results", "Pathway-{}-NODES-.txt".format("%02d" % (i,)))).readlines()
+            os.path.join(dest_algo_dir, "results", "Pathway-{}-NODES-.txt".format("%02d" % (i,)))).readlines()
         results = map(lambda x: x.strip(), results)
         modules.append(results)
         i += 1
@@ -88,36 +90,49 @@ def extract_module_genes(bg_genes, STRATEGY, algorithm):
     return modules, [bg_genes for x in modules]
 
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER):
-    global NETWORK_NAME
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip.sif"):
     constants.update_dirs(DATASET_NAME_u=dataset_name)
-    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(NETWORK_NAME, score_method)
-    STRATEGY = "INES"
+    network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(network_file_name, score_method)
+    strategy = "INES"
     algorithm = "GREEDY"
     omitted_genes = []
     modules = []
     all_bg_genes = []
-    cur_network_name = NETWORK_NAME
+    dest_algo_dir = "{}_{}".format(ALGO_DIR, random.random())
+    shutil.copytree(ALGO_DIR, dest_algo_dir)
+    empty_counter = 0
     for cur_i_module in range(40):
         binary_score_file_name, cur_network_file_name = init_specific_params(score_file_name, score_method, omitted_genes,
-                                                                         network_file_name, str(cur_i_module))
+                                                                         network_file_name, str(random.random()), dest_algo_dir)
 
-        format_scripts(algo_name=ALGO_NAME, score_file_name=binary_score_file_name, network_name=cur_network_file_name,
-                       STRATEGY=STRATEGY, algorithm=algorithm)
-        print subprocess.Popen("bash {}/run_{}.sh".format(constants.SH_DIR, ALGO_NAME), shell=True,
-                               stdout=subprocess.PIPE, cwd=ALGO_DIR).stdout.read()
-        module, all_bg_gene = extract_module_genes(bg_genes, STRATEGY, algorithm)
+        script_file_name=format_scripts(score_file_name=binary_score_file_name, network_name=cur_network_file_name,
+                       STRATEGY=strategy, algorithm=algorithm, algo_dir=dest_algo_dir, dataset_name=dataset_name)
+        print subprocess.Popen("bash {}".format(script_file_name), shell=True,
+                               stdout=subprocess.PIPE, cwd=dest_algo_dir).stdout.read()
+        module, all_bg_gene = extract_module_genes(bg_genes, strategy, algorithm, dest_algo_dir)
+
         if len(module[0]) > 3:
+            empty_counter=0
             modules.append(module[0])
             all_bg_genes.append(all_bg_gene[0])
+        else:
+            empty_counter+=1
         omitted_genes += list(module[0])
+        os.remove(script_file_name)
+
+        if empty_counter>3:
+            print "got more that 3 smalle modules in row. continue..."
+            break
+
+    shutil.rmtree(dest_algo_dir)
+
     output_base_dir = ""
     if constants.REPORTS:
-        output_base_dir = build_all_reports(ALGO_NAME + "_" + STRATEGY+ "_" + algorithm, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
-
+        output_base_dir = build_all_reports("{}_{}_{}".format(ALGO_NAME,strategy, algorithm), dataset_name, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
     output_file_name = os.path.join(constants.OUTPUT_DIR,
-                                    "{}_{}_{}_client_output.txt".format(ALGO_NAME,STRATEGY,algorithm))
+                                    "{}_client_output.txt".format("{}_{}_{}".format(ALGO_NAME,strategy, algorithm)))
     output_modules(output_file_name, modules, score_file_name, output_base_dir )
+
 
 
 if __name__ == "__main__":

@@ -35,6 +35,13 @@ def get_permutation_name(prefix, dataset, algo, index):
 
 
 def permutation_output_exists(prefix, dataset, algo, index):
+    # print "try to find results for {}... {}".format(
+    #         os.path.join(constants.OUTPUT_GLOBAL_DIR, get_permutation_name(prefix, dataset, algo, index), algo,
+    #                      "modules_summary.tsv"),
+    #     os.path.exists(
+    #         os.path.join(constants.OUTPUT_GLOBAL_DIR, get_permutation_name(prefix, dataset, algo, index), algo,
+    #                      "modules_summary.tsv"))
+    # )
     return os.path.exists(
         os.path.join(constants.OUTPUT_GLOBAL_DIR, get_permutation_name(prefix, dataset, algo, index), algo,
                      "modules_summary.tsv"))
