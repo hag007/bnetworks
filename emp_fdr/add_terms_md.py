@@ -17,8 +17,7 @@ if __name__=="__main__":
     parser.add_argument('--datasets', dest='datasets', default="SOC")
     parser.add_argument('--prefix', dest='prefix', default="GE")
     parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
-    parser.add_argument('--n_permutations', dest='n_permutations', default=1000)
-
+    parser.add_argument('--n_permutations', dest='n_permutations', default=300) 
     args = parser.parse_args()
 
     datasets=args.datasets.split(",")

@@ -87,7 +87,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
     df_dists["emp"] = pd.Series(emp_dists, index=output.index[:limit])
 
     zero_bool=[x<=0.004 for x in emp_pvals]
-    emp_pvals=np.array(emp_pvals) + 0.00333333
+    # emp_pvals=np.array(emp_pvals) # + 0.00333333
     fdr_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
     mask_terms=fdr_results
     go_ids_result=output.index.values[mask_terms]
@@ -108,8 +108,8 @@ if __name__ == "__main__":
     parser.add_argument('--prefix', dest='prefix', default="GE")
     parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
     parser.add_argument('--n_iteration', dest='n_iteration', default=100)
-    parser.add_argument('--n_total_samples', help="n_total_samples", dest='n_start', default=1000)
-    parser.add_argument('--n_dist_samples', help="n_dist_samples", dest='n_end', default=200)
+    parser.add_argument('--n_total_samples', help="n_total_samples", dest='n_total_samples', default=1000)
+    parser.add_argument('--n_dist_samples', help="n_dist_samples", dest='n_dist_samples', default=200)
     parser.add_argument('--pf', dest='pf', help="parallelization factor", default=20)
 
     args = parser.parse_args()
@@ -144,6 +144,7 @@ if __name__ == "__main__":
 
             shared_list = multiprocessing.Manager().list()
             params=[]
+            print "about to start {} intersections".format(n_iteration)
             for cur in range(n_iteration):
                 params.append([main, [cur_alg, cur_ds, n_dist_samples, n_total_samples, shared_list]]) # , n_dist_samples*cur
 

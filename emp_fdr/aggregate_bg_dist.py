@@ -46,9 +46,12 @@ def calc_dist(algos, datasets, shared_list=None, is_max=True):
                             df_go_pvals[df_go_pvals.isna()] = 1
                             df_go_pvals=df_go_pvals.min(axis=1).to_frame()
 
-                    except EmptyDataError:
+                    except EmptyDataError,e:
+                        print e
                         pass
-
+                # if len(go_results)==0:
+                #     df_go_pvals=pd.DataFrame(data=np.array([[1]]),index=["GO:0008150"])
+ 
             if not is_max:
                 df_go_pvals[df_go_pvals.isna()] = 1
 
@@ -116,10 +119,11 @@ if __name__ == "__main__":
 
             
             params=[[calc_dist, [[algo], [get_permutation_name(prefix, dataset, algo,  cur)], pvals]] for cur in range(n_start,n_end)]
+            print "test"
             p.map(func_star, params)
             pvals=list(pvals)
             df_all_terms = pd.concat(pvals, axis=1)
-
+            df_all_terms=df_all_terms.fillna(1)
             print "total # permutations: {}/{}".format(len(pvals), n_end-n_start)
             
             if recalc_true_modules:
@@ -147,4 +151,8 @@ if __name__ == "__main__":
             df_results.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_diff_{}_{}.tsv".format(dataset, algo)),
                                         sep='\t', index_label="GO id")
 
-
+            if args.max_dist:
+                 df_results.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr","MAX","emp_diff_{}_{}.tsv".format(dataset, algo)),  sep='\t', index_label="GO id")
+     
+            print "permutation shape: {}".format(df_all_terms)
+   
