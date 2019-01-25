@@ -25,6 +25,7 @@ from pandas.errors import EmptyDataError
 from utils.permute_network import EdgeSwapGraph
 import scipy
 from scipy.optimize import least_squares
+from runners.FDR_runner import run_FDR
 import random
 from statsmodels.sandbox.stats.multicomp import fdrcorrection0
 import multiprocessing
@@ -87,10 +88,11 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
     df_dists = pd.DataFrame(index=output.index)
     df_dists["emp"] = pd.Series(emp_dists, index=output.index[:limit])
 
+    emp_pvals = [x if x != 0 else 1.0 / n_dist_samples for x in emp_pvals]
     zero_bool=[x<=0.004 for x in emp_pvals]
-    emp_pvals=[x if x!=0 else 1.0/n_dist_samples for x in emp_pvals] # + 0.00333333
-    fdr_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
-    mask_terms=fdr_results
+    fdr_bh_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
+    fdr_robust_results=[True if x <0.05 else False for x in run_FDR(emp_pvals)]
+    mask_terms=fdr_robust_results
     go_ids_result=output.index.values[mask_terms]
     go_names_result=output["GO name"].values[mask_terms]
     n_emp_true =sum(mask_terms)
