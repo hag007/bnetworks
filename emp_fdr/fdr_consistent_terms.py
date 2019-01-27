@@ -91,7 +91,10 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
     emp_pvals = [x if x != 0 else 1.0 / n_dist_samples for x in emp_pvals]
     zero_bool=[x<=0.004 for x in emp_pvals]
     fdr_bh_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
-    fdr_robust_results=[True if x <0.05 else False for x in run_FDR(emp_pvals)]
+    # print "emp_pval: {}".format(emp_pvals)
+    robust_fdr=run_FDR(np.array(emp_pvals))['result'] # sys.stdout.write("FDR results; {}".format(run_FDR(np.array(emp_pvals),1.0/n_dist_samples ) ))
+    # print "robust fdr: {}".format(robust_fdr)
+    fdr_robust_results=[True if x <0.05 else False for x in robust_fdr]
     mask_terms=fdr_robust_results
     go_ids_result=output.index.values[mask_terms]
     go_names_result=output["GO name"].values[mask_terms]
