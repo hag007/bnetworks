@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
             if args.max_dist:
                 df_results.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
-                                               "emp_diff_{}_{}.tsv".format(dataset, algo)), sep='\t',
+                                               "emp_diff_modules_{}_{}.tsv".format(dataset, algo)), sep='\t',
                                   index_label="GO id")
 
             print "permutation shape: {}".format(df_all_terms)
