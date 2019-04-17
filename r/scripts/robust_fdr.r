@@ -1,3 +1,4 @@
+# source("https://bioconductor.org/biocLite.R")
 # biocLite("prot2D")
 .libPaths("/specific/netapp5/gaga/hagailevi/evaluation/Renv")
 library(prot2D, lib.loc  = "/specific/netapp5/gaga/hagailevi/evaluation/Renv")

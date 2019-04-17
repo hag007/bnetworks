@@ -20,7 +20,7 @@ import ensembl2gene_symbol
 
 
 # convert ensembl to gene symbols
-constants.update_dirs(DATASET_NAME_u="EN_BRCA")
+constants.update_dirs(DATASET_NAME_u="ICGC_BRCA_KR")
 df_raw = pd.read_csv(os.path.join(constants.DATA_DIR, "ge_raw.tsv"), sep="\t", index_col=0)
 ensg_ids = [ensembl2gene_symbol.g2e_convertor([cur])[0] if len(ensembl2gene_symbol.g2e_convertor([cur])) > 0 else "nan" for cur in df_raw.index]
 ensg_ids=[x if not x.startswith("ENSGR") else "nan" for x in ensg_ids ]

@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '../')
 import os
 from multiprocessing import Process
 import utils.aggregate_reports as aggregate_reports
@@ -68,16 +70,16 @@ def run_dataset(dataset_name, expected_genes=None, disease_name=None, score_meth
 
 if __name__ == "__main__":
     # datasets=["GE_SOC", "GE_MCF7_2", "GE_TNFa_2", "GE_HC12", "GE_IES", "GE_IEM", "GE_IEN"]
-    datasets=["EN_CML", "EN_LICH", "EN_BRCA", "EN_KIRC"] # ["EN_LUNG", "EN_PRAD", "EN_PAAD"]
-    algos = ["hotnet2", "bionet", "jactivemodules_greedy", "jactivemodules_sa"]
+    datasets=["GWAS_test"] # ["EN_LUNG", "EN_PRAD", "EN_PAAD"]
+    algos = ["netbox"]
 
     for cur_ds in datasets: # datasets: # [1:2]
         print "current folder : {}".format(os.path.basename(cur_ds))
         score_method = constants.PREDEFINED_SCORE
-        if cur_ds.startswith("GE"):
-            score_method = constants.DEG_EDGER
-            if cur_ds.startswith("GE_IE"):
-                score_method=constants.DEG_T
+        # if cur_ds.startswith("GE"):
+        #     score_method = constants.DEG_EDGER
+        #     if cur_ds.startswith("GE_IE"):
+        #         score_method=constants.DEG_T
 
         run_dataset(cur_ds, score_method=score_method,
                     algos=algos, network_file_name="dip.sif") #
