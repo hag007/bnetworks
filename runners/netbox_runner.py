@@ -80,7 +80,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
     
     script_name = "run_{}.sh".format(ALGO_NAME)
     dest_algo_dir="{}_{}".format(ALGO_DIR,random.random())
-    shutil.copytree(ALGO_DIR, dest_algo_dir)
+    # shutil.copytree(ALGO_DIR, dest_algo_dir)
     conf_file_name=init_specific_params(score_file_name, dest_algo_dir)
     script_file_name=format_script(os.path.join(constants.SH_DIR, script_name), BASE_FOLDER=constants.BASE_PROFILE,
                   DATASET_DIR=constants.DATASET_DIR, CONFIG_FILE_NAME=conf_file_name, NETBOX_DIR=dest_algo_dir)
@@ -90,7 +90,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
     modules, all_bg_genes = extract_modules_and_bg(bg_genes, dest_algo_dir)
     os.remove(script_file_name)
     os.remove(conf_file_name)
-    shutil.rmtree(dest_algo_dir)
+    # shutil.rmtree(dest_algo_dir)
     output_base_dir = ""
     if constants.REPORTS:
         output_base_dir = build_all_reports(ALGO_NAME, dataset_name, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)

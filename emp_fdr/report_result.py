@@ -8,7 +8,6 @@ from fastsemsim.Ontology import ontologies
 from fastsemsim.Ontology import AnnotationCorpus
 from fastsemsim.SemSim.SetSemSim import SetSemSim
 
-
 import matplotlib
 matplotlib.use("Agg")
 
@@ -22,7 +21,6 @@ import multiprocessing
 from utils.daemon_multiprocessing import func_star
 
 import argparse
-
 
 ontology_type = 'GeneOntology'
 ignore_parameters = {'ignore': {}}
@@ -47,16 +45,19 @@ print "\n#################################"
 print "# Annotation corpus successfully loaded."
 print "#################################\n"
 
-semsim = SetSemSim(ontology, ac, TSS="Resnik", MSS="BMA") # GSESAMESemSim(ontology, ac)  # maxSemSim(ontology, ac) #
+semsim = SetSemSim(ontology, ac, TSS="Resnik", MSS="BMA")
 
 def calc_similarity(mat_adj, i_x, i_y, x, y):
     key="{}_{}".format(i_x,i_y)
     key_inv="{}_{}".format(i_y,i_x)
-    if mat_adj[key] != -2: return
-    mat_adj[key] = semsim.SemSim(x, y)  # , ResnikSemSim(ontology,ac))
-    # print mat_adj[key]
+    if mat_adj[key] != -200: return
+    mat_adj[key] = semsim.SemSim(x, y)
+
+    # if mat_adj[key]<0:
+    #    print x,y,mat_adj[key]
+
     if np.isnan(mat_adj[key]):
-        mat_adj[key] = -1
+        mat_adj[key] = -100
     mat_adj[key_inv] = mat_adj[key]
 
 def main(datasets, algos, pf=10):
@@ -69,6 +70,7 @@ def main(datasets, algos, pf=10):
             print "error while creating ds_2_alg_scores folder: {}".format(e)
 
     for cur_ds in datasets:
+        print "cur ds: {}".format(cur_ds) 
         constants.update_dirs(DATASET_NAME_u=cur_ds)
         algo_go_sim_score = []
         total_num_genes = []
@@ -80,10 +82,7 @@ def main(datasets, algos, pf=10):
                 emp_results = pd.read_csv(
                     os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", 
                                  "emp_diff_{}_{}_passed_oob.tsv".format(cur_ds[cur_ds.index("_") + 1:], cur_algo)), sep='\t', index_col=0)
-                # emp_results = pd.read_csv(
-                #     os.path.join("/home/hag007/Desktop/fdr_terms/fdr_005_i_1000/terms/emp_diff_{}_{}_passed_oob.tsv"
-                #                  .format(cur_ds[cur_ds.index("_") + 1:], cur_algo)),
-                #     sep='\t', index_col=0)
+
             except:
                 total_num_genes.append(0)
                 algos_signals.append(0)
@@ -91,7 +90,7 @@ def main(datasets, algos, pf=10):
                 continue
 
             emp_results=emp_results.sort_values(by='emp_rank')
-            emp_results_fdr=emp_results.loc[emp_results["passed_oob_permutation_test"].values,:]["GO name"]
+            emp_results_fdr=emp_results.dropna().loc[emp_results.dropna()["passed_oob_permutation_test"].values,:]["GO name"]
 
             algos_signals.append(len(emp_results_fdr.index))
             all_go_terms = emp_results_fdr.index.values
@@ -106,8 +105,13 @@ def main(datasets, algos, pf=10):
             adj_sum, adj_count = calc_intra_similarity(all_go_terms, pf)
 
             file(os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds,cur_algo, "n_sig.txt")), 'w+').write(str(len(all_go_terms)))
-            file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds, cur_algo, "var.txt")), 'w+').write(str(1 - adj_sum / adj_count) if adj_count>0 else str(0) )
+            file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds, cur_algo, "var.txt")), 'w+').write(str(1 - adj_sum / adj_count) if adj_count>0 else str(0))
 
+            # manager=multiprocessing.Manager()
+            # adj=manager.dict()
+            # for x in range(len(all_go_terms)):
+            #     for y in range(len(all_go_terms)):
+            #         adj["{}_{}".format(x,y)]=-200
 
 def calc_intra_similarity(all_go_terms, pf):
     manager = multiprocessing.Manager()
@@ -124,7 +128,6 @@ def calc_intra_similarity(all_go_terms, pf):
     p.close()
     p.join()
 
-
     adj_sum = sum([adj["{}_{}".format(x, y)] for x in range(len(all_go_terms)) for y in range(len(all_go_terms)) if
                    adj["{}_{}".format(x, y)] != -1])
     adj_count = float(len(
@@ -133,10 +136,21 @@ def calc_intra_similarity(all_go_terms, pf):
     print "adj_sum: ", adj_sum
     print "adj_count: ", adj_count
 
-
-
-
     return adj_sum, adj_count
+
+
+
+            # adj_sum=sum([adj["{}_{}".format(x,y)] for x in range(len(all_go_terms)) for y in range(len(all_go_terms)) if adj["{}_{}".format(x,y)]!=-100])
+            # adj_count=float(len([adj["{}_{}".format(x,y)] for x in range(len(all_go_terms)) for y in range(len(all_go_terms)) if adj["{}_{}".format(x,y)]!=-100]))
+            # print "adj_sum: ",adj_sum
+            # print "adj_count: ",adj_count
+            #
+            # p.close()
+            # p.join()
+            # print "n sig_terms: {}, variability: {}".format(len(all_go_terms), str(1 - adj_sum / adj_count))
+            # file(os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds,cur_algo, "n_sig.txt")), 'w+').write(str(len(all_go_terms)))
+            # file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds, cur_algo, "var.txt")), 'w+').write(str(1 - adj_sum / adj_count) if adj_count>0 else str(0) )
+
 
 
 if __name__ == "__main__":

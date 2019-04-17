@@ -88,15 +88,18 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
     df_dists = pd.DataFrame(index=output.index)
     df_dists["emp"] = pd.Series(emp_dists, index=output.index[:limit])
 
-    emp_pvals = [x if x != 0 else 1.0 / n_dist_samples for x in emp_pvals]
+    emp_pvals = np.sort([x if x != 0 else 1.0 / n_dist_samples for x in emp_pvals])
     zero_bool=[x<=0.004 for x in emp_pvals]
     fdr_bh_results = fdrcorrection0(emp_pvals, alpha=0.05, method='indep', is_sorted=False)[0]
-    fdr_robust_results=[True if x <0.05 else False for x in run_FDR(emp_pvals)]
-    mask_terms=fdr_robust_results
+    # print "emp_pval: {}".format(emp_pvals)
+    robust_fdr=run_FDR(np.array(emp_pvals))['result'] # sys.stdout.write("FDR results; {}".format(run_FDR(np.array(emp_pvals),1.0/n_dist_samples ) ))
+    # print "robust fdr: {}".format(robust_fdr)
+    fdr_robust_results=[True if x <0.05 else False for x in robust_fdr]
+    mask_terms=fdr_bh_results  # fdr_robust_results
     go_ids_result=output.index.values[mask_terms]
     go_names_result=output["GO name"].values[mask_terms]
     n_emp_true =sum(mask_terms)
-    BH_TH = np.sort(emp_pvals)[n_emp_true - 1]
+    BH_TH = emp_pvals[n_emp_true - 1]
 
     print "BH cutoff: {} # true terms passed BH cutoff: {}".format(BH_TH, n_emp_true)
     if shared_list is not None:
@@ -143,7 +146,7 @@ if __name__ == "__main__":
             go_names_intersection=[]
             ys1=[]
             ys2=[]
-            print "{}_{}".format(cur_alg, cur_alg)
+            print "{}_{}".format(cur_ds, cur_alg)
 
             shared_list = multiprocessing.Manager().list()
             params=[]
