@@ -32,6 +32,7 @@ def main(datasets, algos):
                  np.array(list(range(len(algos)))) / float(len(algos) - 1)]
     df_matrix = pd.DataFrame()
     df_summary = pd.DataFrame()
+    df_variability_matrix=pd.DataFrame()
     for cur_ds in datasets:
 
         constants.update_dirs(DATASET_NAME_u=cur_ds)
@@ -79,6 +80,7 @@ def main(datasets, algos):
             df_series.name = "{}_{}".format(cur_ds, a)
             df_summary=df_summary.append(df_series)
             df_matrix.loc[a, cur_ds]=h
+            df_variability_matrix.loc[a, cur_ds]=s
             colorlist = [ml_colors.rgb2hex(colormap(i)) for i in
                          np.array(list(range(len(algos)))) / float(len(algos) - 1)]
             patches = [Line2D([0], [0], marker='o', color='gray', label=a,
@@ -89,7 +91,7 @@ def main(datasets, algos):
             ax.grid(True)
         plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,
                                  "hs_plot_terms_signal_algo_{}.png".format(constants.DATASET_NAME)))
-    return df_summary, df_matrix
+    return df_summary, df_matrix, df_variability_matrix
 
 
 if __name__ == "__main__":
@@ -108,9 +110,9 @@ if __name__ == "__main__":
 
     go_ratio_ds_summary = pd.DataFrame()
     ds_summary=pd.DataFrame()
-    ds_summary, df_matrix=main(datasets=datasets, algos=algos)
+    ds_summary, df_matrix, df_variability_matrix=main(datasets=datasets, algos=algos)
     ds_summary.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "ds_go_rank_summary.tsv"), sep='\t')
     df_matrix.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "ds_go_matrix.tsv"), sep='\t')
-
+    df_variability_matrix.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "ds_go_variability_matrix.tsv"), sep='\t')
 
 

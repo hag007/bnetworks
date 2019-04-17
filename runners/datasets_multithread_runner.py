@@ -69,7 +69,7 @@ def run_dataset(dataset_name, expected_genes=None, disease_name=None, score_meth
 if __name__ == "__main__":
     # datasets=["GE_SOC", "GE_MCF7_2", "GE_TNFa_2", "GE_HC12", "GE_IES", "GE_IEM", "GE_IEN"]
     datasets=["EN_CML", "EN_LICH", "EN_BRCA", "EN_KIRC"] # ["EN_LUNG", "EN_PRAD", "EN_PAAD"]
-    algos = ["hotnet2", "bionet", "jactivemodules_greedy", "jactivemodules_sa"]
+    algos = ["hotnet2", "bionet", "jactivemodules_greedy", "jactivemodules_sa", "netbox", "keypathwayminer_INES_GREEDY"]
 
     for cur_ds in datasets: # datasets: # [1:2]
         print "current folder : {}".format(os.path.basename(cur_ds))
