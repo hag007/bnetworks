@@ -8,48 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.Rhistory" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.0758084491215.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.304033963543.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.319466903358.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.419020865291.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.437281989866.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.448266551149.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.533729901142.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.60615782131.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.656517519003.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/prepare_hotnet2_0.756940342254.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.354802833546.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.361501218428.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.39923497743.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.473805433545.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.550866861133.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.554676136088.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.575030275647.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.58254173859.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.639348181583.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.671926096988.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.74593012607.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.753977724751.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.834697221911.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.92257133716.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.926083454274.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.949749908961.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sh/scripts/run_netbox_0.92923785789.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/aggregate_reports.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/aggregate_reports.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emp_fdr/aggregate_bg_dist_modules.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_dist.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emp_fdr/pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/report_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/report_result.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/r/scripts/robust_fdr.r" beforeDir="false" afterPath="$PROJECT_DIR$/r/scripts/robust_fdr.r" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/datasets_multithread_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/datasets_multithread_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/netbox_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/netbox_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.0159263682581.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.0159263682581.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.106233770002.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.106233770002.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.149364119414.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.149364119414.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.205402725304.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.205402725304.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.335211244137.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.335211244137.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.488800357596.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.488800357596.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.722945652209.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sh/scripts/run_jactivemodules_0.722945652209.sh" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -68,15 +28,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="42883">
               <caret line="2308" column="4" selection-start-line="2308" selection-start-column="4" selection-end-line="2308" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="grid_plot_criteria.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/grid_plot_criteria.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4028">
-              <caret line="218" column="62" selection-start-line="218" selection-start-column="62" selection-end-line="218" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -113,8 +64,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="aggregate_bg_dist_modules.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_dist_modules.py">
+      <file leaf-file-name="aggregate_bg_modules_dist.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_dist.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="207">
               <caret line="133" selection-start-line="133" selection-end-line="133" />
@@ -131,11 +82,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="datasets_multithread_runner.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="datasets_multithread_runner.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runners/datasets_multithread_runner.py">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pipeline.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/emp_fdr/pipeline.py">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="19">
-              <caret line="41" column="8" lean-forward="true" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
+              <caret line="66" column="14" lean-forward="true" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -237,7 +197,6 @@
         <option value="$PROJECT_DIR$/runners/summarize_GO_terms_md_agg.py" />
         <option value="$PROJECT_DIR$/runners/fdr_consistent_terms.py" />
         <option value="$PROJECT_DIR$/emp_fdr/report_results.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/pipeline.py" />
         <option value="$PROJECT_DIR$/utils/scripts.py" />
         <option value="$PROJECT_DIR$/utils/randomize_data.py" />
         <option value="$PROJECT_DIR$/runners/keypathwayminer_ines_greedy_runner.py" />
@@ -269,6 +228,7 @@
         <option value="$PROJECT_DIR$/emp_fdr/aggregate_bg_dist_modules.py" />
         <option value="$PROJECT_DIR$/emp_fdr/report_result.py" />
         <option value="$PROJECT_DIR$/runners/datasets_multithread_runner.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/pipeline.py" />
       </list>
     </option>
   </component>
@@ -1109,9 +1069,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/matplotlib/cm.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/mpl_toolkits/mplot3d/axes3d.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7771">
@@ -1437,7 +1394,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_dist_modules.py">
+    <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_dist.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
           <caret line="133" selection-start-line="133" selection-end-line="133" />
@@ -1453,8 +1410,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/runners/datasets_multithread_runner.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/pipeline.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
-          <caret line="41" column="8" lean-forward="true" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
+          <caret line="66" column="14" lean-forward="true" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="14" />
         </state>
       </provider>
     </entry>
