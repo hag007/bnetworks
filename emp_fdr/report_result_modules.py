@@ -81,7 +81,7 @@ def main(datasets, algos, pf=10):
             try:
                 emp_results = pd.read_csv(
                     os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", 
-                                 "emp_diff_{}_{}_passed_oob.tsv".format(cur_ds[cur_ds.index("_") + 1:], cur_algo)), sep='\t', index_col=0)
+                                 "emp_diff_modules_{}_{}_passed_oob.tsv".format(cur_ds[cur_ds.index("_") + 1:], cur_algo)), sep='\t', index_col=0)
 
             except:
                 total_num_genes.append(0)

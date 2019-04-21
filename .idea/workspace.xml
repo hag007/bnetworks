@@ -5,11 +5,18 @@
     <bookmark url="file://$PROJECT_DIR$/utils/go_pval_dist.py" line="107" />
     <bookmark url="file://$PROJECT_DIR$/utils/go_pval_dist.py" line="108" />
     <bookmark url="file://$PROJECT_DIR$/utils/go_pval_dist.py" line="69" />
+    <bookmark url="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" line="54" mnemonic="9" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/emp_fdr/aggregate_bg_dist_modules.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_dist.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/pipeline.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emp_fdr/add_terms_md_modules.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_copy_dist.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emp_fdr/report_result_modules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emp_fdr/add_terms_md.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/add_terms_md.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/emp_fdr/report_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/report_result.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,52 +30,47 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pyplot.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/matplotlib/pyplot.py">
+      <file leaf-file-name="add_terms_md.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/emp_fdr/add_terms_md.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42883">
-              <caret line="2308" column="4" selection-start-line="2308" selection-start-column="4" selection-end-line="2308" selection-end-column="4" />
+            <state relative-caret-position="163">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="grid_plot_go_terms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/grid_plot_go_terms.py">
+      <file leaf-file-name="add_GO_terms_metadata_agg.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="558">
-              <caret line="84" selection-start-line="84" selection-end-line="84" />
+            <state relative-caret-position="281">
+              <caret line="156" column="26" lean-forward="true" selection-start-line="156" selection-start-column="26" selection-end-line="156" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fdr_consistent_terms.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="148">
+              <caret line="185" column="131" selection-start-line="185" selection-start-column="131" selection-end-line="185" selection-end-column="131" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="aggregate_reports.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_reports.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="aggregate_bg_dist.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_dist.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="137" column="42" selection-start-line="137" selection-start-column="42" selection-end-line="137" selection-end-column="42" />
+            <state relative-caret-position="283">
+              <caret line="53" column="48" lean-forward="true" selection-start-line="53" selection-start-column="48" selection-end-line="53" selection-end-column="48" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add_terms_md.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emp_fdr/add_terms_md.py">
+      <file leaf-file-name="fdr_consistent_terms_modules.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms_modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="52" selection-start-line="52" selection-end-line="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="aggregate_bg_modules_dist.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_dist.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="133" selection-start-line="133" selection-end-line="133" />
+            <state relative-caret-position="300">
+              <caret line="253" column="49" lean-forward="true" selection-start-line="253" selection-start-column="49" selection-end-line="253" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -76,35 +78,44 @@
       <file leaf-file-name="report_result.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/emp_fdr/report_result.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2584">
-              <caret line="136" column="34" lean-forward="true" selection-start-line="136" selection-start-column="34" selection-end-line="136" selection-end-column="34" />
+            <state relative-caret-position="-1068">
+              <caret line="53" column="32" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="datasets_multithread_runner.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runners/datasets_multithread_runner.py">
+      <file leaf-file-name="report_result_modules.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/emp_fdr/report_result_modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="301">
+              <caret line="87" column="39" lean-forward="true" selection-start-line="87" selection-start-column="39" selection-end-line="87" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pipeline.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/emp_fdr/pipeline.py">
+      <file leaf-file-name="ResnikSemSim.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/ResnikSemSim.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="66" column="14" lean-forward="true" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="14" />
+            <state relative-caret-position="378">
+              <caret line="44" selection-start-line="44" selection-end-line="44" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_axes.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/matplotlib/axes/_axes.py">
+      <file leaf-file-name="managers.py" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/lib/python2.7/multiprocessing/managers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9804">
-              <caret line="560" column="9" selection-start-line="560" selection-start-column="9" selection-end-line="560" selection-end-column="9" />
+            <state relative-caret-position="362">
+              <caret line="758" selection-start-line="758" selection-end-line="758" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SemSimUtils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/SemSimUtils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="202">
+              <caret line="187" selection-start-line="187" selection-end-line="187" />
             </state>
           </provider>
         </entry>
@@ -120,36 +131,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>lab</find>
+      <find>to_csv</find>
+      <find>str</find>
+      <find>try</find>
+      <find>iloc</find>
+      <find>dist_path</find>
+      <find>reduce</find>
+      <find>mask_terms</find>
+      <find>n_genes</find>
+      <find>main</find>
+      <find>oob</find>
+      <find>n_mod</find>
+      <find>df_all_terms</find>
+      <find>pos:</find>
+      <find>hg_pva</find>
+      <find>chemo</find>
+      <find>pos</find>
+      <find>max_pvals_corrected</find>
       <find>emp</find>
-      <find>15</find>
-      <find>ge_raw</find>
-      <find>ticks</find>
-      <find>ResnikSemSim</find>
-      <find>det_MICA</find>
-      <find>self.IC</find>
-      <find>self.ontology</find>
-      <find>nod</find>
-      <find>revers</find>
-      <find>reverse_annotations</find>
-      <find>self.freq</find>
-      <find>patches</find>
-      <find>grid_type</find>
-      <find>int_det_p</find>
-      <find>int_det_IC</find>
-      <find>int_det_IC(</find>
-      <find>ac</find>
-      <find>gray</find>
-      <find>algos</find>
-      <find>sns</find>
-      <find>&quot;variability&quot;</find>
-      <find>scz</find>
-      <find>gwas</find>
-      <find>legend</find>
-      <find>50</find>
-      <find>colorb</find>
-      <find>max_dist</find>
-      <find>calc_intra_similarity</find>
+      <find>emp_pval</find>
+      <find>sort</find>
+      <find>hg_pval</find>
+      <find>pass</find>
+      <find>str(</find>
+      <find>calc_emp_pval</find>
+      <find>hg_pval_max</find>
+      <find>max</find>
+      <find>pos_greedy_greedy</find>
+      <find>passed_oob_permutation_test</find>
+      <find>calc_similarity</find>
+      <find>adj_sum</find>
     </findStrings>
     <replaceStrings>
       <replace>ALGO_DIR</replace>
@@ -178,12 +189,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/runners/bionet_runner.py" />
-        <option value="$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/goatools/obo_parser.py" />
-        <option value="$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py" />
-        <option value="$PROJECT_DIR$/constants.py" />
-        <option value="$PROJECT_DIR$/utils/mail.py" />
-        <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_extended.py" />
         <option value="$PROJECT_DIR$/utils/network.py" />
         <option value="$PROJECT_DIR$/utils/daemon_multiprocessing.py" />
         <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_fix.py" />
@@ -200,13 +205,10 @@
         <option value="$PROJECT_DIR$/utils/scripts.py" />
         <option value="$PROJECT_DIR$/utils/randomize_data.py" />
         <option value="$PROJECT_DIR$/runners/keypathwayminer_ines_greedy_runner.py" />
-        <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/add_terms_md.py" />
         <option value="$PROJECT_DIR$/emp_fdr/aggregate_reports.py" />
         <option value="$PROJECT_DIR$/utils/ensembl2gene_symbol.py" />
         <option value="$PROJECT_DIR$/utils/cx_to_sif.py" />
         <option value="$PROJECT_DIR$/runners/FDR_runner.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py" />
         <option value="$PROJECT_DIR$/r/scripts/robust_fdr.r" />
         <option value="$PROJECT_DIR$/runners/choice_test.py" />
         <option value="$PROJECT_DIR$/utils/truncate_network.py" />
@@ -226,17 +228,26 @@
         <option value="$PROJECT_DIR$/utils/grid_plot_go_terms.py" />
         <option value="$PROJECT_DIR$/emp_fdr/aggregate_bg_dist.py" />
         <option value="$PROJECT_DIR$/emp_fdr/aggregate_bg_dist_modules.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/report_result.py" />
         <option value="$PROJECT_DIR$/runners/datasets_multithread_runner.py" />
         <option value="$PROJECT_DIR$/emp_fdr/pipeline.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_dist.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_dist_copy.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/add_terms_md_modules.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_copy_dist.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/add_terms_md.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms_modules.py" />
+        <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/report_result.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/report_result_modules.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="24" />
-    <option name="width" value="1855" />
-    <option name="height" value="1056" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="2374" />
+    <option name="y" value="431" />
+    <option name="width" value="1853" />
+    <option name="height" value="1076" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -259,11 +270,6 @@
               <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
               <item name="bnetworks" type="462c0819:PsiDirectoryNode" />
               <item name="env" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bnetworks" type="462c0819:PsiDirectoryNode" />
-              <item name="runners" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
@@ -311,7 +317,25 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.grid_plot_go_terms">
+  <component name="RunManager" selected="Python.report_result_modules">
+    <configuration name="aggregate_reports (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="bnetworks" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/emp_fdr" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emp_fdr/aggregate_reports.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="aggregate_reports" type="PythonConfigurationType" factoryName="Python">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -348,7 +372,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="dot_plot" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="fdr_consistent_terms" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -356,11 +380,29 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/emp_fdr" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/dot_plot.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="fdr_consistent_terms_modules" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="bnetworks" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/emp_fdr" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms_modules.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -379,42 +421,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/go_to_modules_plt.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="grid_plot" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="bnetworks" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/grid_plot_criteria.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="grid_plot_go_terms" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="bnetworks" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/grid_plot_go_terms.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -528,7 +534,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="refactor_raw_ge" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="report_result" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -536,17 +542,17 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/emp_fdr" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/refactor_raw_ge.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emp_fdr/report_result.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="terms_distance" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="report_result_modules" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -554,11 +560,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/runners" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/emp_fdr" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/runners/terms_distance.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emp_fdr/report_result_modules.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -574,19 +580,19 @@
       <item itemvalue="Python.keypathwayminer_ines_runner" />
       <item itemvalue="Python.bionet_runner" />
       <item itemvalue="Python.go_to_modules_plt" />
-      <item itemvalue="Python.terms_distance" />
-      <item itemvalue="Python.refactor_raw_ge" />
-      <item itemvalue="Python.dot_plot" />
-      <item itemvalue="Python.grid_plot" />
-      <item itemvalue="Python.grid_plot_go_terms" />
+      <item itemvalue="Python.fdr_consistent_terms" />
+      <item itemvalue="Python.fdr_consistent_terms_modules" />
+      <item itemvalue="Python.aggregate_reports (1)" />
+      <item itemvalue="Python.report_result" />
+      <item itemvalue="Python.report_result_modules" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.grid_plot_go_terms" />
-        <item itemvalue="Python.grid_plot" />
-        <item itemvalue="Python.dot_plot" />
-        <item itemvalue="Python.terms_distance" />
-        <item itemvalue="Python.refactor_raw_ge" />
+        <item itemvalue="Python.report_result_modules" />
+        <item itemvalue="Python.report_result" />
+        <item itemvalue="Python.aggregate_reports (1)" />
+        <item itemvalue="Python.fdr_consistent_terms" />
+        <item itemvalue="Python.fdr_consistent_terms_modules" />
       </list>
     </recent_temporary>
   </component>
@@ -613,20 +619,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1855" height="1056" extended-state="0" />
+    <frame x="1984" y="-11" width="1857" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.8311037" visible="true" weight="0.2522911" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.8311037" visible="true" weight="0.23827493" />
       <window_info anchor="bottom" id="TODO" order="9" sideWeight="0.49973047" weight="0.32991803" />
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.19042437" side_tool="true" weight="0.56540084" />
-      <window_info anchor="bottom" x="1985" y="377" width="1855" height="321" id="Find" order="10" sideWeight="0.26037735" side_tool="true" visible="true" weight="0.34177214" />
+      <window_info anchor="bottom" x="1985" y="377" width="1855" height="321" id="Find" order="10" sideWeight="0.26091644" side_tool="true" weight="0.48565573" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32991803" />
       <window_info anchor="bottom" id="Python Console" order="0" weight="0.32991803" />
-      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.73962265" weight="0.4862869" />
+      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.73854446" visible="true" weight="0.25" />
       <window_info anchor="right" id="Structure" order="3" sideWeight="0.5020492" side_tool="true" weight="0.23072776" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.4989224" weight="0.32684427" />
       <window_info id="Favorites" order="0" sideWeight="0.16889632" side_tool="true" weight="0.18544474" />
-      <window_info anchor="bottom" id="Debug" order="6" sideWeight="0.69326144" weight="0.38185653" />
+      <window_info anchor="bottom" id="Debug" order="6" sideWeight="0.69326144" weight="0.38114753" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -635,26 +641,6 @@
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.7407008" visible="true" weight="0.38729507" />
-      <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.8311037" visible="true" weight="0.26415095" />
-      <window_info anchor="right" id="Structure" order="3" sideWeight="0.5020492" side_tool="true" weight="0.23072776" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="9" sideWeight="0.49973047" weight="0.32991803" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Debug" order="6" sideWeight="0.69326144" weight="0.3739754" />
-      <window_info anchor="right" x="0" y="0" width="251" height="856" id="Documentation" order="4" side_tool="true" weight="0.07385445" />
-      <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.4989224" weight="0.32684427" />
-      <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.19042437" side_tool="true" weight="0.56540084" />
-      <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="3" weight="0.32991803" />
-      <window_info id="Favorites" order="0" sideWeight="0.16889632" side_tool="true" weight="0.18544474" />
-      <window_info anchor="bottom" x="1985" y="377" width="1855" height="321" id="Find" order="10" sideWeight="0.2592992" side_tool="true" visible="true" weight="0.38729507" />
-      <window_info anchor="bottom" id="Python Console" order="0" />
-    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -673,44 +659,14 @@
           <option name="timeStamp" value="1371" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py</url>
-          <line>77</line>
-          <option name="timeStamp" value="1396" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py</url>
-          <line>168</line>
-          <option name="timeStamp" value="1397" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/emp_fdr/report_result.py</url>
-          <line>165</line>
-          <option name="timeStamp" value="1403" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/5000_200_intersection.py</url>
           <line>13</line>
           <option name="timeStamp" value="1404" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py</url>
-          <line>161</line>
-          <option name="timeStamp" value="1405" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/5000_200_intersection.py</url>
           <line>24</line>
           <option name="timeStamp" value="1408" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py</url>
-          <line>138</line>
-          <option name="timeStamp" value="1409" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py</url>
-          <line>92</line>
-          <option name="timeStamp" value="1412" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/cx_to_sif.py</url>
@@ -809,39 +765,74 @@
           <option name="timeStamp" value="1507" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/ResnikSemSim.py</url>
-          <line>44</line>
-          <option name="timeStamp" value="1508" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/runners/terms_distance.py</url>
           <line>61</line>
           <option name="timeStamp" value="1510" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/SemSimUtils.py</url>
-          <line>210</line>
-          <option name="timeStamp" value="1511" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/SemSimUtils.py</url>
-          <line>202</line>
-          <option name="timeStamp" value="1512" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/SemSimUtils.py</url>
-          <line>64</line>
-          <option name="timeStamp" value="1514" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/SemSimUtils.py</url>
-          <line>186</line>
-          <option name="timeStamp" value="1515" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/dot_plot.py</url>
           <line>109</line>
           <option name="timeStamp" value="1516" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_copy_dist.py</url>
+          <line>127</line>
+          <option name="timeStamp" value="1521" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_copy_dist.py</url>
+          <line>131</line>
+          <option name="timeStamp" value="1522" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py</url>
+          <line>143</line>
+          <option name="timeStamp" value="1537" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py</url>
+          <line>146</line>
+          <option name="timeStamp" value="1539" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py</url>
+          <line>94</line>
+          <option name="timeStamp" value="1540" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms_modules.py</url>
+          <line>141</line>
+          <option name="timeStamp" value="1543" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms_modules.py</url>
+          <line>112</line>
+          <option name="timeStamp" value="1545" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/report_result.py</url>
+          <line>106</line>
+          <option name="timeStamp" value="1546" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/report_result.py</url>
+          <line>135</line>
+          <option name="timeStamp" value="1551" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/report_result.py</url>
+          <line>130</line>
+          <option name="timeStamp" value="1552" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/report_result.py</url>
+          <line>58</line>
+          <option name="timeStamp" value="1555" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/report_result.py</url>
+          <line>52</line>
+          <option name="timeStamp" value="1556" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -854,7 +845,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1521" />
+      <option name="time" value="1557" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -871,32 +862,28 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
-        <expression-string />
+        <expression-string>sum([adj[&quot;{}_{}&quot;.format(x, y)] for x in range(len(all_go_terms)) for y in range(len(all_go_terms)) if
+                   adj[&quot;{}_{}&quot;.format(x, y)] != -1])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string />
+        <expression-string>hg_pval</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string />
+        <expression-string>np.size(max_pvals_corrected)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string />
+        <expression-string>np.sum(fdrcorrection0(max_pvals_corrected, alpha=0.05, method='indep', is_sorted=False)[0])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string />
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string />
+        <expression-string>np.sum(fdrcorrection0(max_pvals_corrected, alpha=0.05, method='indep', is_sorted=False))</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -1022,98 +1009,58 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>sns.color_palette()</expression-string>
+        <expression-string>adj</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>sns.colorcolor_palette()</expression-string>
+        <expression-string>adj[&quot;{}_{}&quot;.format(1, 2)]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>df_new</expression-string>
+        <expression-string>adj[&quot;{}_{}&quot;.format(x, y)]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>sns.load_dataset(&quot;tips&quot;)</expression-string>
+        <expression-string>adj[&quot;{}_{}&quot;.format(x, y)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>df_measurements</expression-string>
+        <expression-string>emp_pvals</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>df_measurements[i_zeros]=0</expression-string>
+        <expression-string>emp_pvals[0]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.ontology.node_attributes[2]</expression-string>
+        <expression-string>emp_pvals[0].shape[0]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>len(self.offspring[8150])</expression-string>
+        <expression-string>df_filtered_in[&quot;passed_fdr&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.ac.reverse_annotations</expression-string>
+        <expression-string>df_filtered_in[&quot;passed_fdr&quot;] = pvals_corrected &lt;= emp_cutoff</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>n_genes_pvals</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/mpl_toolkits/mplot3d/axes3d.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7771">
-          <caret line="436" column="76" lean-forward="true" selection-start-line="436" selection-start-column="76" selection-end-line="436" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/matplotlib/colors.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" column="34" lean-forward="true" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/groups intersection.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/scipy/stats/stats.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97166">
-          <caret line="5131" column="14" lean-forward="true" selection-start-line="5131" selection-start-column="14" selection-end-line="5131" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/scipy/stats/morestats.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="43529">
-          <caret line="2311" lean-forward="true" selection-start-line="2311" selection-end-line="2311" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/scikit_posthocs/_posthocs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="35815">
-          <caret line="1891" selection-start-line="1891" selection-end-line="1891" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/filter_GO_edges.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3382">
-          <caret line="178" column="36" selection-start-line="178" selection-start-column="36" selection-end-line="178" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/genes_clustering.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3249">
@@ -1175,13 +1122,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3705">
-          <caret line="196" column="84" selection-start-line="193" selection-start-column="74" selection-end-line="196" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/refactor_raw_ge.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -1196,13 +1136,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/ResnikSemSim.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="44" column="26" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/Ontology/AnnotationCorpus.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
@@ -1214,13 +1147,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="394">
           <caret line="309" column="8" selection-start-line="309" selection-start-column="8" selection-end-line="309" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/SemSimUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="208" column="38" selection-start-line="208" selection-start-column="27" selection-end-line="208" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -1377,16 +1303,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_reports.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/add_terms_md.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="52" selection-start-line="52" selection-end-line="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_dist.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="665">
@@ -1394,31 +1310,111 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/runners/datasets_multithread_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1026">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/env/init/create_env.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/pipeline.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="51" column="48" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_dist.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="133" selection-start-line="133" selection-end-line="133" />
+        <state relative-caret-position="883">
+          <caret line="124" column="16" selection-start-line="124" selection-start-column="16" selection-end-line="124" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_copy_dist.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/add_terms_md_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="34" column="54" selection-start-line="34" selection-start-column="54" selection-end-line="34" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="253" column="49" lean-forward="true" selection-start-line="253" selection-start-column="49" selection-end-line="253" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="156" column="26" lean-forward="true" selection-start-line="156" selection-start-column="26" selection-end-line="156" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/add_terms_md.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="185" column="131" selection-start-line="185" selection-start-column="131" selection-end-line="185" selection-end-column="131" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_reports.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="53" column="48" lean-forward="true" selection-start-line="53" selection-start-column="48" selection-end-line="53" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/SemSimUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="187" selection-start-line="187" selection-end-line="187" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python2.7/multiprocessing/managers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="758" selection-start-line="758" selection-end-line="758" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/ResnikSemSim.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/emp_fdr/report_result.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2584">
-          <caret line="136" column="34" lean-forward="true" selection-start-line="136" selection-start-column="34" selection-end-line="136" selection-end-column="34" />
+        <state relative-caret-position="-1068">
+          <caret line="53" column="32" selection-start-line="53" selection-start-column="32" selection-end-line="53" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runners/datasets_multithread_runner.py">
+    <entry file="file://$PROJECT_DIR$/emp_fdr/report_result_modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/pipeline.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="66" column="14" lean-forward="true" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="14" />
+        <state relative-caret-position="301">
+          <caret line="87" column="39" lean-forward="true" selection-start-line="87" selection-start-column="39" selection-end-line="87" selection-end-column="39" />
         </state>
       </provider>
     </entry>
