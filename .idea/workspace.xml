@@ -8,16 +8,7 @@
     <bookmark url="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" line="54" mnemonic="9" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/emp_fdr/add_terms_md_modules.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_copy_dist.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emp_fdr/report_result_modules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/add_terms_md.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/add_terms_md.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/report_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/report_result.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" afterDir="false" />
-    </list>
+    <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
