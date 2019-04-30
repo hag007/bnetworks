@@ -90,7 +90,7 @@ def main(datasets, algos, pf=10):
                 continue
 
             emp_results=emp_results.sort_values(by='emp_rank')
-            emp_results_fdr=emp_results.dropna().loc[emp_results.dropna()["passed_oob_permutation_test"].apply(lambda a: np.any(np.array(a[1:-1].split(", "), dtype=np.bool))).values,:]["GO name"]
+            emp_results_fdr=emp_results.dropna().loc[emp_results.dropna()["passed_oob_permutation_test"].apply(lambda a: np.any(np.array(a[1:-1].split(", ")) == "True")).values,:]["GO name"]
 
             algos_signals.append(len(emp_results_fdr.index))
             all_go_terms = emp_results_fdr.index.values
@@ -159,7 +159,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='args')
     parser.add_argument('--datasets', dest='datasets', default="TNFa_2")
     parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
+    parser.add_argument('--algos', dest='algos', default="jactivemodules_sa")
     parser.add_argument('--pf', dest='pf', default=5)
     args = parser.parse_args()
 

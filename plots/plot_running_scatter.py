@@ -4,8 +4,8 @@ import shutil
 import json
 import numpy as np
 import pandas as pd
-import ebm
-import network
+import utils.ebm
+import utils.network
 from utils.scripts import format_script
 from pandas.io.common import EmptyDataError
 from scipy.stats import mannwhitneyu

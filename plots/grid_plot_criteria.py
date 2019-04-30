@@ -149,22 +149,26 @@ def plot_scatter3d(df_size, df_ratio, df_variability, grid_type):
     plt.clf()
 
 
-def plot_scatter_with_size(df_size, df_ratio, df_variability, grid_type):
+def plot_scatter_with_size(df_size, df_ratio, df_variability, grid_type, ax=None):
     df_size=df_size.loc[np.sort(df_size.index), np.sort(df_size.columns)]
     df_ratio=df_ratio.loc[np.sort(df_ratio.index), np.sort(df_ratio.columns)]
     df_variability=df_variability.loc[np.sort(df_variability.index), np.sort(df_variability.columns)]
     algos = list(df_size.index)
     sns.set_palette("husl", len(algos))
-    fig, ax = plt.subplots(figsize=(13, 13))
 
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(13, 13))
+
+    ax.set_facecolor('#fffde3')
     ax.grid(color='gray')
+
     i_x = np.arange(len(df_size.columns))
     i_y = np.arange(len(df_size.index))
     size = np.array([df_size.iloc[b, a] for a in i_x for b in i_y])
     x = np.array([df_ratio.iloc[b, a] for a in i_x for b in i_y])
     y = np.array([df_variability.iloc[b, a] for a in i_x for b in i_y])
     labels=np.array([sns.color_palette()[b] for a in i_x for b in i_y])
-    sc = ax.scatter(x, y, s=size/float(max(size))*2000, c=labels, cmap='jet')
+    sc = ax.scatter(x, y, s=size/float(max(size))*2000+20, c=labels, cmap='jet', alpha=0.7)
 
     sorted_list = sorted([[x[i], y[i]] for i in range(len(x))], reverse=True)
     pareto_front = [sorted_list[0]]
@@ -178,10 +182,7 @@ def plot_scatter_with_size(df_size, df_ratio, df_variability, grid_type):
 
     pf_X = [pair[0] for pair in pareto_front]
     pf_Y = [pair[1] for pair in pareto_front]
-    plt.plot(pf_X, pf_Y)
-
-
-
+    ax.plot(pf_X, pf_Y)
 
 
     colormap = cm.jet
@@ -198,22 +199,24 @@ def plot_scatter_with_size(df_size, df_ratio, df_variability, grid_type):
     ax.set_xlabel("EHR", fontdict={"size":12})
     plt.subplots_adjust(left=0.25, right=0.99, top=0.99, bottom=0.05)
     ax.set_ylabel("heterogeneity", fontdict={"size":12})
+    ax.set_title("Pareto Fontier")
     plt.xticks(size=12)
     plt.yticks(size=12)
     plt.tight_layout()
     plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "datasets_algo_scatter_{}.png".format(grid_type)))
-    plt.clf()
+    # plt.clf()
 
 
 def main():
     main_path = "/home/hag007/Desktop/aggregate_report/visual"
-    df_counts=pd.read_csv(os.path.join(main_path, "true_positive_counts.tsv"), sep='\t', index_col=0)
+    df_counts=pd.read_csv(os.path.join( main_path, "true_positive_counts.tsv"), sep='\t', index_col=0)
     df_ratio=pd.read_csv(os.path.join(main_path, "true_positive_ratio.tsv"), sep='\t', index_col=0)
     plot_grid(df_ratio, df_counts, "true_positive")
     plot_scatter(df_ratio, df_counts, "true_positive")
     df_counts = pd.read_csv(os.path.join(main_path, "empirical_terms_counts.tsv"), sep='\t', index_col=0)
     df_variability = pd.read_csv(os.path.join(main_path, "empirical_terms_variability.tsv"), sep='\t', index_col=0)
-    df_variability+=np.abs(df_variability.values.min())
+    df_variability[df_counts == 0]=0
+    df_variability += np.abs(np.min(df_variability.values))+1
     df_variability[df_counts==0]=0
     plot_grid(df_variability, df_counts, "empirical_terms")
     plot_scatter(df_variability, df_counts, "empirical_terms")

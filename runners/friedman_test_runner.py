@@ -27,7 +27,7 @@ if __name__ == "__main__":
     # for cur_algo in algos:
     #     algo_ranks.append(df.loc[df["algo"].values==cur_algo, rank_col_name].values)
 
-    df = pd.read_csv("/home/hag007/Desktop/aggregate_report/ratio_matrix.tsv", sep='\t', index_col=0)
+    df = pd.read_csv("/home/hag007/Desktop/aggregate_report/visual/true_positive_ratio.tsv", sep='\t', index_col=0)
     algos=list(df.index)
     datasets = list(df.columns)
     for cur_algo in algos:
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     # posthoc_siegel = sp.posthoc_siegel_friedman(dataset_ranks, p_adjust="fdr_bh")
     # posthoc_dunn = sp.posthoc_dunn(algo_ranks, p_adjust="fdr_bh")
     # manwhitney_posthoc=sp.posthoc_mannwhitney(algo_ranks, p_adjust="fdr_bh")
-    # wilcoxon_posthoc = sp.posthoc_wilcoxon(algo_ranks, p_adjust="fdr_bh")
+    wilcoxon_posthoc = sp.posthoc_wilcoxon(algo_ranks, p_adjust="fdr_bh")
 
     # df_pw_signed_test=pd.DataFrame(columns=np.arange(n_algos), index=np.arange(n_algos))
     # for i in np.arange(n_algos):
@@ -55,13 +55,13 @@ if __name__ == "__main__":
 
     print algos
     print fried
-    print posthoc_conover
+    # print posthoc_conover
     # print posthoc_nemenyi
     # print posthoc_miller
     # print posthoc_siegel
     # print posthoc_dunn
     # print manwhitney_posthoc
-    # print wilcoxon_posthoc
+    print wilcoxon_posthoc
     # print "==="
     # print df_pw_signed_test
 
