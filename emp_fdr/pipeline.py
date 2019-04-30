@@ -90,17 +90,17 @@ if __name__=="__main__":
                # py_script = "aggregate_bg_dist.py"
                # execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, recalc_true_modules_param])
 
-               py_script = "aggregate_bg_modules_dist.py"
-               execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, recalc_true_modules_param])
+               # py_script = "aggregate_bg_modules_copy_dist.py"
+               # execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, recalc_true_modules_param])
 
-               # py_script = "add_terms_md.py"
+               # py_script = "add_terms_md_modules.py"
                # execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_permutations_param])
 
-               # py_script = "fdr_consistent_terms.py"
+               # py_script = "fdr_consistent_terms_modules.py"
                # execute_stage(py_script, [datasets_param, algos_param, prefix_param, pf_param, n_iteration_param, n_total_samples_param, n_dist_samples_param, n_iteration_param])
 
-               # py_script = "report_result.py"
-               # execute_stage(py_script, [datasets_param, algos_param, prefix_param, pf_param])
+               py_script = "report_result_modules.py"
+               execute_stage(py_script, [datasets_param, algos_param, prefix_param, pf_param])
     
                try:
                       df_status_report = pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "status_report.tsv"), sep="\t", index_col=0)

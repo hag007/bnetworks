@@ -51,10 +51,14 @@ def calc_similarity(mat_adj, i_x, i_y, x, y):
     key="{}_{}".format(i_x,i_y)
     key_inv="{}_{}".format(i_y,i_x)
     if mat_adj[key] != -200: return
+    if(x==y):
+       mat_adj[key]=-100
+       return 
+
     mat_adj[key] = semsim.SemSim(x, y)
 
     # if mat_adj[key]<0:
-    #    print x,y,mat_adj[key]
+    print x,y,mat_adj[key]
 
     if np.isnan(mat_adj[key]):
         mat_adj[key] = -100
@@ -90,7 +94,8 @@ def main(datasets, algos, pf=10):
                 continue
 
             emp_results=emp_results.sort_values(by='emp_rank')
-            emp_results_fdr=emp_results.dropna().loc[emp_results.dropna()["passed_oob_permutation_test"].apply(lambda a: np.any(np.array(a[1:-1].split(", ")) == "True")).values,:]["GO name"]
+            emp_results_fdr=emp_results.dropna().loc[emp_results.dropna()["passed_oob_permutation_test"].apply(lambda a: np.any(np.array(a[1:-1].split(", ")) == "True")).values,:]["GO name"]            
+            
 
             algos_signals.append(len(emp_results_fdr.index))
             all_go_terms = emp_results_fdr.index.values
@@ -105,7 +110,7 @@ def main(datasets, algos, pf=10):
             adj_sum, adj_count = calc_intra_similarity(all_go_terms, pf)
 
             file(os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds,cur_algo, "n_sig.txt")), 'w+').write(str(len(all_go_terms)))
-            file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds, cur_algo, "var.txt")), 'w+').write(str(1 - adj_sum / adj_count) if adj_count>0 else str(0))
+            file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds, cur_algo, "var.txt")), 'w+').write(str( - adj_sum / adj_count) if adj_count>0 else str(0))
 
             # manager=multiprocessing.Manager()
             # adj=manager.dict()
@@ -122,7 +127,11 @@ def calc_intra_similarity(all_go_terms, pf):
     params = []
     for i_x, x in enumerate(all_go_terms):
         for i_y, y in enumerate(all_go_terms):
+            # calc_similarity(adj, i_x, i_y, x, y)  
             params.append([calc_similarity, [adj, i_x, i_y, x, y]])
+    print "len(params): {}".format(len(params))
+
+    
     p = multiprocessing.Pool(pf)
     p.map(func_star, params)
     p.close()
@@ -135,7 +144,7 @@ def calc_intra_similarity(all_go_terms, pf):
          adj["{}_{}".format(x, y)] != -100]))
     print "adj_sum: ", adj_sum
     print "adj_count: ", adj_count
-    print "adj_avg: ", adj_sum/adj_count
+    print "adj_avg: ", adj_sum/ max(adj_count, 1)
 
     return adj_sum, adj_count
 
@@ -159,7 +168,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='args')
     parser.add_argument('--datasets', dest='datasets', default="TNFa_2")
     parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_sa")
+    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
     parser.add_argument('--pf', dest='pf', default=5)
     args = parser.parse_args()
 
