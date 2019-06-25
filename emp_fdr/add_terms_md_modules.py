@@ -14,10 +14,10 @@ if __name__=="__main__":
 
 
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="TNFa_2")
-    parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
-    parser.add_argument('--n_permutations', dest='n_permutations', default=5000)
+    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer2.G50")
+    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM")
+    parser.add_argument('--algos', dest='algos', default="my_netbox_td")
+    parser.add_argument('--n_permutations', dest='n_permutations', default=0)
 
     args = parser.parse_args()
 
@@ -32,7 +32,7 @@ if __name__=="__main__":
     for cur_ds in datasets:
         for cur_alg in algos:
             print "{}_{}".format(cur_ds, cur_alg)
-            results=utils.add_GO_terms_metadata_agg.main(cur_ds, cur_alg, n_permutations, csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX/emp_diff_modules_{dataset}_{algo}.tsv"))
+            results=utils.add_GO_terms_metadata_agg.main(cur_ds, cur_alg, n_permutations, csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX/emp_diff_modules_{dataset}_{algo}.tsv"), prefix=prefix)
             if results is None:
                 continue
             n_filtered_terms, n_corrected_terms, hg_cutoff, emp_cutoff=results

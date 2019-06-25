@@ -37,7 +37,7 @@ def main(base_folder="/home/hag007/Desktop/aggregate_report/oob", algo=None, dat
         norm = max(-np.log10(go_terms_hg_tables[cur[9:-15]][PVAL].min()), norm)
 
     for k,v in go_terms_emp_tables.iteritems():
-        go_terms_emp[k]= v[v["passed_oob_permutation_test"]==True ]
+        go_terms_emp[k]= v[v["passed_oob_permutation_test"].str.contains('True', regex=False)==True]
 
     for k,v in go_terms_hg_tables.iteritems():
         go_terms_hg[k]= v.dropna()
@@ -45,7 +45,7 @@ def main(base_folder="/home/hag007/Desktop/aggregate_report/oob", algo=None, dat
     hg_hist = np.array([])
     for k, v in go_terms_hg.iteritems():
         if sum([d in k for d in datasets]) and algo in k:
-            hg_hist = np.append(hg_hist, v['hg_pval'])
+            hg_hist = np.append(hg_hist, v['hg_pval_max'])
             # filtered_genes=v['hg_pval']
             # sorted_genes_hg = filtered_genes.sort_values( ascending=False)
             # hg_scores = np.append(sorted_genes_hg.values,
@@ -59,19 +59,19 @@ def main(base_folder="/home/hag007/Desktop/aggregate_report/oob", algo=None, dat
     emp_hist = np.array([])
     for k, v in go_terms_emp.iteritems():
         if sum([d in k for d in datasets]) and algo in k:
-            emp_hist=np.append(emp_hist, v['hg_pval'])
+            emp_hist=np.append(emp_hist, v['hg_pval_max'])
 
     ax=sns.distplot(hg_hist, norm_hist=False, kde=False, label="# HG enriched terms", bins=25, hist_kws=dict(alpha=0.5, range=(0,25)), ax=subplot)
     ax=sns.distplot(emp_hist, norm_hist=False, kde=False, label="# EMP validated terms", bins=25, hist_kws=dict(alpha=0.5, range=(0,25)), ax=subplot)
-    subplot.set_xlabel("enrichment score: -log10(pval)", fontsize=20)
-    subplot.set_ylabel("counts", fontsize=20)
-    subplot.legend(prop={"size": 20})
-    plt.tight_layout()
-    font={'size' : 20}
+    subplot.set_xlabel("enrichment score: -log10(pval)", fontsize=15)
+    subplot.set_ylabel("counts", fontsize=15)
+    subplot.legend(prop={"size": 15}, loc='upper right')
+    font={'size' : 15}
     # plt.rc('font' , **font)
     # subplot.legend()
     subplot.set_title("algorithm: {}, dataset: {}\n"
-              "EHR: {}".format(algo, ",".join(datasets), round(len(emp_hist)/float(len(hg_hist)), 2)), fontdict={"size": 20})
+              "EHR: {}".format(algo, ",".join(datasets), round(len(emp_hist)/float(len(hg_hist)), 2)), fontdict={"size": 15})
+    plt.tight_layout()
     plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "TP_histogram_{}_{}.png".format(algo, ",".join(datasets))))
     # plt.clf()
 
@@ -89,13 +89,13 @@ if __name__ == "__main__":
     # datasets=["{}_{}".format(prefix,x) for x in args.datasets.split(",")]
     algos = args.algos.split(",")
 
-    algos=["jactivemodules_greedy", "netbox"]
-    datasets=["TNFa_2", "ROR_1"]
+    # algos=["jactivemodules_greedy", "netbox"]
+    # datasets=["TNFa_2", "ROR_1"]
 
     pf=int(args.pf)
     ds_summary=pd.DataFrame()
-    # figure, subplots = plt.subplots(7, 6, figsize=(27,23))
-    figure, subplots = plt.subplots(2, 2, figsize=(15, 15))
+    figure, subplots = plt.subplots(7, 6, figsize=(35,30)) # figsize=(27,23)
+    # figure, subplots = plt.subplots(2, 2, figsize=(15, 15))
     plt.subplots_adjust(left=0.05, right=0.95, top=0.90, bottom=0.05)
     for i, algo in enumerate(algos):
         for j, dataset in enumerate(datasets):

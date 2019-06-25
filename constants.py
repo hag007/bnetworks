@@ -78,6 +78,16 @@ ON_THE_FLY = "ON_THE_FLY"
 FILTER_KEYWORDS = ["_label", "_name"]
 ALL_CANCER_TYPES = ["ESCA", "LAML", "ACC", "CHOL", "BLCA", "BRCA", "CESC", "COAD", "UCEC", "GBM", "HNSC", "KICH", "KIRC", "KIRP", "DLBC", "LIHC", "LGG", "LUAD", "LUSC", "SKCM", "MESO", "UVM", "PANCAN", "OV", "PAAD", "PCPG", "PRAD", "READ", "SARC", "STAD", "TGCT", "THYM", "THCA", "UCS"]
 ALL_TUMOR_TYPES = ["Primary Tumor", "Metastatic", "Additional - New Parimary", "Additional Metatatic", "Primary Blood Derived Cancer - Peripheral Blood", "Blood Derived Cancer - Bone Marrow, Post-treatment", "Primary Blood Derived Cancer - Bone Marrow", "Recurrent Blood Derived Cancer - Peripheral Blood", "Recurrent Tumor"]
+
+
+ALGOS_ACRONYM={"jactivemodules_greedy":"jAM_greedy",
+               "jactivemodules_sa": "jAM_SA",
+               "netbox": "netbox",
+               "hotnet2": "hotnet2",
+               "bionet": "bionet",
+               "keypathwayminer_INES_GREEDY": "KPM"}
+
+
 def update_dirs(BASE_DIR=config_json["BASE_PROFILE"], DATASET_NAME_u=None, DATASET_TYPE_u ="GDC-TCGA", CANCER_TYPE_u ="SKCM"):
 
     global BASE_PROFILE

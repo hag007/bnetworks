@@ -68,10 +68,16 @@ def calc_modules_ehr(algo_sample = None, dataset_sample = None, terms_file_name=
     fdr_results = fdrcorrection0(sig_genes_hg_pval, alpha=0.05, method='indep', is_sorted=False)
     n_hg_true = len([cur for cur in fdr_results[0] if cur])
     sig_hg_genes= sorted_genes_hg.iloc[:n_hg_true, :] if n_hg_true > 0 else 0
-    HG_CUTOFF = sig_hg_genes.iloc[- 1]["hg_pval_max"]
-    statistics["hg_cutoff"]=round(HG_CUTOFF,2)
-    statistics["hg_corrected"]=len(sig_hg_genes.index)
-    print "HG cutoff: {}, n={}".format(HG_CUTOFF, len(sig_hg_genes.index))
+    if type(sig_hg_genes)==int:
+        HG_CUTOFF = 0
+        statistics["hg_cutoff"] = 0
+        statistics["hg_corrected"] = 0
+        print "HG cutoff: {}, n={}".format(HG_CUTOFF, 0)
+    else:
+        HG_CUTOFF = sig_hg_genes.iloc[- 1]["hg_pval_max"]
+        statistics["hg_cutoff"]=round(HG_CUTOFF,2)
+        statistics["hg_corrected"]=len(sig_hg_genes.index)
+        print "HG cutoff: {}, n={}".format(HG_CUTOFF, len(sig_hg_genes.index))
 
     sorted_genes_emp = filtered_genes.sort_values(by=['emp_pval_max'])
     sorted_genes_emp.loc[sorted_genes_emp['emp_pval_max']==0,'emp_pval_max']=1.0/5000
@@ -86,7 +92,10 @@ def calc_modules_ehr(algo_sample = None, dataset_sample = None, terms_file_name=
 
     tps={}
     fps = {}
-    n_modules=output_terms.iloc[0]["hg_pval"].count(',')+1
+    if output_terms.shape[0]==0:
+        n_modules=0
+    else:
+        n_modules=output_terms.iloc[0]["hg_pval"].count(',')+1
     statistics["n_modules"]=n_modules
     for a in range(n_modules):
         tps[a]=[]
@@ -110,6 +119,7 @@ def calc_modules_ehr(algo_sample = None, dataset_sample = None, terms_file_name=
         statistics["module_{}_tp".format(a)] = len(tps[a])
         statistics["module_{}_fp".format(a)] = len(fps[a])
         statistics["module_{}_total".format(a)] = len(tps[a])+len(fps[a])
+        print dataset_sample, algo_sample
         statistics["module_{}_size".format(a)] = output_modules.loc[a, '#_genes']
 
         if statistics["module_{}_emp_ratio".format(a)] >emp_ratio_th:
@@ -120,7 +130,7 @@ def calc_modules_ehr(algo_sample = None, dataset_sample = None, terms_file_name=
         full_data.loc["module_{}".format(a),"tp"]="\n".join(tps[a])
         full_data.loc["module_{}".format(a),"fp"]="\n".join(fps[a])
         full_data.sort_index(inplace=True)
-    statistics["real_modules_ratio"]=round(float(real_modules_counter)/n_modules,2)
+    statistics["real_modules_ratio"]=round(float(real_modules_counter)/max(n_modules,1),2)
     # print "real_modules_counter: {}. ratio: {}".format(real_modules_counter, statistics["real_modules_ratio"])
 
 
@@ -147,10 +157,10 @@ def calc_modules_ehr(algo_sample = None, dataset_sample = None, terms_file_name=
 
 def plot_modules_ehr_summary():
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM")  #
+    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50")  # TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM
     parser.add_argument('--prefix', dest='prefix', default="GE")
     parser.add_argument('--algos', dest='algos',
-                        default="jactivemodules_greedy,jactivemodules_sa,hotnet2,bionet,netbox,keypathwayminer_INES_GREEDY")  #
+                        default="my_netbox_td")  # ,keypathwayminer_INES_GREEDY,hotnet2,my_netbox_td
 
     args = parser.parse_args()
 
@@ -164,20 +174,20 @@ def plot_modules_ehr_summary():
     df_count_matrix = pd.DataFrame()
     df_all = pd.DataFrame()
     df_statistics = pd.DataFrame()
-    # for cur_ds in datasets:
-    #     df_ds=pd.DataFrame()
-    #     for cur_alg in algos:
-    #         tps, fps, sig_hg_genes, sig_emp_genes, statistics=calc_modules_ehr(cur_alg, cur_ds,
-    #                                                                terms_file_name=os.path.join("/home/hag007/Desktop/aggregate_report/oob", "emp_diff_modules_{}_{}_passed_oob.tsv"),
-    #                                                                modules_file_name=os.path.join("/media/hag007/Data/bnet/output/GE_{}/{}/modules_summary.tsv"))
-    #         statistics["algo"]=cur_alg
-    #         statistics["dataset"]=cur_ds
-    #         statistics["id"]="{}_{}".format(cur_alg, cur_ds)
-    #
-    #         df_statistics=df_statistics.append(statistics, ignore_index=True)
-    #
-    # df_statistics=df_statistics.set_index("id")
-    # df_statistics.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"modules_statistics.tsv"), sep='\t')
+    for cur_ds in datasets:
+        df_ds=pd.DataFrame()
+        for cur_alg in algos:
+            tps, fps, sig_hg_genes, sig_emp_genes, statistics=calc_modules_ehr(cur_alg, cur_ds,
+                                                                   terms_file_name=os.path.join("/home/hag007/Desktop/aggregate_gwas_report/oob", "emp_diff_modules_{}_{}_passed_oob.tsv"),
+                                                                   modules_file_name=os.path.join("/media/hag007/Data/bnet/output/PASCAL_SUM_{}/{}/modules_summary.tsv"))
+            statistics["algo"]=cur_alg
+            statistics["dataset"]=cur_ds
+            statistics["id"]="{}_{}".format(cur_alg, cur_ds)
+
+            df_statistics=df_statistics.append(statistics, ignore_index=True)
+
+    df_statistics=df_statistics.set_index("id")
+    df_statistics.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"modules_statistics.tsv"), sep='\t')
 
     df_statistics = pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "modules_statistics.tsv"), sep='\t',
                                 index_col=0)
@@ -203,9 +213,13 @@ def plot_modules_ehr_summary():
     cs = []
     ss = []
 
-    for cur_ds in datasets:
-        df_ds = pd.DataFrame()
-        for cur_alg in algos:
+    for i_a, cur_alg in enumerate(algos):
+        for i_d, cur_ds in enumerate(datasets):
+
+            ax.plot([-0.5, 13.5], [(len(algos)+1)*i_d -0.5, (len(algos)+1)*i_d-0.5], linestyle=(0, (5, 10)), c='black')
+
+
+
             y_axis += 1
             id = "{}_{}".format(cur_alg, cur_ds)
             ids.append(id)
@@ -241,7 +255,7 @@ def plot_modules_ehr_summary():
     ax.set_xticklabels(np.append("", (np.arange(12) - 1)[1:]), size=15)
 
     ax.set_xlabel("module index", size=25)
-    ax.set_ylabel("algo_dataset combination", size=25)
+    ax.set_ylabel("solution\n(algo-dataset combination)", size=25)
     cax = figure.add_axes([0.65, 0.01,0.01, 0.97])
     # aspect = 30
     # pad_fraction = 0.5
@@ -292,9 +306,13 @@ def plot_modules_ehr_summary():
         pvals = []
         for cur_ds in datasets:
             for cur_alg in algos:
-                pvals.append(scipy.stats.mannwhitneyu(
+                try:
+                    pvals.append(scipy.stats.mannwhitneyu(
                     EHRs[(EHRs["dataset"] == cur_ds) & (EHRs["algo"] == cur_alg)]["ehr"].values,
                     EHRs[(EHRs["dataset"] == cur_ds) & (EHRs["algo"] != cur_alg)]["ehr"].values)[1])
+                except Exception,e:
+                    print e
+                    pvals.append(1)
 
         fdrs = fdrcorrection0(pvals, is_sorted=False)[1]
         i = 0
@@ -338,6 +356,8 @@ def plot_modules_ehr_summary():
     subplots[1].set_xlabel("# top ranked EHR modules\n(modules head threshold)")
     subplots[1].set_ylabel("average EHR")
     subplots[1].set_title("average EHR as function of modules' head threshold")
+    subplots[1].set_facecolor('#fffde3')
+    subplots[1].grid(color='gray')
     subplots[1].legend()
     # subplots[0].savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,"summary_m_ehr.png"))
 
@@ -347,6 +367,8 @@ def plot_modules_ehr_summary():
     subplots[2].set_xlabel("# top ranked EHR modules\n(modules head threshold)")
     subplots[2].set_ylabel("# significant datasets")
     subplots[2].set_title("# significant datasets as function of modules' head threshold")
+    subplots[2].set_facecolor('#fffde3')
+    subplots[2].grid(color='gray')
     subplots[2].legend()
     # subplots[1].savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,"summary_sig.png"))
 
@@ -357,6 +379,8 @@ def plot_modules_ehr_summary():
     subplots[3].set_ylabel("fraction of solutions where\n# modules >= modules head threshold")
     subplots[3].set_title(
         "fraction of (modules >= modules head threshold) solutions\nas function of modules' head threshold")
+    subplots[3].set_facecolor('#fffde3')
+    subplots[3].grid(color='gray')
     subplots[3].legend()
 
     plt.figtext(0.01, 0.99, "A:", weight='bold', size=20)

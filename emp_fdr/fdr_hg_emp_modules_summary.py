@@ -40,9 +40,15 @@ def calc_emp_pval(cur_rv, cur_dist):
 
 
 def main(algo_sample = None, dataset_sample = None,tsv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", "emp_diff_{}_{}_md.tsv")):
-    output_md = pd.read_csv(
-        tsv_file_name.format(dataset_sample, algo_sample),
-        sep='\t', index_col=0).dropna()
+
+    try:
+        output_md = pd.read_csv(
+            tsv_file_name.format(dataset_sample, algo_sample),
+            sep='\t', index_col=0).dropna()
+    except Exception, e:
+        print e
+        return 0, 0
+
     output_md = output_md.rename(columns={"filtered_pval": "hg_pval_max"})
     filtered_genes=output_md.loc[np.logical_and.reduce([output_md["n_genes"].values > 5, output_md["n_genes"].values < 500]), ["GO name","hg_pval_max", "emp_pval_max", "passed_oob_permutation_test"]]
 
@@ -55,8 +61,14 @@ def main(algo_sample = None, dataset_sample = None,tsv_file_name=os.path.join(co
     fdr_results = fdrcorrection0(sig_genes_hg_pval, alpha=0.05, method='indep', is_sorted=False)
     n_hg_true = len([cur for cur in fdr_results[0] if cur])
     sig_hg_genes= sorted_genes_hg.iloc[:n_hg_true, :] if n_hg_true > 0 else 0
-    HG_CUTOFF = 10**(-sig_hg_genes.iloc[- 1]["hg_pval_max"])
-    print "HG cutoff: {}, n={}".format(HG_CUTOFF, len(sig_hg_genes.index))
+    if type(sig_hg_genes) == int:
+        HG_CUTOFF = 0
+        print "HG cutoff: {}, n=0".format(HG_CUTOFF)
+
+    else:
+        HG_CUTOFF = 10**(-sig_hg_genes.iloc[- 1]["hg_pval_max"])
+        print "HG cutoff: {}, n={}".format(HG_CUTOFF, len(sig_hg_genes.index))
+
 
     sorted_genes_emp = filtered_genes.sort_values(by=['emp_pval_max'])
     sorted_genes_emp.loc[sorted_genes_emp['emp_pval_max']==0,'emp_pval_max']=1.0/5000
@@ -78,9 +90,9 @@ def main(algo_sample = None, dataset_sample = None,tsv_file_name=os.path.join(co
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM")
-    parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy,jactivemodules_sa,hotnet2,bionet,netbox,keypathwayminer_INES_GREEDY")
+    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50") # TNFa_2,HC12,ROR_1,SHERA,SHEZH_1,ERS_1,IEM 
+    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM")
+    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy,jactivemodules_sa,bionet,netbox,keypathwayminer_INES_GREEDY") # ,my_netbox_td,hotnet2
 
     args = parser.parse_args()
 
@@ -96,17 +108,20 @@ if __name__ == "__main__":
     for cur_ds in datasets:
         df_ds=pd.DataFrame()
         for cur_alg in algos:
-
-            sig_hg_genes, sig_emp_genes=main(cur_alg, cur_ds,tsv_file_name=os.path.join("/home/hag007/Desktop/aggregate_report/oob", "emp_diff_modules_{}_{}_passed_oob.tsv"))
-            venn2([set(sig_hg_genes.index), set(sig_emp_genes.index)], set_labels = ('HG', 'EMP'))
-            plt.title("EMP/HG ratio: {}".format(round(float(len(sig_emp_genes.index))/len(sig_hg_genes.index),3)))
-            plt.savefig("/home/hag007/Desktop/venn/venn_{}_{}.png".format(cur_ds, cur_alg))
-            plt.clf()
+            sig_hg_genes, sig_emp_genes=main(cur_alg, cur_ds,tsv_file_name=os.path.join("/home/hag007/Desktop/aggregate_gwas_report/oob", "emp_diff_modules_{}_{}_passed_oob.tsv"))
+            # venn2([set(sig_hg_genes.index), set(sig_emp_genes.index)], set_labels = ('HG', 'EMP'))
+            # plt.title("EMP/HG ratio: {}".format(round(float(len(sig_emp_genes.index))/len(sig_hg_genes.index),3)))
+            # plt.savefig("/home/hag007/Desktop/venn/venn_{}_{}.png".format(cur_ds, cur_alg))
+            # plt.clf()
             df_ds.loc["{}_{}".format(cur_ds,cur_alg), "algo"]=cur_alg
             df_ds.loc["{}_{}".format(cur_ds,cur_alg), "dataset"]=cur_ds
-            df_ds.loc["{}_{}".format(cur_ds,cur_alg),"n_emp"]=np.sum(sig_emp_genes["passed_oob_permutation_test"].apply(lambda x: np.any(np.array(x[1:-1].split(', '),dtype=np.bool))).values)
-            df_ds.loc["{}_{}".format(cur_ds,cur_alg), "n_hg"] = len(sig_hg_genes.index)
-            df_ds.loc["{}_{}".format(cur_ds,cur_alg), "ratio"] = round(float(df_ds.loc["{}_{}".format(cur_ds,cur_alg), "n_emp"])/df_ds.loc["{}_{}".format(cur_ds,cur_alg), "n_hg"],3)
+            if type(sig_emp_genes)==int or type(sig_hg_genes)==int:
+                df_ds.loc["{}_{}".format(cur_ds, cur_alg), "n_emp"] = 0
+                df_ds.loc["{}_{}".format(cur_ds, cur_alg), "n_hg"] = 0
+            else:
+                df_ds.loc["{}_{}".format(cur_ds,cur_alg),"n_emp"]=np.sum(sig_emp_genes["passed_oob_permutation_test"].apply(lambda x: np.any(np.array(x[1:-1].split(', '),dtype=np.bool))).values)
+                df_ds.loc["{}_{}".format(cur_ds,cur_alg), "n_hg"] = len(sig_hg_genes.index)
+            df_ds.loc["{}_{}".format(cur_ds,cur_alg), "ratio"] = round(float(df_ds.loc["{}_{}".format(cur_ds,cur_alg), "n_emp"])/max(df_ds.loc["{}_{}".format(cur_ds,cur_alg), "n_hg"],1),3)
             df_rank_matrix.loc[cur_alg, cur_ds]=df_ds.loc["{}_{}".format(cur_ds, cur_alg), "ratio"]
         df_ds["ratio_rank"]=df_ds["ratio"].rank(ascending=False)
         for cur_alg in algos:
@@ -115,7 +130,7 @@ if __name__ == "__main__":
             df_matrix.loc[cur_alg, cur_ds] = df_ds.loc["{}_{}".format(cur_ds, cur_alg), "ratio"]
         df_all=pd.concat([df_all,df_ds])
 
-    df_all.to_csv("/home/hag007/Desktop/aggregate_report/venn/summary.tsv", sep='\t')
-    df_rank_matrix.to_csv("/home/hag007/Desktop/aggregate_report/venn/rank_matrix.tsv", sep='\t')
-    df_matrix.to_csv("/home/hag007/Desktop/aggregate_report/venn/ratio_matrix.tsv", sep='\t')
-    df_count_matrix.to_csv("/home/hag007/Desktop/aggregate_report/venn/count_matrix.tsv", sep='\t')
+    df_all.to_csv("/home/hag007/Desktop/aggregate_gwas_report/venn/summary.tsv", sep='\t')
+    df_rank_matrix.to_csv("/home/hag007/Desktop/aggregate_gwas_report/venn/rank_matrix.tsv", sep='\t')
+    df_matrix.to_csv("/home/hag007/Desktop/aggregate_gwas_report/venn/ratio_matrix.tsv", sep='\t')
+    df_count_matrix.to_csv("/home/hag007/Desktop/aggregate_gwas_report/venn/count_matrix.tsv", sep='\t')

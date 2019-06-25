@@ -77,9 +77,9 @@ def calc_dist(algos, datasets, shared_list=None, is_max=True):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="TNFa_2")
-    parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
+    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer2.G50")
+    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM")
+    parser.add_argument('--algos', dest='algos', default="my_netbox_td")
     parser.add_argument('--network', dest='network', default="dip.sif")
     parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))",
                         dest='n_start', default=0)
@@ -126,7 +126,7 @@ if __name__ == "__main__":
                 df_counter = 0
 
                 df_results = pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
-                                                      "emp_diff_{}_{}.tsv".format(dataset, algo)),
+                                                      "emp_diff_modules_{}_{}.tsv".format(dataset, algo)),
                                          sep='\t', index_col=0)
 
                 df_results['hg_pval'] = df_real_agg_list_pval.iloc[:, 0]

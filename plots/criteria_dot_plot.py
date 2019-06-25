@@ -42,9 +42,12 @@ SIM_TH= 0.4
 algos_acronym={"jactivemodules_greedy":"jAM_greedy",
                "jactivemodules_sa": "jAM_SA",
                "netbox": "netbox",
-               "hotnet2": "hotnet2",
-               "bionet": "bionet",
-               "keypathwayminer_INES_GREEDY": "KPM"}
+
+
+               "bionet": "bionet"}
+# "my_netbox_td": "netbox_td", "keypathwayminer_INES_GREEDY": "KPM",  "hotnet2": "hotnet2",
+
+
 
 
 def dot_grid(df_measurements, grid_type, y_label, filter_zeros=False, ax=None):
@@ -107,16 +110,16 @@ def main():
 
     fig, axs = plt.subplots(2,2, figsize=(20, 20))
 
-    main_path = "/home/hag007/Desktop/aggregate_report/visual"
+    main_path = "/home/hag007/Desktop/aggregate_gwas_report/visual"
     df_measurements_counts=pd.read_csv(os.path.join(main_path, "empirical_terms_counts.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
     # df_measurements_counts=df_measurements_counts.drop(labels=["SHERA"], axis=1)
     dot_grid(df_measurements_counts, "counts", "Terms Count", ax=axs[0][1])
 
-    main_path = "/home/hag007/Desktop/aggregate_report/visual"
+
     df_measurements_ratio = pd.read_csv(os.path.join(main_path, "true_positive_ratio.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
     dot_grid(df_measurements_ratio, "ratio", "EHR", ax=axs[0][0])
 
-    main_path = "/home/hag007/Desktop/aggregate_report/visual"
+
     df_measurements_heterogeneity = pd.read_csv(os.path.join(main_path, "empirical_terms_variability.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
     i_zeros = df_measurements_heterogeneity==0
     df_measurements_heterogeneity +=np.abs(np.min(df_measurements_heterogeneity.values))+1

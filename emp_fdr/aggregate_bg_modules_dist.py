@@ -72,19 +72,19 @@ def calc_dist(algos, datasets, shared_list=None, is_max=True):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="SOC")
-    parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
+    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer2.G50")
+    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM")
+    parser.add_argument('--algos', dest='algos', default="my_netbox_td")
     parser.add_argument('--network', dest='network', default="dip.sif")
     parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))",
                         dest='n_start', default=0)
     parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))",
-                        dest='n_end', default=1000)
+                        dest='n_end', default=0)
     parser.add_argument('--network_permutations', dest='network_perm', default="false")
     parser.add_argument('--max_dist', help="takes max or all samples", dest='max_dist', default="true")
     parser.add_argument('--pval_measurement', help="how to calc pval. can be emp or beta", dest='pval_measurement',
                         default="emp")
-    parser.add_argument('--pf', dest='pf', help="parallelization factor", default=20)
+    parser.add_argument('--pf', dest='pf', help="parallelization factor", default=1)
     parser.add_argument('--recalc_true_modules', dest='recalc_true_modules', default="false")
 
     args = parser.parse_args()
@@ -127,8 +127,9 @@ if __name__ == "__main__":
             print "test"
             p.map(func_star, params)
             pvals = list(pvals)
-            df_all_terms = pd.concat(pvals, axis=1)
-            df_all_terms = df_all_terms.fillna(1)
+            if len(pvals) > 0:
+                df_all_terms = pd.concat(pvals, axis=1)
+                df_all_terms = df_all_terms.fillna(1)
             print "total # permutations: {}/{}".format(len(pvals), n_end - n_start)
 
             if recalc_true_modules:
@@ -138,18 +139,19 @@ if __name__ == "__main__":
                             algos=[algo], network_file_name=network_file_name)
 
             ## empirical pvalues
-            df_real_agg_pval = calc_dist([algo], ["{}_{}".format(prefix, dataset)])
-            df_real_agg_list_pval = df_real_agg_pval.apply(lambda x: str(list(-np.log10(x))))
+            df_real_agg_pval_before = calc_dist([algo], ["{}_{}".format(prefix, dataset)])
+            df_real_agg_list_pval = df_real_agg_pval_before.apply(lambda x: str(list(-np.log10(x)))).to_frame()
             print "total # real terms: {}".format(len(df_real_agg_list_pval.index))
             df_counter = 0
             df_results = df_all_terms.apply(lambda row: str(list(-np.log10(row.values.astype(np.float)))),
                                             axis=1).to_frame()
             df_results.columns = ['dist_n_samples']
-            missing_indices = set(df_real_agg_list_pval.index).difference(df_results.index)
-            df_results.loc[missing_indices, "dist_n_samples"] = str([0])
-            df_results['hg_pval'] = df_real_agg_list_pval.iloc[:, 0]
-            df_results["GO name"] = pd.Series(goids2gonames.get_go_names(list(df_real_agg_list_pval.index)),
-                                              index=df_real_agg_list_pval.index)
+            missing_indices = set(df_real_agg_pval_before.index).difference(df_results.index)
+            for cur_missed_i in missing_indices:
+                df_results.loc[cur_missed_i, "dist_n_samples"] = str([0])
+            df_results['hg_pval'] = df_real_agg_pval_before.iloc[:, 0]
+            df_results["GO name"] = pd.Series(goids2gonames.get_go_names(list(df_real_agg_pval_before.index)),
+                                              index=df_real_agg_pval_before.index)
             df_results.loc[df_results["hg_pval"].isna().values, "hg_pval"] = "[]"
 
             df_results.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_diff_{}_{}.tsv".format(dataset, algo)),
