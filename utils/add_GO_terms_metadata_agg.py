@@ -68,11 +68,11 @@ def get_all_genes_for_term(vertices, cur_root, term, in_subtree):
 
 def main(dataset="SOC", algo="jactivemodules_sa", n_permutations=300,
          csv_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr",
-                                    "MAX/emp_diff_modules_{dataset}_{algo}.tsv")):
-    dataset_data = pd.read_csv(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset), "data", "ge.tsv"),
-                               sep='\t', index_col=0)
-    classes_data = np.array(
-        file(os.path.join(constants.DATASETS_DIR, "GE_{}".format(dataset), "data", "classes.tsv")).readlines()[
+                                    "MAX/emp_diff_modules_{dataset}_{algo}.tsv"), prefix="GE"):
+    dataset_data=None
+    if prefix=="GE":
+        dataset_data = pd.read_csv(os.path.join(constants.DATASETS_DIR, "{}_{}".format(prefix, dataset), "data", "ge.tsv"), sep='\t', index_col=0)
+        classes_data = np.array(file(os.path.join(constants.DATASETS_DIR, "{}_{}".format(prefix, dataset), "data", "classes.tsv")).readlines()[
             0].strip().split("\t")).astype(np.int)
 
     csv_file_name = csv_file_name.format(dataset=dataset, algo=algo)
@@ -92,7 +92,10 @@ def main(dataset="SOC", algo="jactivemodules_sa", n_permutations=300,
     df["hg_pval_max"]=df["hg_pval"].apply(lambda a: a if type(a)!=str else np.max(np.array(a[1:-1].split(", "), dtype=np.float32)))
 
     n_genes_pvals = df.loc[np.logical_and.reduce([df["n_genes"].values > 5, df["n_genes"].values < 500]), "hg_pval"]
-    n_modules = str(n_genes_pvals.iloc[0]).count(",") + 1
+    print df
+    n_modules = n_genes_pvals.shape[0]
+    if n_modules > 0:
+         n_modules = str(n_genes_pvals.iloc[0]).count(",") + 1
     n_genes_pvals = n_genes_pvals.values
     print "start reduction.."
     n_genes_pvals = [
@@ -116,46 +119,54 @@ def main(dataset="SOC", algo="jactivemodules_sa", n_permutations=300,
                                                      df["hg_pval"].apply(lambda row: np.any(
                                                              np.array(row[1:-1].split(', ') if type(row) == str else [row],
                                                                   dtype=np.float) >= HG_CUTOFF))]), :]
-
-    df_filtered_in["index"] = df_filtered_in.index.values
-    df_filtered_in["emp_pval"] = df_filtered_in.apply(lambda row: calc_empirical_pval(row, n_permutations), axis=1)
-    df_filtered_in["emp_pval_max"] = df_filtered_in["emp_pval"].apply(
+    
+    emp_cutoff=0
+    if df_filtered_in.shape[0]!=0:
+    
+       df_filtered_in["index"] = df_filtered_in.index.values
+       df_filtered_in["emp_pval"] = df_filtered_in.apply(lambda row: calc_empirical_pval(row, n_permutations), axis=1)
+       df_filtered_in["emp_pval_max"] = df_filtered_in["emp_pval"].apply(
         lambda a: a if type(a) != str else np.min(np.array(a[1:-1].split(", "), dtype=np.float32)))
 
-    df_filtered_in["mean_difference"] = df_filtered_in.apply(lambda x: mean_difference(x, dataset_data, classes_data),
+       if not dataset_data is None:
+           df_filtered_in["mean_difference"] = df_filtered_in.apply(lambda x: mean_difference(x, dataset_data, classes_data),
                                                              axis=1)
 
-    pvals_corrected = [[x] if type(x) != str else np.array(x[1:-1].split(", ")).astype(np.float) for x in
+       pvals_corrected = [[x] if type(x) != str else np.array(x[1:-1].split(", ")).astype(np.float) for x in
                        df_filtered_in["emp_pval"]]
 
-    max_pvals_corrected = reduce(lambda a, x: np.append(a, np.min(x)), pvals_corrected, np.array([]))
+       max_pvals_corrected = reduce(lambda a, x: np.append(a, np.min(x)), pvals_corrected, np.array([]))
 
-    print "n currected pvals: {}".format(max_pvals_corrected.shape[0])
+       print "n currected pvals: {}".format(max_pvals_corrected.shape[0])
 
-    pvals_corrected = reduce(lambda a, x: np.append(a, x), pvals_corrected, np.array([]))
-    fdr_results = fdrcorrection0(max_pvals_corrected, alpha=0.05, method='indep', is_sorted=False)
-    file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "md.txt"), 'w+').write(
+       pvals_corrected = reduce(lambda a, x: np.append(a, x), pvals_corrected, np.array([]))
+       fdr_results = fdrcorrection0(max_pvals_corrected, alpha=0.05, method='indep', is_sorted=False)
+       file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "md.txt"), 'w+').write(
         "\n".join(str(list(np.sort(max_pvals_corrected)))[1:-1].split(', ')))
-    max_true_counter = len([cur for cur in fdr_results[0] if cur == True])
-    emp_cutoff = np.sort(np.sort(max_pvals_corrected))[max_true_counter - 1] if max_true_counter > 0 else 0
-    print ": {} (emp cutoff: {}, n={})".format(max_true_counter, emp_cutoff, len(fdr_results[0]))
-    print "emp true hypothesis: {}".format(np.sum(np.min(pvals_corrected.reshape(-1, n_modules), axis=1) <= emp_cutoff))
-    if n_modules > 1:
-        df_filtered_in["passed_fdr"] = [str(a) for a in (pvals_corrected <= emp_cutoff).reshape(-1, n_modules)]
+       max_true_counter = len([cur for cur in fdr_results[0] if cur == True])
+       emp_cutoff = np.sort(np.sort(max_pvals_corrected))[max_true_counter - 1] if max_true_counter > 0 else 0
+       print ": {} (emp cutoff: {}, n={})".format(max_true_counter, emp_cutoff, len(fdr_results[0]))
+       print "emp true hypothesis: {}".format(np.sum(np.min(pvals_corrected.reshape(-1, n_modules), axis=1) <= emp_cutoff))
+       if n_modules > 1:
+           df_filtered_in["passed_fdr"] = [str(a) for a in (pvals_corrected <= emp_cutoff).reshape(-1, n_modules)]
+
+       else:
+           df_filtered_in["passed_fdr"] = pvals_corrected <= emp_cutoff
+           df_filtered_in["passed_fdr"]=df_filtered_in["passed_fdr"].apply(lambda a: str([a]))
+
+       df_filtered_in["emp_rank"] = df_filtered_in["emp_pval_max"].rank(ascending=1)
+       df_filtered_in["hg_rank"] = df_filtered_in["hg_pval_max"].rank(ascending=0)
+
+       df_filtered_in = df_filtered_in.sort_values(by=["emp_rank", "hg_rank"])
+
 
     else:
-        df_filtered_in["passed_fdr"] = pvals_corrected <= emp_cutoff
-        df_filtered_in["passed_fdr"]=df_filtered_in["passed_fdr"].apply(lambda a: str([a]))
-
-    df_filtered_in["emp_rank"] = df_filtered_in["emp_pval_max"].rank(ascending=1)
-    df_filtered_in["hg_rank"] = df_filtered_in["hg_pval_max"].rank(ascending=0)
-
-    df_filtered_in = df_filtered_in.sort_values(by=["emp_rank", "hg_rank"])
+        df_filtered_in=pd.DataFrame(columns=['emp_pval', 'hg_rank', 'emp_rank', 'passed_fdr'])
 
     df_all = pd.concat((df_filtered_in, df_filtered_out), axis=0)
+    print df_filtered_in.columns, df_all.columns
     df_all.loc[df_all["hg_pval"].values > 0, :][
-        ["GO name", "hg_pval", "hg_pval_max", "emp_pval", "hg_rank", "emp_rank", "n_genes", "depth", "mean_difference",
-         "passed_fdr"]].to_csv(csv_file_name[:-4] + "_md.tsv", sep='\t')
+        ["GO name", "hg_pval", "hg_pval_max", "emp_pval", "hg_rank", "emp_rank", "n_genes", "depth", "passed_fdr"]].to_csv(csv_file_name[:-4] + "_md.tsv", sep='\t')
     return len(df_filtered_in.index), max_true_counter, HG_CUTOFF, emp_cutoff
 
 

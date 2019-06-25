@@ -13,6 +13,8 @@ import numpy as np
 import pandas as pd
 import subprocess
 
+from implementations.my_netbox import main as my_netbox_main
+
 # import rpy2.robjects.numpy2ri  as numpy2ri
 # numpy2ri.activate()
 
@@ -36,11 +38,24 @@ from utils.scripts import format_script
 import utils.server as server
 from utils.network import output_modules
 
-ALGO_NAME = "netbox"
+ALGO_NAME = "my_netbox"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 
 import shutil
 import random
+
+def extract_modules_and_bg(bg_genes, dest_algo_dir):
+    results = file(os.path.join(dest_algo_dir, "modules.txt")).readlines()
+    modules = [[] for x in range(max([int(x.strip().split(" =")[1]) for x in results[1:]]) + 1)]
+    for x in results[1:]:
+        if int(x.strip().split(" =")[1]) != -1:
+            modules[int(x.strip().split(" =")[1])].append(x.strip().split(" =")[0])
+        else:
+            modules.append([x.strip().split(" =")[0]])
+    modules = filter(lambda x: len(x) > 3, modules)
+    all_bg_genes = [bg_genes for x in modules]
+    print "extracted {} modules".format(len(modules))
+    return modules, all_bg_genes
 
 def init_specific_params(score_file_name, dest_algo_dir):
 
@@ -53,24 +68,8 @@ def init_specific_params(score_file_name, dest_algo_dir):
     h_rows=h_rows[ordered_ind]
     last_q_index = np.where(deg_data[:,np.where(h_cols=="qval")[0][0]]>0.05)[0][0]
     ge_list_file_name = os.path.join(constants.OUTPUT_DIR, "ge_list.txt")
-    file(ge_list_file_name, "w+").write("\n".join([x for x in h_rows[:last_q_index] if len(ensembl2entrez_convertor([x]))>0 ])) # ensembl2entrez_convertor([x])[0]
-
-    conf_file = "conf.props"
-    conf_file_name=format_script(os.path.join(dest_algo_dir, conf_file), pval_threshold=0.05, sp_threshold=2, gene_file=ge_list_file_name)
-    return conf_file_name
-
-def extract_modules_and_bg(bg_genes, dest_algo_dir):
-    results = file(os.path.join(dest_algo_dir, "modules.txt")).readlines()
-    modules = [[] for x in range(max([0]+[int(x.strip().split(" =")[1]) for x in results[1:]]) + 1)]
-    for x in results[1:]:
-        if int(x.strip().split(" =")[1]) != -1:
-            modules[int(x.strip().split(" =")[1])].append(x.strip().split(" =")[0])
-        else:
-            modules.append([x.strip().split(" =")[0]])
-    modules = filter(lambda x: len(x) > 3, modules)
-    all_bg_genes = [bg_genes for x in modules]
-    print "extracted {} modules".format(len(modules))
-    return modules, all_bg_genes
+    file(ge_list_file_name, "w+").write("\n".join([x for x in h_rows[:last_q_index] if len(ensembl2entrez_convertor([x]))>0 ])) 
+    return ge_list_file_name
 
 
 def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip.sif"):
@@ -79,18 +78,15 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
     
     script_name = "run_{}.sh".format(ALGO_NAME)
-    dest_algo_dir="{}_{}".format(ALGO_DIR,random.random())
-    shutil.copytree(ALGO_DIR, dest_algo_dir)
-    conf_file_name=init_specific_params(score_file_name, dest_algo_dir)
-    script_file_name=format_script(os.path.join(constants.SH_DIR, script_name), BASE_FOLDER=constants.BASE_PROFILE,
-                  DATASET_DIR=constants.DATASET_DIR, CONFIG_FILE_NAME=conf_file_name, NETBOX_DIR=dest_algo_dir)
-    print subprocess.Popen("bash {}".format(script_file_name), shell=True,
-                           stdout=subprocess.PIPE, cwd=dest_algo_dir).stdout.read()
+    dest_algo_dir="{}".format(ALGO_DIR,random.random()) # _{}
 
-    modules, all_bg_genes = extract_modules_and_bg(bg_genes, dest_algo_dir)
-    os.remove(script_file_name)
-    os.remove(conf_file_name)
-    shutil.rmtree(dest_algo_dir)
+    ge_list_file_name=init_specific_params(score_file_name, dest_algo_dir)
+
+    modules=my_netbox_main(dataset_name=dataset_name, score_file_name=ge_list_file_name, network_file_name=network_file_name)
+    modules = filter(lambda x: len(x) > 3, modules)
+    all_bg_genes = [bg_genes for x in modules]
+    print "extracted {} modules".format(len(modules))
+
     output_base_dir = ""
     if constants.REPORTS:
         output_base_dir = build_all_reports(ALGO_NAME, dataset_name, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
@@ -100,8 +96,8 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
 
 if __name__ == "__main__":
-    constants.update_dirs(DATASET_NAME_u="PASCAL_SUM_Breast_Cancer.G50")
-    main(dataset_name="PASCAL_SUM_Breast_Cancer.G50", score_method=constants.PREDEFINED_SCORE)
+    constants.update_dirs(DATASET_NAME_u="GE_HC12")
+    main(dataset_name=constants.DATASET_NAME)
 
 
 

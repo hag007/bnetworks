@@ -11,12 +11,16 @@ from runners import keypathwayminer_ines_greedy_runner
 from runners import netbox_runner
 from runners import reactomefi_runner
 from runners import matisse_runner
+from runners import my_netbox_runner
+from runners import my_netbox_td_runner
 
 algo_by_names = {"reactomefi":reactomefi_runner.main,
                  "matisse": matisse_runner.main,
                  "bionet": bionet_runner.main,
                  "keypathwayminer_INES_GREEDY": keypathwayminer_ines_greedy_runner.main,
                  "netbox": netbox_runner.main,
+                 "my_netbox": my_netbox_runner.main,
+                 "my_netbox_td": my_netbox_td_runner.main,
                  "hotnet2": hotnet2_runner.main,
                  "jactivemodules_greedy": jactivemodules_greedy_runner.main,
                  "jactivemodules_sa": jactivemodules_sa_runner.main}
@@ -36,6 +40,8 @@ def run_dataset(dataset_name, expected_genes=None, disease_name=None, score_meth
                 Process(target=bionet_runner.main, args=[dataset_name, disease_name, expected_genes, score_method, network_file_name, fdr]),
                 Process(target=hotnet2_runner.main, args=[dataset_name, disease_name, expected_genes, score_method, network_file_name]),
                 Process(target=netbox_runner.main, args=[dataset_name, disease_name, expected_genes, score_method, network_file_name]),
+                Process(target=my_netbox_runner.main, args=[dataset_name, disease_name, expected_genes, score_method, network_file_name]),
+                Process(target=my_netbox_td_runner.main, args=[dataset_name, disease_name, expected_genes, score_method, network_file_name]),
                 Process(target=keypathwayminer_ines_greedy_runner.main, args=[dataset_name, disease_name, expected_genes, score_method, network_file_name]),
                 Process(target=reactomefi_runner.main, args=[dataset_name, disease_name, expected_genes, score_method, network_file_name]),
                 Process(target=matisse_runner.main, args=[dataset_name, disease_name, expected_genes, score_method, network_file_name])
