@@ -18,6 +18,7 @@ from runners.datasets_multithread_runner import run_dataset
 from utils.daemon_multiprocessing import MyPool, func_star
 import shutil
 from statsmodels.sandbox.stats.multicomp import fdrcorrection0
+import multiprocessing
 
 def impute_dataset(dataset_name, network_file_name, imputation_fraction=0.5):
     if dataset_name.startswith("GE_"):
@@ -69,7 +70,7 @@ def get_enriched_terms(algos, datasets, is_plot=False, empirical_th=None):
         return pval, df_go, df_go_pvals
 
 
-def recovery_iteration(prefix, dataset, cur, algo, network_file_name="dip.sif"):
+def recovery_iteration(prefix, dataset, cur, algo, network_file_name="dip.sif", results=None):
 
     print "starting iteration: {}, {}, {}".format(prefix, dataset, cur)
     recovered_dataset_name="{}_{}_recovery_{}".format(prefix, dataset, cur)
@@ -91,13 +92,19 @@ def recovery_iteration(prefix, dataset, cur, algo, network_file_name="dip.sif"):
                 algos=[algo], network_file_name=permuted_network_file_name)
     cur_pval, df_terms, df_pval_terms = get_enriched_terms([algo], [recovered_dataset_name])
 
-    df=pd.read_csv(os.path.join("/home/hag007/Desktop/aggregate_report/oob", "emp_diff_modules_{}_{}_passed_oob.tsv".format(dataset,algo)), sep='\t')
+    df=pd.read_csv(os.path.join("/specific/netapp5/gaga/hagailevi/evaluation/bnet/output/emp_fdr/MAX/oob_temp", "emp_diff_modules_{}_{}_passed_oob.tsv".format(dataset,algo)), sep='\t')
     full_sig_terms=df.loc[df["passed_oob_permutation_test"].dropna(axis=0).apply(
         lambda a: np.any(np.array(a[1:-1].split(", ")) == "True")).values, :].sort_values(by=["hg_pval_max"], ascending=False)['GO id']
+    print df_terms
+    if df_terms.shape[0]!=0:
+        recovery_fraction=len(set(full_sig_terms).intersection(df_terms["GO id"].values))/float(len(full_sig_terms))
+        print "recovery_fraction: {}/{}={} ({}, {})".format(len(set(full_sig_terms).intersection(df_terms["GO id"].values)), float(len(full_sig_terms)), recovery_fraction, len(set(full_sig_terms)), len(set(df_terms["GO id"].values)))
+    else:
+        recovery_fraction=0
 
-    recovery_fraction=len(set(full_sig_terms).intersection(df_terms["GO id"].values))/float(len(full_sig_terms))
-    print "recovery_fraction: {}/{}={} ({}, {})".format(len(set(full_sig_terms).intersection(df_terms["GO id"].values)), float(len(full_sig_terms)), recovery_fraction, len(set(full_sig_terms)), len(set(df_terms["GO id"].values)))
     print "done iteration: {}, {}, {}".format(prefix, dataset, cur)
+    if results is not None:
+        results.append(recovery_fraction)
     return recovery_fraction
 
 
@@ -106,11 +113,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='args')
     parser.add_argument('--datasets', dest='datasets', default="TNFa_2")
     parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="netbox,jactivemodules_greedy,my_netbox_td,jactivemodules_sa")
+    parser.add_argument('--algos', dest='algos', default="my_netbox_td")
     parser.add_argument('--network', dest='network', default="dip.sif")
-    parser.add_argument('--pf', help="parallelization_factor", dest='pf', default=1)
-    parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_start', default=0)
-    parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_end', default=100)
+    parser.add_argument('--pf', help="parallelization_factor", dest='pf', default=20)
+    parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_start', default=13)
+    parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_end', default=14)
     parser.add_argument('--override_permutations', help="takes max or all samples", dest='override_permutations', default="false")
 
     args = parser.parse_args()
@@ -136,15 +143,15 @@ if __name__ == "__main__":
 
         df_all_terms = pd.DataFrame()
         cur_real_ds= "{}_{}".format(prefix, dataset)
-
+        
 
         for algo in algos:
-            recovery_fractions=[]
-            prcs = []
+            recovery_fractions = multiprocessing.Manager().list()
+            # prcs = []
             # p = MyPool(parallelization_factor)
-            # params=[[recovery_iteration, [prefix, dataset, x, algo, network_file_name]] for x in np.arange(int(n_start), int(n_end)) if override_permutations or not permutation_output_exists(prefix, dataset, algo, x)]
+            # params=[[recovery_iteration, [prefix, dataset, x, algo, network_file_name, recovery_fractions]] for x in np.arange(int(n_start), int(n_end))]
             # p.map(func_star, params)
-
+         
             for x in np.arange(n_start,n_end):
                 recovery_fractions.append(recovery_iteration(prefix, dataset, x, algo, network_file_name))
 
