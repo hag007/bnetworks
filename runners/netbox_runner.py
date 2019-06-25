@@ -61,7 +61,7 @@ def init_specific_params(score_file_name, dest_algo_dir, dataset_name):
 
 def extract_modules_and_bg(bg_genes, dest_algo_dir):
     results = file(os.path.join(dest_algo_dir, "modules.txt")).readlines()
-    modules = [[] for x in range(max([int(x.strip().split(" =")[1]) for x in results[1:]]) + 1)]
+    modules = [[] for x in range(max([0]+[int(x.strip().split(" =")[1]) for x in results[1:]]) + 1)]
     for x in results[1:]:
         if int(x.strip().split(" =")[1]) != -1:
             modules[int(x.strip().split(" =")[1])].append(x.strip().split(" =")[0])
@@ -79,9 +79,16 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
     
     script_name = "run_{}.sh".format(ALGO_NAME)
-    dest_algo_dir="{}".format(ALGO_DIR,random.random()) # _{}
-    # shutil.copytree(ALGO_DIR, dest_algo_dir)
+
+    ######### client (single-threaded)
+    dest_algo_dir="{}".format(ALGO_DIR,random.random())
     conf_file_name=init_specific_params(score_file_name, dest_algo_dir, dataset_name)
+    ######### server (multi-threaded)
+    # dest_algo_dir="{}_{}".format(ALGO_DIR,random.random())
+    # shutil.copytree(ALGO_DIR, dest_algo_dir)
+    # conf_file_name=init_specific_params(score_file_name, dest_algo_dir)
+    #########
+
     script_file_name=format_script(os.path.join(constants.SH_DIR, script_name), BASE_FOLDER=constants.BASE_PROFILE,
                   DATASET_DIR=constants.DATASET_DIR, CONFIG_FILE_NAME=conf_file_name, NETBOX_DIR=dest_algo_dir)
     print subprocess.Popen("bash {}".format(script_file_name), shell=True,
@@ -90,7 +97,10 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
     modules, all_bg_genes = extract_modules_and_bg(bg_genes, dest_algo_dir)
     os.remove(script_file_name)
     os.remove(conf_file_name)
+
+    ######### server (on parallel)
     # shutil.rmtree(dest_algo_dir)
+
     output_base_dir = ""
     if constants.REPORTS:
         output_base_dir = build_all_reports(ALGO_NAME, dataset_name, modules, all_bg_genes, score_file_name, network_file_name, disease_name, expected_genes)
@@ -100,8 +110,8 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
 
 if __name__ == "__main__":
-    constants.update_dirs(DATASET_NAME_u="GE_HC12")
-    main(dataset_name=constants.DATASET_NAME)
+    constants.update_dirs(DATASET_NAME_u="PASCAL_SUM_Breast_Cancer.G50")
+    main(dataset_name="PASCAL_SUM_Breast_Cancer.G50", score_method=constants.PREDEFINED_SCORE)
 
 
 

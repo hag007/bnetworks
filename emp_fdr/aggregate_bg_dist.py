@@ -58,6 +58,7 @@ def calc_dist(algos, datasets, shared_list=None, is_max=True):
             if shared_list is not None:
                 shared_list.append(df_go_pvals)
                 print "done aggregate {} permutations".format(len(shared_list)) 
+            
             return df_go_pvals
     except Exception, e:
        print Exception, e 
@@ -134,7 +135,9 @@ if __name__ == "__main__":
 
 
             ## empirical pvalues
+            
             df_real_agg_pval = calc_dist([algo], ["{}_{}".format(prefix, dataset)])
+            
             df_real_agg_pval=df_real_agg_pval.apply(lambda x: -np.log10(x))
             df_real_max_pval=df_real_agg_pval.max(axis=1).to_frame()
             print "total # real terms: {}".format(len(df_real_max_pval.index))

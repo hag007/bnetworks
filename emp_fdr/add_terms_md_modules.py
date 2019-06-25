@@ -38,7 +38,7 @@ if __name__=="__main__":
             n_filtered_terms, n_corrected_terms, hg_cutoff, emp_cutoff=results
             hg_cutoffs.loc[cur_alg ,cur_ds] = hg_cutoff
             emp_cutoffs.loc[cur_alg, cur_ds] = emp_cutoff
-            n_terms.loc[cur_alg, cur_ds] = "{}/{} ({})".format(n_corrected_terms, n_filtered_terms, n_corrected_terms/float(n_filtered_terms))
+            n_terms.loc[cur_alg, cur_ds] = "{}/{} ({})".format(n_corrected_terms, n_filtered_terms, n_corrected_terms/max(1.0,float(n_filtered_terms)))
 
 
         hg_cutoffs.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "hg_cutoffs_summary.tsv"), sep='\t')

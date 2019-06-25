@@ -106,21 +106,19 @@ def main(base_folder="/home/hag007/Desktop/aggregate_report/oob", pf=5):
                 p = multiprocessing.Pool(pf)
                 p.map(func_star,params)
 
-                # adj_sum = sum(
-                #     [adj["{}_{}".format(x, y)] for x in range(len(go_terms[cur_x])) for y in range(len(go_terms[cur_y]))
-                #      if adj["{}_{}".format(x, y)] != -100])
-                # adj_count = float(len(
-                #     [adj["{}_{}".format(x, y)] for x in range(len(go_terms[cur_x])) for y in range(len(go_terms[cur_y]))
-                #      if adj["{}_{}".format(x, y)] != -100]))
+                adj_sum = sum(
+                    [adj["{}_{}".format(x, y)] if adj["{}_{}".format(x, y)] != -100 else 10 for x in range(len(go_terms[cur_x])) for y in range(len(go_terms[cur_y]))])
+                adj_count = float(len(
+                    [adj["{}_{}".format(x, y)] if adj["{}_{}".format(x, y)] != -100 else 10 for x in range(len(go_terms[cur_x])) for y in range(len(go_terms[cur_y]))]))
 
-                adj_sum_x_max=[[adj["{}_{}".format(x,y)]  if adj["{}_{}".format(x,y)]!=-100 else 10 for y in range(len(go_terms[cur_y]))] for x in range(len(go_terms[cur_x]))]
-                adj_sum_x_max=[max(x) for x in adj_sum_x_max]
-                adj_sum_y_max = [[adj["{}_{}".format(x, y)] if adj["{}_{}".format(x, y)] != -100 else 10 for x in range(len(go_terms[cur_x]))] for y in range(len(go_terms[cur_y]))]
-                adj_sum_y_max = [max(x) for x in adj_sum_y_max]
+                # adj_sum_x_max=[[adj["{}_{}".format(x,y)]  if adj["{}_{}".format(x,y)]!=-100 else 10 for y in range(len(go_terms[cur_y]))] for x in range(len(go_terms[cur_x]))]
+                # adj_sum_x_max=[max(x) for x in adj_sum_x_max]
+                # adj_sum_y_max = [[adj["{}_{}".format(x, y)] if adj["{}_{}".format(x, y)] != -100 else 10 for x in range(len(go_terms[cur_x]))] for y in range(len(go_terms[cur_y]))]
+                # adj_sum_y_max = [max(x) for x in adj_sum_y_max]
 
-                adj_sum_max=adj_sum_x_max+adj_sum_y_max
-                adj_sum=sum(adj_sum_max) # - len(set(go_terms[cur_x]).intersection(go_terms[cur_y]))
-                adj_count= len(list(np.append(go_terms[cur_x], go_terms[cur_y])))
+                # adj_sum_max=adj_sum_x_max+adj_sum_y_max
+                # adj_sum=sum(adj_sum_max) # - len(set(go_terms[cur_x]).intersection(go_terms[cur_y]))
+                # adj_count= len(list(np.append(go_terms[cur_x], go_terms[cur_y])))
 
                 print "adj_sum: ",adj_sum
                 print "adj_count: ",adj_count
@@ -133,7 +131,7 @@ def main(base_folder="/home/hag007/Desktop/aggregate_report/oob", pf=5):
                 p.join()
 
     print df_summary
-    df_summary.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "cancer_type_go_distance.tsv"), sep='\t')
+    df_summary.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "cancer_type_go_distance_original_1.tsv"), sep='\t')
 
     distArray = ssd.squareform(df_summary[df_summary.index.values].values+1)
 
@@ -147,7 +145,7 @@ def main(base_folder="/home/hag007/Desktop/aggregate_report/oob", pf=5):
                colors=colors,
                show_leaf_counts=True)
     plt.tight_layout()
-    plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "hierarchical_go_clustering_max.png"))
+    plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "hierarchical_go_clustering.png"))
 
 if __name__ == "__main__":
 
@@ -167,3 +165,4 @@ if __name__ == "__main__":
     for cur_ds in datasets:
         print "current dataset: {}".format(cur_ds)
         main(pf=pf, base_folder=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr/MAX"))
+

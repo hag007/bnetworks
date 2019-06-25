@@ -58,13 +58,13 @@ def calc_similarity(mat_adj, i_x, i_y, x, y):
     mat_adj[key] = semsim.SemSim(x, y)
 
     # if mat_adj[key]<0:
-    print x,y,mat_adj[key]
+    # print x,y,mat_adj[key]
 
     if np.isnan(mat_adj[key]):
         mat_adj[key] = -100
     mat_adj[key_inv] = mat_adj[key]
 
-def main(datasets, algos, pf=10):
+def main(datasets, algos, prefix, pf=10):
 
 
     if not os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "ds_2_alg_scores")):
@@ -85,12 +85,15 @@ def main(datasets, algos, pf=10):
             try:
                 emp_results = pd.read_csv(
                     os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", 
-                                 "emp_diff_modules_{}_{}_passed_oob.tsv".format(cur_ds[cur_ds.index("_") + 1:], cur_algo)), sep='\t', index_col=0)
+                                 "emp_diff_modules_{}_{}_passed_oob.tsv".format(cur_ds[len(prefix) + 1:], cur_algo)), sep='\t', index_col=0)
 
             except:
+                print "file {} wasn't found".format("emp_diff_modules_{}_{}_passed_oob.tsv".format(cur_ds[len(prefix) + 1:], cur_algo))
                 total_num_genes.append(0)
                 algos_signals.append(0)
                 algo_go_sim_score.append(1)
+                file(os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds,cur_algo, "n_sig.txt")), 'w+').write(str(0))
+                file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds, cur_algo, "var.txt")), 'w+').write(str(0))
                 continue
 
             emp_results=emp_results.sort_values(by='emp_rank')
@@ -102,13 +105,14 @@ def main(datasets, algos, pf=10):
 
             try:
                 total_num_genes.append(pd.read_csv(
-                    os.path.join(constants.OUTPUT_GLOBAL_DIR, constants.DATASET_NAME, cur_algo, "all_modules_general.tsv"),
+                    os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo, "all_modules_general.tsv"),
                     sep="\t")["total_num_genes"][0])
             except:
                 total_num_genes.append(0)
+                print "cannot read file {}".format(os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo, "all_modules_general.tsv"))
 
             adj_sum, adj_count = calc_intra_similarity(all_go_terms, pf)
-
+            print "about to save files..."
             file(os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds,cur_algo, "n_sig.txt")), 'w+').write(str(len(all_go_terms)))
             file(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "ds_2_alg_scores", "{}_{}_{}".format(cur_ds, cur_algo, "var.txt")), 'w+').write(str( - adj_sum / adj_count) if adj_count>0 else str(0))
 
@@ -178,6 +182,4 @@ if __name__ == "__main__":
     pf=int(args.pf)
     print "test" 
     ds_summary=pd.DataFrame()
-    for cur_ds in datasets:
-        print "current dataset: {}".format(cur_ds)
-        main(datasets=datasets, algos=algos, pf=pf)
+    main(datasets=datasets, algos=algos, prefix=prefix, pf=pf)

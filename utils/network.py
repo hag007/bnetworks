@@ -197,9 +197,11 @@ def merge_two_dicts(x, y):
 def create_modules_output(modules, score_file_name):
     scores=None
     if score_file_name is not None:
-        scores = pd.read_csv(score_file_name,sep="\t").set_index("id")
+       print "score_file_name: {}".format(score_file_name) 
+       print pd.read_csv(score_file_name,sep="\t").columns
+       scores = pd.read_csv(score_file_name,sep="\t").set_index("id")
 
-        if constants.IS_PVAL_SCORES:
+       if constants.IS_PVAL_SCORES:
             scores["score"] = scores["pval"].apply(lambda x: -np.log10(x))
 
     zero_scores = [ {"score" : 0, "id" : gene} for module in modules for gene in module if scores is None or gene not in scores.index]
@@ -256,13 +258,13 @@ def build_all_reports(algo_name, dataset_name, modules, all_bg_genes, score_file
     modules_summary = manager.list()
 
     params=[]
-    p=multiprocessing.Pool(5)
+    # p=multiprocessing.Pool(2)
     for i, module in enumerate(modules):
-        params.append([module_report, [algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports,
-             modules_summary]])
-        # module_report_star([algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports, modules_summary])
+        # params.append([module_report, [algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports,
+        #      modules_summary]])
+        module_report(algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports, modules_summary)
 
-    p.map(func_star, params)
+    # p.map(func_star, params)
 
     modules_summary=list(modules_summary)
     all_hg_reports=list(all_hg_reports)

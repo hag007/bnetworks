@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, '../')
-import seaborn as sns
-sns.set(color_codes=True)
+# import seaborn as sns
+# sns.set(color_codes=True)
 import logging
 sh = logging.StreamHandler()
 logger = logging.getLogger("log")
