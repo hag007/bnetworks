@@ -72,7 +72,7 @@ def init_specific_params(score_file_name, dest_algo_dir):
     return ge_list_file_name
 
 
-def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip.sif"):
+def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip.sif", module_sig_th=0.05):
     constants.update_dirs(DATASET_NAME_u=dataset_name)
     network_file_name, score_file_name, score_method, bg_genes = server.init_common_params(network_file_name, score_method)
 
@@ -82,7 +82,7 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
     ge_list_file_name=init_specific_params(score_file_name, dest_algo_dir)
 
-    modules=my_netbox_td_main(dataset_name=dataset_name, score_file_name=ge_list_file_name, network_file_name=network_file_name, modules_file_name=os.path.join(constants.NETWORKS_DIR, "dip_ng_modularity_components.txt"))
+    modules=my_netbox_td_main(dataset_name=dataset_name, score_file_name=ge_list_file_name, network_file_name=network_file_name, modules_file_name=os.path.join(constants.NETWORKS_DIR, "dip_ng_modularity_components.txt"), module_sig_th=module_sig_th)
     modules = filter(lambda x: len(x) > 3, modules)
     all_bg_genes = [bg_genes for x in modules]
     print "extracted {} modules".format(len(modules))
@@ -96,8 +96,10 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
 
 if __name__ == "__main__":
-    constants.update_dirs(DATASET_NAME_u="PASCAL_SUM_Breast_Cancer2.G50")
-    main(dataset_name=constants.DATASET_NAME, score_method=constants.PREDEFINED_SCORE)
+    ds=["PASCAL_SUM_Breast_Cancer.G50", "PASCAL_SUM_Crohns_Disease.G50", "PASCAL_SUM_Schizophrenia.G50", "PASCAL_SUM_Triglycerides.G50", "PASCAL_SUM_Type_2_Diabetes.G50"]
+    for cur in ds:
+        constants.update_dirs(DATASET_NAME_u=cur) # Type_2_Diabetes Crohns_Disease
+        main(dataset_name=constants.DATASET_NAME, score_method=constants.PREDEFINED_SCORE, module_sig_th=0.3)
 
 
 

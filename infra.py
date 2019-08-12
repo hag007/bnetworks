@@ -1,4 +1,14 @@
 
+import matplotlib as mpl
+font = {'size'   : 22}
+mpl.rc('font', **font)
+mpl.rc('xtick', labelsize=22)    # fontsize of the tick labels
+mpl.rc('ytick', labelsize=22)
+mpl.rc('axes', labelsize=22)
+mpl.rc('legend', fontsize=20)
+
+import matplotlib.pyplot  as plt
+
 import re
 import os
 from fractions import Fraction

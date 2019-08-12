@@ -27,6 +27,13 @@ import random
 import codecs
 
 
+
+from sklearn.metrics import average_precision_score
+from sklearn.metrics import precision_recall_curve
+import matplotlib.pyplot as plt
+
+
+
 def subsample_dataset(dataset_name, network_file_name, ss_ratio=0.4):
     if dataset_name.startswith("GE_"):
         data_file_path = os.path.join(constants.DATASETS_DIR, dataset_name, "data", "ge.tsv")
@@ -107,61 +114,8 @@ def recovery_iteration(prefix, dataset, cur, algo, network_file_name="dip.sif",
                        base_folder='/home/hag007/Desktop/aggregate_report/oob', ss_ratio=0.4, precisions=None,
                        recalls=None):
     print "starting iteration: {}, {}, {}".format(prefix, dataset, cur)
-    # recovered_dataset_name="{}_{}".format(prefix, dataset)
-    recovered_dataset_name = "{}_{}_recovery_{}_{}_{}".format(prefix, dataset, algo, ss_ratio, cur)
-    if os.path.exists(os.path.join(constants.DATASETS_DIR, recovered_dataset_name)):
-        shutil.rmtree(os.path.join(constants.DATASETS_DIR, recovered_dataset_name))
-    if os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR, recovered_dataset_name)):
-        shutil.rmtree(os.path.join(constants.OUTPUT_GLOBAL_DIR, recovered_dataset_name))
-
-    if not os.path.exists(os.path.join(constants.DATASETS_DIR, recovered_dataset_name)):
-        shutil.copytree(os.path.join(constants.DATASETS_DIR, prefix + "_" + dataset),
-                        os.path.join(constants.DATASETS_DIR, recovered_dataset_name))
-        shutil.rmtree(os.path.join(constants.DATASETS_DIR, recovered_dataset_name, "output"))
-        os.makedirs(os.path.join(constants.DATASETS_DIR, recovered_dataset_name, "output"))
-        shutil.rmtree(os.path.join(constants.DATASETS_DIR, recovered_dataset_name, "cache"))
-        os.makedirs(os.path.join(constants.DATASETS_DIR, recovered_dataset_name, "cache"))
-
-        subsample_dataset(recovered_dataset_name, network_file_name, ss_ratio=ss_ratio)
-
-    permuted_network_file_name = network_file_name  # # _perm
-
-    run_dataset(recovered_dataset_name, score_method=score_method,
-                algos=[algo], network_file_name=permuted_network_file_name)
-    cur_pval, df_terms, df_pval_terms = get_enriched_terms([algo], [recovered_dataset_name])
-
-    # print df_terms
-    # /specific/netapp5/gaga/hagailevi/evaluation/bnet/output/emp_fdr/MAX
-    df = pd.read_csv(os.path.join(base_folder, "emp_diff_modules_{}_{}_passed_oob.tsv".format(dataset, algo)), sep='\t')
-    try:
-        full_sig_terms = df.loc[df["passed_oob_permutation_test"].dropna(axis=0).apply(
-            lambda a: np.any(np.array(a[1:-1].split(", ")) == "True")).values, :].sort_values(by=["hg_pval_max"],
-                                                                                              ascending=False)['GO id']
-    except KeyError, e:
-        full_sig_terms = np.array([])
-
-    df_detailed_pr = df_pval_terms.to_frame().rename(columns= {0: 'pval'})
-    df_detailed_pr.columns
-    df_detailed_pr['is_significant'] = df_detailed_pr.index.isin(full_sig_terms)
-
-    df_detailed_pr.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, recovered_dataset_name, algo, "df_detailed_pr.tsv"),
-                         sep='\t')
 
 
-    recall = len(set(full_sig_terms).intersection(df_pval_terms.index.values)) / float(max(1, len(full_sig_terms)))
-    precision = len(set(full_sig_terms).intersection(df_pval_terms.index.values)) / float(
-        max(1, df_pval_terms.shape[0]))
-    print "precision: {}/{}={} ({}, {})".format(len(set(full_sig_terms).intersection(df_pval_terms.index.values)),
-                                                float(df_pval_terms.shape[0]), precision, len(set(full_sig_terms)),
-                                                len(set(df_pval_terms.index.values)))
-    print "recall: {}/{}={} ({}, {})".format(len(set(full_sig_terms).intersection(df_pval_terms.index.values)),
-                                             float(len(full_sig_terms)), recall, len(set(full_sig_terms)),
-                                             len(set(df_pval_terms.index.values)))
-    print "done iteration: {}, {}, {}".format(prefix, dataset, cur)
-    # if precisions is not None:
-    precisions.append(precision)
-    recalls.append(recall)
-    return precision, recall
 
 
 if __name__ == "__main__":
@@ -194,7 +148,7 @@ if __name__ == "__main__":
     ss_ratio = float(args.ss_ratio)
     override_permutations = args.override_permutations.lower() == "true"
     base_folder = args.base_folder
-    df = pd.DataFrame()
+    df_summary = pd.DataFrame()
     summary = []
     for dataset in datasets:
 
@@ -214,43 +168,49 @@ if __name__ == "__main__":
         f1_means = []
         f1_stds = []
         for algo in algos:
-            recalls = []
-            recalls = multiprocessing.Manager().list()
-            precisions = multiprocessing.Manager().list()
-            prcs = []
-            p = MyPool(parallelization_factor)
+            df_detailed_pr_agg=pd.DataFrame()
+            df_detailed_pr_is_sig_agg = pd.DataFrame()
+            df_detailed_pr_pval_agg = pd.DataFrame()
 
-            # for cur in np.arange(n_start,n_end):
-            #     recovered_dataset_name = "{}_{}_recovery_{}_{}".format(prefix, dataset, algo, cur)
-            #     if os.path.exists(os.path.join(constants.DATASETS_DIR, recovered_dataset_name)):
-            #         shutil.rmtree(os.path.join(constants.DATASETS_DIR, recovered_dataset_name))
-            #     if os.path.exists(os.path.join(constants.OUTPUT_GLOBAL_DIR, recovered_dataset_name)):
-            #         shutil.rmtree(os.path.join(constants.OUTPUT_GLOBAL_DIR, recovered_dataset_name))
+            for cur in np.arange(int(n_start), int(n_end)):
+                recovered_dataset_name = "{}_{}_recovery_{}_{}_{}".format(prefix, dataset, algo, ss_ratio, cur)
+                df_detailed_pr = pd.read_csv(
+                    os.path.join(constants.OUTPUT_GLOBAL_DIR, recovered_dataset_name, algo, "df_detailed_pr.tsv"),
+                    sep='\t', index_col=0)
+                df_detailed_pr_pval_agg = pd.concat([df_detailed_pr_agg, df_detailed_pr['df_detailed_pr_agg']], axis=1)
+                df_detailed_pr_is_sig_agg = pd.concat([df_detailed_pr_agg, df_detailed_pr['is_significant']], axis=1)
 
-            params = [[recovery_iteration,
-                       [prefix, dataset, x, algo, network_file_name, base_folder, ss_ratio, precisions, recalls]] for x
-                      in np.arange(int(n_start), int(n_end)) if
-                      override_permutations or not permutation_output_exists(prefix, dataset, algo, x)]
-            p.map(func_star, params)
-            p.close()
-            # p.join()
+            ehr_terms = pd.read_csv(base_folder, "emp_diff_modules_{}_{}_passed_oob.tsv".format(dataset, algo), sep='\t', index_col=0)
+            ehr_terms=ehr_terms.loc[ehr_terms["passed_oob_permutation_test"].dropna(axis=0).apply(
+            lambda a: np.any(np.array(a[1:-1].split(", ")) == "True")).values, :].sort_values(by=["hg_pval_max"],
+                                                                                              ascending=False)['GO id']
+            missing_sig_terms=ehr_terms.loc[~ehr_terms.isin(df_detailed_pr_agg.index)]
 
-            # for x in np.arange(n_start,n_end):
-            #     recovery_iteration(prefix, dataset, x, algo, network_file_name, base_folder, ss_ratio, precisions, recalls)
-            f1s = [(2 * p * r) / float(max(p + r, 10e-5)) for p, r in zip(precisions, recalls)]
-            r_means.append(np.mean(recalls))
-            r_stds.append(np.std(recalls))
-            p_means.append(np.mean(precisions))
-            p_stds.append(np.std(precisions))
-            f1_means.append(np.mean(f1s))
-            f1_stds.append(np.std(f1s))
-            print "recovery_fractions for dataset {} and algo {}:\nnp_mean:{}, p_std: {}\nr_means: {}, r_stds: {}".format(
-                dataset, algo, p_means[-1], p_stds[-1], r_means[-1], r_stds[-1])
-            df = df.append({"precisions": precisions, "recalls": recalls, "p_mean": p_means[-1], "p_std": p_stds[-1],
-                            "r_mean": r_means[-1], "r_std": r_stds[-1], "f1_mean": f1_means[-1], "f1_std": f1_stds[-1],
-                            "algo": algo, "dataset": dataset, "ss_ratio": ss_ratio}, ignore_index=True)
-            # open(os.path.join(constants.OUTPUT_GLOBAL_DIR, "recovery_results.txt"),'a+').write("recovery_fractions for dataset {} and algo {}:\n{}\n".format(dataset,algo,recovery_fractions))
+            df_detailed_pr_agg['pval_frequency']=df_detailed_pr_pval_agg.apply(lambda a: np.sum(~np.isnan(a)), axis=1)
+            df_detailed_pr_agg['is_sig']=df_detailed_pr_is_sig_agg.apply(lambda a: np.any(a), axis=1)
+            df_detailed_pr_agg.loc[missing_sig_terms['GO id'], 'is_significant'] = True
+            df_detailed_pr_agg.loc[missing_sig_terms['GO id'], 'pval_frequency'] = 0
+            df_detailed_pr_agg.sort_values(by=['pval_frequency'], ascending=False)
 
-            df.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,
-                                   "recovery_results_{}_{}_{}.tsv".format(prefix, n_end, ss_ratio)), sep='\t')
-            print "save file to: {}".format(os.path.join(constants.OUTPUT_GLOBAL_DIR, "recovery_results.tsv"))
+            y_test=df_detailed_pr_agg['is_significant'].astype(np.int)
+            y_score=df_detailed_pr_agg['pval_frequency'].values / 100.0
+            average_precision = average_precision_score(y_test,y_score)
+            df_detailed_pr_agg.to_csv(base_folder, "recovery_terms_frequency_{}_{}.tsv".format(n_end, ss_ratio), sep='\t')
+
+            precision, recall, _ = precision_recall_curve(y_test, y_score)
+
+            step_kwargs = {'step': 'post'}
+            plt.step(recall, precision, color='b', alpha=0.2,
+                     where='post')
+            plt.fill_between(recall, precision, alpha=0.2, color='b', **step_kwargs)
+
+            plt.xlabel('Recall')
+            plt.ylabel('Precision')
+            plt.ylim([0.0, 1.05])
+            plt.xlim([0.0, 1.0])
+            plt.title('Precision-Recall curve: AP={0:0.2f}'.format(
+                average_precision))
+
+
+
+

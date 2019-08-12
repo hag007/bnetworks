@@ -1,0 +1,111 @@
+from matplotlib import style
+
+
+
+style.use("ggplot")
+import seaborn as sns
+sns.set(color_codes=True)
+import logging
+sh = logging.StreamHandler()
+logger = logging.getLogger("log")
+logger.addHandler(sh)
+from infra import *
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from statsmodels.sandbox.stats.multicomp import fdrcorrection0
+
+from matplotlib_venn import venn2
+
+def isFloat(string):
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
+
+
+def false_positive_example(algo="jactivemodules_greedy",dataset="TNFa_2",axs=None):
+
+    output=pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","MAX","emp_diff_modules_{}_{}.tsv".format(dataset, algo)), sep='\t', error_bad_lines=False)
+    output_md = pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", "emp_diff_modules_{}_{}_md.tsv".format(dataset, algo)), sep='\t', error_bad_lines=False)
+    output_md_ids=output_md.loc[np.logical_and.reduce([output_md["n_genes"].values > 5, output_md["n_genes"].values < 500])]['GO id']
+    output=output.loc[output["GO id"].isin(output_md_ids.values)]
+    output_md=output_md[output_md["GO id"].isin(output_md_ids)]
+    # output=output.loc[output["filtered_pval"].sort_values(ascending=False).index, :]
+    # output = output.dropna()
+    # output = output.loc[output['dist_n_samples'].values != '0',:]
+    fetch_counter=0
+    n_terms=output.shape[0]
+    bg_dict={}
+    # for index, cur in output.iterrows():
+    #     if fetch_counter>100: break
+    #     bg_pvals=np.array([float(x) for x in cur["dist_n_samples"][1:-1].split(", ") if not pd.isnull(cur["dist_n_samples"])])
+    #     bg_pvals=bg_pvals[bg_pvals!=0]
+    #     bg_dict[index]=bg_pvals
+    #     print "fetch_counter: {}/{}".format(fetch_counter, n_terms)
+    #     fetch_counter += 1
+    #     cur["hg_pval"]
+
+    # fig,axs = plt.subplots(1,2,figsize=(20,10))
+
+    n_of_bg=1
+    for cur_bg in np.arange(n_of_bg):
+
+        output["cur_bg_hg_pval"]=output.apply(lambda a: float(a["dist_n_samples"][1:-1].split(", ")[cur_bg]) if not pd.isnull(a["GO name"]) and a["dist_n_samples"].startswith("[") else np.nan ,axis=1)
+
+        bg_pvals=output[output["cur_bg_hg_pval"] != -1].dropna()
+        sns.distplot(bg_pvals["cur_bg_hg_pval"].values,norm_hist=False, kde=False, label="Permuted dataset", ax=axs[0], bins=50)
+
+    bg_sig_ids=bg_pvals[fdrcorrection0([10**-a for a in  bg_pvals["cur_bg_hg_pval"]], alpha=0.05, method='indep', is_sorted=False)[0]]["GO id"]
+
+    # plt.clf()
+    real_pvals=output_md[output_md["hg_pval_max"].apply(lambda a: isFloat(a))].dropna()
+    real_pvals["hg_pval_max"]=real_pvals["hg_pval_max"].values.astype(np.float)
+
+    sns.distplot(real_pvals["hg_pval_max"][real_pvals["hg_pval_max"]!=-1], norm_hist=False, kde=False, label="Original dataset", ax=axs[0], bins=50)
+    axs[0].set_yscale('log')
+
+    axs[0].set_ylabel("counts", fontsize=22)
+    axs[0].set_xlabel("-log10(pval)", fontsize=22)
+    axs[0].set_title("enrichment signal histogram", fontsize=22)
+    axs[0].legend(prop={'size': 22})
+    plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "pval_dist_real_{}_{}.png".format(dataset, algo)))
+
+    real_sig_ids = real_pvals[fdrcorrection0([10**-a for a in real_pvals["hg_pval_max"]], alpha=0.05, method='indep', is_sorted=False)[0]]["GO id"]
+    venn2([set(real_sig_ids), set(bg_sig_ids)], set_labels=('Original dataset', 'Permuted dataset'), ax=axs[1])
+    axs[1].set_title("significant terms overlap\nbetween original and permuted datasets", fontsize=22)
+
+
+
+        # cur_bg_pvals = []
+        # agg_counter=0
+        # for k,v in bg_dict:
+        #     cur_bg_pvals.append(v[cur_bg])
+        #     print "agg_counter: {}/{}".format(agg_counter, len(bg_dict))
+        #     agg_counter+=1
+
+
+
+
+
+if __name__ == "__main__":
+    datasets=["TNFa_2", "Schizophrenia.G50"]  #, "Schizophrenia.G50"
+    algos=["jactivemodules_greedy","netbox"] #
+    i=0
+    fig,axs=plt.subplots(len(datasets)*len(algos), 2, figsize=(20, 8*len(datasets)*len(algos)))
+    for dataset in datasets:
+        for algo in algos:
+            false_positive_example(algo=algo, dataset=dataset,axs=axs[i,0:2]) # "Breast_Cancer.G50"
+            i += 1
+
+    fig.text(0.01,0.98, "A:", weight='bold',fontsize=22)
+    fig.text(0.5, 0.98, "B:", weight='bold',fontsize=22)
+    fig.text(0.01,0.75, "C:", weight='bold',fontsize=22)
+    fig.text(0.5, 0.75, "D:", weight='bold',fontsize=22)
+    fig.text(0.01, 0.5, "E:", weight='bold', fontsize=22)
+    fig.text(0.5, 0.5, "F:", weight='bold', fontsize=22)
+    fig.text(0.01, 0.25, "G:", weight='bold', fontsize=22)
+    fig.text(0.5, 0.25, "H:", weight='bold', fontsize=22)
+    fig.tight_layout()
+    plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "figure_11.png".format(",".join(datasets), ",".join(algos))))

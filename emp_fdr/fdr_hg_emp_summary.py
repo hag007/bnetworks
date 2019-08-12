@@ -79,8 +79,8 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='args')
     parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50") # TNFa_2,HC12,SHEZH_1,ROR_1,ERS_1,IEM
-    parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy,jactivemodules_sa,hotnet2,bionet,netbox") # ,keypathwayminer_INES_GREEDY,my_netbox_td
+    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM") # GE
+    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy,jactivemodules_sa,bionet,netbox,keypathwayminer_INES_GREEDY,my_netbox_td,dcem") #
 
     args = parser.parse_args()
 

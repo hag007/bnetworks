@@ -90,10 +90,10 @@ def main(algo_sample = None, dataset_sample = None,tsv_file_name=os.path.join(co
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50") # TNFa_2,HC12,ROR_1,SHERA,SHEZH_1,ERS_1,IEM 
-    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy,jactivemodules_sa,bionet,netbox,keypathwayminer_INES_GREEDY") # ,my_netbox_td,hotnet2
-
+    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50") # TNFa_2,HC12,ROR_1,SHERA,SHEZH_1,ERS_1,IEM
+    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM") #
+    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy,jactivemodules_sa,bionet,netbox,keypathwayminer_INES_GREEDY,my_netbox_td,dcem") #
+    omic_prefix="_gwas"
     args = parser.parse_args()
 
     datasets=args.datasets.split(",")
@@ -108,7 +108,7 @@ if __name__ == "__main__":
     for cur_ds in datasets:
         df_ds=pd.DataFrame()
         for cur_alg in algos:
-            sig_hg_genes, sig_emp_genes=main(cur_alg, cur_ds,tsv_file_name=os.path.join("/home/hag007/Desktop/aggregate_gwas_report/oob", "emp_diff_modules_{}_{}_passed_oob.tsv"))
+            sig_hg_genes, sig_emp_genes=main(cur_alg, cur_ds,tsv_file_name=os.path.join("/home/hag007/Desktop/aggregate{}_report/oob".format(omic_prefix), "emp_diff_modules_{}_{}_passed_oob.tsv")) # _gwas
             # venn2([set(sig_hg_genes.index), set(sig_emp_genes.index)], set_labels = ('HG', 'EMP'))
             # plt.title("EMP/HG ratio: {}".format(round(float(len(sig_emp_genes.index))/len(sig_hg_genes.index),3)))
             # plt.savefig("/home/hag007/Desktop/venn/venn_{}_{}.png".format(cur_ds, cur_alg))
@@ -130,7 +130,7 @@ if __name__ == "__main__":
             df_matrix.loc[cur_alg, cur_ds] = df_ds.loc["{}_{}".format(cur_ds, cur_alg), "ratio"]
         df_all=pd.concat([df_all,df_ds])
 
-    df_all.to_csv("/home/hag007/Desktop/aggregate_gwas_report/venn/summary.tsv", sep='\t')
-    df_rank_matrix.to_csv("/home/hag007/Desktop/aggregate_gwas_report/venn/rank_matrix.tsv", sep='\t')
-    df_matrix.to_csv("/home/hag007/Desktop/aggregate_gwas_report/venn/ratio_matrix.tsv", sep='\t')
-    df_count_matrix.to_csv("/home/hag007/Desktop/aggregate_gwas_report/venn/count_matrix.tsv", sep='\t')
+    df_all.to_csv("/home/hag007/Desktop/aggregate{}_report/venn/summary.tsv".format(omic_prefix), sep='\t')
+    df_rank_matrix.to_csv("/home/hag007/Desktop/aggregate{}_report/venn/rank_matrix.tsv".format(omic_prefix), sep='\t')
+    df_matrix.to_csv("/home/hag007/Desktop/aggregate{}_report/venn/ratio_matrix.tsv".format(omic_prefix), sep='\t')
+    df_count_matrix.to_csv("/home/hag007/Desktop/aggregate{}_report/venn/count_matrix.tsv".format(omic_prefix), sep='\t')

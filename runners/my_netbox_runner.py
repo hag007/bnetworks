@@ -96,8 +96,8 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
 
 if __name__ == "__main__":
-    constants.update_dirs(DATASET_NAME_u="GE_HC12")
-    main(dataset_name=constants.DATASET_NAME)
+    constants.update_dirs(DATASET_NAME_u="PASCAL_SUM_Breast_Cancer.G50")
+    main(dataset_name=constants.DATASET_NAME, score_method=constants.PREDEFINED_SCORE)
 
 
 

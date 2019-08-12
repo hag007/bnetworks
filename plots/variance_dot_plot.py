@@ -42,11 +42,16 @@ SIM_TH= 0.4
 algos_acronym={"jactivemodules_greedy":"jAM_greedy",
                "jactivemodules_sa": "jAM_SA",
                "netbox": "netbox",
-               "keypathwayminer_INES_GREEDY": "KPM",
-               "hotnet2": "hotnet2",
+               "my_netbox_td": "my_netbox_td",
                "bionet": "bionet",
-               "my_netbox_td": "netbox_td"
-               }
+               # "hotnet2": "hotnet2",
+               "keypathwayminer_INES_GREEDY": "KPM"
+}
+
+# "hotnet2": "hotnet2",
+# "keypathwayminer_INES_GREEDY": "KPM",
+
+# "my_netbox_td": "netbox_td", "keypathwayminer_INES_GREEDY": "KPM",  "hotnet2": "hotnet2",
 
 
 
@@ -66,10 +71,11 @@ def dot_grid(df_measurements, grid_type, y_label, filter_zeros=False, ax=None):
     df_new = pd.DataFrame()
     for i, cur_row in df_measurements.iterrows():
         for cur_entry in cur_row:
-            df_new=df_new.append({"algo": algos_acronym[i], y_label : cur_entry}, ignore_index=True)
+            if not np.isnan(cur_entry):
+               df_new=df_new.append({"algo": algos_acronym[i], y_label : cur_entry}, ignore_index=True)
 
     ax = sns.stripplot(x='algo', y=y_label, data=df_new, jitter=True, size=10, ax=ax)
-    ax.set_title("{} criterion".format(y_label), fontdict={"size":22})
+    ax.set_title("{} criterion".format(y_label))
     colorlist = [sns.color_palette()[i] for i in
                  np.array(list(range(len(algos))))] #  / float(len(algos) - 1)]
     patches = [Line2D([0], [0], marker='o', color='gray', label=algos_acronym[a], markersize=12,
@@ -81,13 +87,14 @@ def dot_grid(df_measurements, grid_type, y_label, filter_zeros=False, ax=None):
     i=0
     for index, row in df_measurements.iterrows():
 
-        if filter_zeros:
-            mn = row.values[row.values != 0].mean()
-            mdn = np.median(row.values[row.values != 0])
-        else:
-            mn = row.values.mean()
-            mdn = np.median(row.values)
 
+
+        if filter_zeros:
+            mn = row.values[row.values != 0 & ~np.isnan(row.values)].mean()
+            mdn = np.median(row.values[row.values != 0 & ~np.isnan(row.values)])
+        else:
+            mn = row.values[~np.isnan(row.values)].mean()
+            mdn = np.median(row.values[~np.isnan(row.values)])
 
         ax.scatter([i], [mn], marker='D', color='red', edgecolors='b', s=[200], alpha=0.7 ,zorder=4)
 
@@ -95,9 +102,9 @@ def dot_grid(df_measurements, grid_type, y_label, filter_zeros=False, ax=None):
         ax.scatter([i], [mdn], marker='P', color='red', edgecolors='b', s=[200], alpha=0.7, zorder=4)
         i+=1
 
-    ax.set_xlabel("algos", fontdict={"size" : 22})
-    ax.set_ylabel(y_label, fontdict={"size": 22})
-    ax.legend(handles=patches, loc='upper left', fontsize=22)
+    ax.set_xlabel("algos", fontdict={"size" : 12})
+    ax.set_ylabel(y_label, fontdict={"size": 12})
+    ax.legend(handles=patches, loc='upper left', fontsize=12)
     # ax.set_xticks(np.arange(len(algos)),
     #            tuple([algos_acronym[x[3:]] if x.startswith("GE_") else algos_acronym[x] for x in algos]))
     ax.set_xticklabels(tuple([algos_acronym[x[3:]] if x.startswith("GE_") else algos_acronym[x] for x in algos]), rotation=45)
@@ -111,32 +118,31 @@ def main():
 
     fig, axs = plt.subplots(2,2, figsize=(20, 20))
 
-    main_path = "/home/hag007/Desktop/aggregate_report/visual"
-    df_measurements_counts=pd.read_csv(os.path.join(main_path, "empirical_terms_counts.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
-    # df_measurements_counts=df_measurements_counts.drop(labels=["SHERA"], axis=1)
-    dot_grid(df_measurements_counts, "counts", "Terms Count", ax=axs[0][1])
+    suffix='GE_2.0'
 
+    if suffix.startswith("GE"):
+        omic_type=''
+    elif suffix.startswith("PASCAL"):
+        omic_type='_gwas'
 
-    df_measurements_ratio = pd.read_csv(os.path.join(main_path, "true_positive_ratio.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
-    dot_grid(df_measurements_ratio, "ratio", "EHR", ax=axs[0][0])
+    main_path = constants.OUTPUT_GLOBAL_DIR
+    df_measurements=pd.read_csv(os.path.join(main_path, "homogeneity_avg_matrix_{}.tsv".format(suffix)), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
 
+    df_zeros = pd.read_csv(os.path.join('/home/hag007/Desktop/aggregate{}_report/visual/'.format(omic_type), "true_positive_counts.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()), df_measurements.columns.values]
+    # df_measurements[np.logical_or(df_zeros==0, np.isnan(df_zeros)).values]=np.nan
 
-    df_measurements_heterogeneity = pd.read_csv(os.path.join(main_path, "empirical_terms_variability.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
-    i_zeros = df_measurements_heterogeneity==0
-    df_measurements_heterogeneity +=np.abs(np.min(df_measurements_heterogeneity.values))+1
-    # df_measurements=1.0/df_measurements
-    df_measurements_heterogeneity[i_zeros]=0
-    dot_grid(df_measurements_heterogeneity, "variability", "Heterogeneity", filter_zeros=False, ax=axs[1][0])
+    dot_grid(df_measurements, "homogeneity", "Homogeneity", ax=axs[0][0])
 
-    df_counts = pd.read_csv(os.path.join(main_path, "empirical_terms_counts.tsv"), sep='\t', index_col=0)
-    plot_scatter_with_size(df_measurements_counts, df_measurements_ratio, df_measurements_heterogeneity, "size", ax=axs[1][1])
+    main_path = constants.OUTPUT_GLOBAL_DIR
+    df_measurements=pd.read_csv(os.path.join(main_path, "solution_richness_matrix_{}.tsv".format(suffix)), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
+    dot_grid(df_measurements, "richness", "Richness", ax=axs[0][1])
+
 
     plt.figtext(0.01,0.99, "A:", weight='bold')
     plt.figtext(0.5, 0.99, "B:", weight='bold')
-    plt.figtext(0.01, 0.5, "C:", weight='bold')
-    plt.figtext(0.5, 0.5, "D:", weight='bold')
 
-    plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "figure_4.png"))
+
+    plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "figure_10_{}.png".format(suffix)))
 
 if __name__=="__main__":
     main()

@@ -294,7 +294,7 @@ def build_hierarcy():
     min_cost=np.min(edges_costs)
     max_cost=np.max(edges_costs)
     for i, cur_cost in enumerate(edges_costs):
-	edges_costs[i] = cur_cost/(max_cost-min_cost)
+	    edges_costs[i] = cur_cost/(max_cost-min_cost)
     percentiles = [np.percentile(edges_costs,x*10) for x in range(11)]
     print "edge precentiles: {}".format(percentiles)
     print np.min(edges_costs)

@@ -34,7 +34,7 @@ def calc_dist(algos, datasets, shared_list=None, is_max=True):
                 go_results = [os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo, cur_module) for cur_algo in
                               os.listdir(os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds))
                               if os.path.isdir(
-                        os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo)) and cur_algo in algos_filter for
+                        os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo)) and cur_algo == algos_filter for
                               cur_module in os.listdir(os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo)) if
                               "separated_modules" in cur_module and int(cur_module.split("_")[1]) < n_modules]
 

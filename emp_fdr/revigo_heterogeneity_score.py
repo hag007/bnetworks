@@ -12,7 +12,7 @@ from fastsemsim.SemSim.SetSemSim import SetSemSim
 
 import matplotlib
 matplotlib.use("Agg")
-
+import seaborn as sns
 from rpy2.robjects import pandas2ri
 pandas2ri.activate()
 
@@ -28,51 +28,102 @@ import utils.go_hierarcies as go_hierarcies
 
 import simplejson as json
 
-def main(datasets, algos, pf=10, base_folder='/home/hag007/Desktop/aggregate_report/oob', file_format="emp_diff_modules_{}_{}_passed_oob.tsv"):
+import matplotlib.pyplot as plt
 
-    df = pd.DataFrame()
-    for cur_ds in datasets:
-        print "cur ds: {}".format(cur_ds) 
-        constants.update_dirs(DATASET_NAME_u=cur_ds)
-        algo_go_sim_score = []
-        total_num_genes = []
-        algos_signals = []
-        for i_algo, cur_algo in enumerate(algos):
-            print "current cur_algo: {}".format(cur_algo)
-            try:
-                emp_before_filter = pd.read_csv(
-                    os.path.join(base_folder,
-                                 file_format.format(cur_ds, cur_algo)), sep='\t', index_col=0)
 
-                emp_after_filter = pd.read_csv(os.path.join(base_folder,
-                             file_format.format(cur_ds, cur_algo)[:-4] + "_reduced.tsv"), sep='\t', index_col=0)
-            except:
-                total_num_genes.append(0)
-                algos_signals.append(0)
-                algo_go_sim_score.append(1)
-                continue
 
-            emp_results_fdr=emp_before_filter.dropna().loc[emp_before_filter.dropna()["passed_oob_permutation_test"].apply(lambda a: np.any(np.array(a[1:-1].split(", ")) == "True")).values,:]
-            df.loc[cur_algo, cur_ds]=float(emp_after_filter.shape[0])/max(emp_results_fdr.shape[0],1)
-            print "{}/{}".format(emp_after_filter.shape[0], emp_results_fdr.shape[0])
-    df.to_csv(os.path.join("/home/hag007/Desktop/aggregate_report", "ds_go_heterogeneity_matrix.tsv"), sep='\t')
+def main(algos=None, cutoffs=[1.0, 2.0, 3.0, 4.0, 5.0], ax=None, axs_violin=None):
+
+    df_summary_agg = pd.DataFrame()
+    for cutoff in cutoffs:
+        df_summary=pd.read_csv(
+            os.path.join(constants.OUTPUT_GLOBAL_DIR, "solution_richness_matrix_{}_{}.tsv".format(prefix, cutoff)),
+            sep='\t', index_col=0)
+
+        for a in df_summary.index:
+            for b in df_summary.columns:
+                df_summary_agg=df_summary_agg.append({"algo": a, "dataset" : b, "cutoff": cutoff, "value" : df_summary.loc[a,b]}, ignore_index=True)
+
+    if algos is None:
+        algos=sorted(list(df_summary.index))
+
+    colorlist = [sns.color_palette("hls",n_colors=len(algos))[i] for i in
+                 np.array(list(range(len(algos))))]
+    for i_cutoff, cutoff in enumerate(cutoffs):
+        my_order = df_summary_agg[df_summary_agg["cutoff"]==cutoff].groupby(by=["algo"])["value"].mean().sort_values().index
+        g=sns.violinplot(x="algo", y="value", data=df_summary_agg[df_summary_agg["cutoff"]==cutoff], ax=axs_violin[i_cutoff], order=my_order, palette={a: colorlist[algos.index(a)] for a in my_order})
+        g.set_xticklabels(g.get_xticklabels(), rotation=45)
+    results = {}
+    for cutoff in cutoffs:
+        df_summary=pd.read_csv(
+            os.path.join(constants.OUTPUT_GLOBAL_DIR, "solution_richness_matrix_{}_{}.tsv".format(prefix, cutoff)),
+            sep='\t', index_col=0)
+
+        for k, v in df_summary.iterrows():
+            if k not in results:
+                results[k] = []
+            results[k].append(v.values)
+
+
+    i=0
+    for k,v in sorted(list(results.iteritems()),key=lambda a: a[0]):
+        if len(v)>0:
+            print k, v
+        ys=[ np.mean(cur_measurement) for cur_measurement in v]
+        stds= [np.std(cur_measurement) for cur_measurement in v]
+        ax.plot(cutoffs,ys,label=k, c=colorlist[algos.index(k)])
+
+        # for x, y, std in zip(cutoffs, ys, stds):
+        #     ax.errorbar(x - 0.15 + 0.05 * i, y, yerr=std, linestyle='None', marker='^', c=colorlist[i])
+
+        i += 1
+
+    ax.set_xlabel("similarity cutoff", fontdict={"size": 22})
+    ax.set_ylabel("average non-redundant terms", fontdict={"size": 22})
+    ax.legend(fontsize=22)
+
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="TNFa_2,HC12,SHERA,ROR_1,SHEZH_1,ERS_1,IEM") # "Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50"
+    parser.add_argument('--datasets', dest='datasets', default="TNFa_2,HC12,ROR_1,ERS_1,IEM,SHERA,SHEZH_1") # ",Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50 TNFa_2,HC12,SHERA,ROR_1,SHEZH_1,ERS_1,IEM"
     parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy,jactivemodules_sa,bionet,netbox,hotnet2,keypathwayminer_INES_GREEDY") #"jactivemodules_greedy,jactivemodules_sa,bionet,netbox,my_netbox_td"
+    parser.add_argument('--algos', dest='algos', default="dcem,jactivemodules_greedy,jactivemodules_sa,bionet,netbox,my_netbox_td,keypathwayminer_INES_GREEDY,hotnet2") # jactivemodules_greedy,jactivemodules_sa,bionet,netbox,my_netbox_td
     parser.add_argument('--pf', dest='pf', default=3)
+    parser.add_argument('--base_folder', dest='base_folder', default=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","MAX"))
+    parser.add_argument('--file_format', dest='file_format', default="emp_diff_modules_{}_{}_passed_oob.tsv")
+    parser.add_argument('--sim_method', dest='sim_method', default="Resnik")
     args = parser.parse_args()
 
     prefix = args.prefix
+    file_format = args.file_format
+    base_folder= args.base_folder
+    sim_method = args.sim_method
     datasets=["{}".format(x) for x in args.datasets.split(",")]
     algos = args.algos.split(",")
+    cutoffs=[1.0,2.0,3.0,4.0,5.0]
     pf=int(args.pf)
-    print "test" 
-    ds_summary=pd.DataFrame()
-    for cur_ds in datasets:
-        print "current dataset: {}".format(cur_ds)
-        main(datasets=datasets, algos=algos, pf=pf)
+
+
+    fig, axs = plt.subplots(1,2,figsize=(20,10))
+    fig_violin, axs_violin = plt.subplots(2,len(cutoffs),figsize=(4*len(cutoffs)*2,10))
+    prefix = "GE"
+    datasets=["TNFa_2" ,"HC12","ROR_1","ERS_1","IEM","SHERA","SHEZH_1"]
+    algos=["dcem", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY", "hotnet2", "my_netbox_td"]
+    main(algos=algos, cutoffs=cutoffs, ax=axs[0], axs_violin=axs_violin[0])
+
+    prefix = "PASCAL_SUM"
+    datasets=["Breast_Cancer.G50", "Crohns_Disease.G50", "Schizophrenia.G50", "Triglycerides.G50", "Type_2_Diabetes.G50"]
+    algos = ["dcem", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY", "hotnet2", "my_netbox_td"]
+    main(algos=algos, cutoffs=cutoffs, ax=axs[1], axs_violin=axs_violin[1])
+
+    fig.text(0.01, 0.97, "A:", weight='bold', fontsize=22)
+    fig.text(0.5, 0.97, "B:", weight='bold', fontsize=22)
+    fig.tight_layout()
+    fig.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,"figure_13.png"))
+
+    fig_violin.text(0.0, 0.97, "A:", weight='bold', fontsize=22)
+    fig_violin.text(0.0, 0.5, "B:", weight='bold', fontsize=22)
+    fig_violin.tight_layout()
+    fig_violin.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "figure_13_violin.png"))
