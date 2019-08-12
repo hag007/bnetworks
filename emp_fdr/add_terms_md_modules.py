@@ -14,8 +14,8 @@ if __name__=="__main__":
 
 
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer2.G50")
-    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM")
+    parser.add_argument('--datasets', dest='datasets', default="TNFa_2")
+    parser.add_argument('--prefix', dest='prefix', default="GE")
     parser.add_argument('--algos', dest='algos', default="my_netbox_td")
     parser.add_argument('--n_permutations', dest='n_permutations', default=5000)
 

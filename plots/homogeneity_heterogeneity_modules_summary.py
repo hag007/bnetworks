@@ -155,22 +155,7 @@ def calc_modules_ehr(algo_sample = None, dataset_sample = None, prefix=None, ter
 
 
 
-def plot_modules_ehr_summary():
-    parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50")  # TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM
-    parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--base_folder', dest='base_folder', default="/home/hag007/Desktop/aggregate_gwas_report/oob")
-    parser.add_argument('--terms_file_name_format', dest='terms_file_name_format', default="emp_diff_modules_{}_{}_passed_oob.tsv")
-    parser.add_argument('--algos', dest='algos',
-                        default="my_netbox_td")  # ,keypathwayminer_INES_GREEDY,hotnet2,my_netbox_td
-
-    args = parser.parse_args()
-
-    datasets = args.datasets.split(",")
-    algos = args.algos.split(",")
-    prefix = args.prefix
-    base_folder = args.base_folder
-    terms_file_name_format = args.terms_file_name_format
+def plot_modules_ehr_summary(prefix, datasets, algos, base_folder, terms_file_name_format):
 
 
     terms_limit = 0
@@ -202,7 +187,7 @@ def plot_modules_ehr_summary():
 
     df_statistics=df_statistics.set_index("id")
     df_statistics.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"modules_statistics_{}.tsv".format(prefix)), sep='\t')
-    df_full_data.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "modules_full_data_{}.tsv".format(prefix)), sep='\t')
+    df_full_data.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "modules_full_data_{}.tsv".format(prefix) ), sep='\t')
 
     df_statistics = pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "modules_statistics_{}.tsv".format(prefix)), sep='\t',
                                 index_col=0)
@@ -213,4 +198,20 @@ def plot_modules_ehr_summary():
 
 
 if __name__ == "__main__":
-    plot_modules_ehr_summary()
+    parser = argparse.ArgumentParser(description='args')
+    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50")  # TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM     TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM
+    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM") # GE   PASCAL_SUM
+    parser.add_argument('--base_folder', dest='base_folder', default="/home/hag007/Desktop/aggregate_gwas_report/oob")
+    parser.add_argument('--terms_file_name_format', dest='terms_file_name_format', default="emp_diff_modules_{}_{}_passed_oob.tsv")
+    parser.add_argument('--algos', dest='algos',
+                        default="dcem,jactivemodules_greedy,jactivemodules_sa,bionet,netbox,my_netbox_td") # ")  # ,keypathwayminer_INES_GREEDY,hotnet2,my_netbox_td,hotnet2,keypathwayminer_INES_GREEDY
+
+    args = parser.parse_args()
+
+    datasets = args.datasets.split(",")
+    algos = args.algos.split(",")
+    prefix = args.prefix
+    base_folder = args.base_folder
+    terms_file_name_format = args.terms_file_name_format
+
+    plot_modules_ehr_summary(prefix, datasets, algos, base_folder, terms_file_name_format)

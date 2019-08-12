@@ -30,6 +30,9 @@ def compute_redundancy(datasets, algos, pf=10, base_folder='/home/hag007/Desktop
         except Exception, e:
             print "error while creating ds_2_alg_scores folder: {}".format(e)
 
+    results={}
+    for cur_algo in algos:
+        results[cur_algo]=[]
 
     for cutoff in cutoffs:
         df_summary=pd.DataFrame()
@@ -86,12 +89,19 @@ def compute_redundancy(datasets, algos, pf=10, base_folder='/home/hag007/Desktop
                     df_summary.loc[cur_algo, cur_ds]=len(all_go_terms_r)
 
             df["ranked_terms"]=df.shape[0]-ss.rankdata(df.loc[:, "n_reduced_terms"])
-
+            for k, v in df.iterrows():
+                results[k].append(v["n_reduced_terms"])
 
         df_summary.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "solution_richness_matrix_{}_{}.tsv".format(prefix,cutoff)),sep='\t')
 
+    for k,v in results.iteritems():
+        if len(v)>0:
+            print k, np.mean(v), v
+        ax.plot(cutoffs,[ np.mean([v[i_ds+i_cutoff*len(datasets)] for i_ds in np.arange(len(datasets))])  for i_cutoff in np.arange(len(cutoffs))],label=k)
 
-
+    ax.set_xlabel("similarity cutoff", fontdict={"size": 22})
+    ax.set_ylabel("average non-redundant terms", fontdict={"size": 22})
+    ax.legend(fontsize=22)
 
 
 def main(datasets, algos, pf=10, base_folder='/home/hag007/Desktop/aggregate_report/oob', file_format="emp_diff_modules_{}_{}_passed_oob.tsv", sim_method='Resnik'):
@@ -167,18 +177,22 @@ if __name__ == "__main__":
     sim_method = args.sim_method
     datasets=["{}".format(x) for x in args.datasets.split(",")]
     algos = args.algos.split(",")
-    cutoffs = [1.0, 2.0, 3.0, 4.0, 5.0]
+    cutoffs=[1,2,3,4,5]
     pf=int(args.pf)
 
 
-    fig, axs = plt.subplots(1,2,figsize=(20,10))
-    prefix = "GE"
-    datasets=["TNFa_2" ,"HC12","ROR_1","ERS_1","IEM","SHERA","SHEZH_1"]
-    algos=["dcem", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY", "hotnet2", "my_netbox_td"]
-    compute_redundancy(datasets=datasets, algos=algos, pf=pf, base_folder=base_folder, file_format=file_format, sim_method=sim_method, cutoffs=cutoffs, ax=axs[0])
+    # fig, axs = plt.subplots(1,2,figsize=(20,10))
+    # prefix = "GE"
+    # datasets=["TNFa_2" ,"HC12","ROR_1","ERS_1","IEM","SHERA","SHEZH_1"]
+    # algos=["dcem", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY", "hotnet2"]
+    # compute_redundancy(datasets=datasets, algos=algos, pf=pf, base_folder=base_folder, file_format=file_format, sim_method=sim_method, cutoffs=cutoffs, ax=axs[0])
 
+    prefix = "PASCAL_SUM"
+    datasets=["Breast_Cancer.G50", "Crohns_Disease.G50", "Schizophrenia.G50", "Triglycerides.G50", "Type_2_Diabetes.G50"]
+    algos = ["my_netbox_td"] # "dcem","jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "my_netbox_td"
+    compute_redundancy(datasets=datasets, algos=algos, pf=pf, base_folder=base_folder, file_format=file_format, sim_method=sim_method, cutoffs=cutoffs, ax=axs[1])
 
-    # prefix = "PASCAL_SUM"
-    # datasets=["Breast_Cancer.G50", "Crohns_Disease.G50", "Schizophrenia.G50", "Triglycerides.G50", "Type_2_Diabetes.G50"]
-    # algos = ["dcem","jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "my_netbox_td"]
-    # compute_redundancy(datasets=datasets, algos=algos, pf=pf, base_folder=base_folder, file_format=file_format, sim_method=sim_method, cutoffs=cutoffs, ax=axs[1])
+    # fig.text(0.01, 0.97, "A:", weight='bold', fontsize=22)
+    # fig.text(0.5, 0.97, "B:", weight='bold', fontsize=22)
+    # fig.tight_layout()
+    # fig.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR,"figure_13.png"))

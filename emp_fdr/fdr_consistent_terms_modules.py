@@ -101,7 +101,7 @@ def main(algo_sample = None, dataset_sample = None, n_dist_samples = 300, n_tota
         i_choice=np.random.choice(n_total_samples, n_dist_samples, replace=False)
         i_dist=i_choice[:n_dist_samples]
     else:
-        i_dist=np.arange(n_start_i, n_start_i+n_fist_samples)
+        i_dist=np.arange(n_start_i, n_start_i+n_first_samples)
 
 
 
@@ -171,7 +171,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='args')
     parser.add_argument('--datasets', dest='datasets', default="TNFa_2")
     parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
+    parser.add_argument('--algos', dest='algos', default="my_netbox_td")
     parser.add_argument('--n_iteration', dest='n_iteration', default=1)
     parser.add_argument('--n_total_samples', help="n_total_samples", dest='n_total_samples', default=5000)
     parser.add_argument('--n_dist_samples', help="n_dist_samples", dest='n_dist_samples', default=5000)
