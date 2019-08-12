@@ -13,7 +13,7 @@ from runners import reactomefi_runner
 from runners import matisse_runner
 from runners import my_netbox_runner
 from runners import my_netbox_td_runner
-
+from runners import dcem_runner
 algo_by_names = {"reactomefi":reactomefi_runner.main,
                  "matisse": matisse_runner.main,
                  "bionet": bionet_runner.main,
@@ -23,7 +23,8 @@ algo_by_names = {"reactomefi":reactomefi_runner.main,
                  "my_netbox_td": my_netbox_td_runner.main,
                  "hotnet2": hotnet2_runner.main,
                  "jactivemodules_greedy": jactivemodules_greedy_runner.main,
-                 "jactivemodules_sa": jactivemodules_sa_runner.main}
+                 "jactivemodules_sa": jactivemodules_sa_runner.main,
+                 "dcem" : dcem_runner.main}
 
 def create_ds_folders(dataset_name):
     os.makedirs(os.path.join(os.path.join(constants.DATASETS_DIR, dataset_name, "data")))

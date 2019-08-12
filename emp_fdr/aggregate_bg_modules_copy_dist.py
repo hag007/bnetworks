@@ -43,7 +43,7 @@ def calc_dist(algos, datasets, shared_list=None, is_max=True):
                 go_results = [os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo, cur_module) for cur_algo in
                               os.listdir(os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds))
                               if os.path.isdir(
-                        os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo)) and cur_algo in algos_filter for
+                        os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo)) and cur_algo == algos_filter for
                               cur_module in os.listdir(os.path.join(constants.OUTPUT_GLOBAL_DIR, cur_ds, cur_algo)) if
                               "separated_modules" in cur_module and int(cur_module.split("_")[1]) < n_modules]
 
@@ -126,7 +126,7 @@ if __name__ == "__main__":
                 df_counter = 0
 
                 df_results = pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX",
-                                                      "emp_diff_modules_{}_{}.tsv".format(dataset, algo)),
+                                                      "emp_diff_{}_{}.tsv".format(dataset, algo)),
                                          sep='\t', index_col=0)
 
                 df_results['hg_pval'] = df_real_agg_list_pval.iloc[:, 0]

@@ -238,7 +238,7 @@ def generate_report_from_template(output_file_name, cy, algo_name="", hg_report=
     output_dir = os.path.join(constants.OUTPUT_GLOBAL_DIR, dataset_name, algo_name)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    shutil.move(report_file_name,
+    shutil.copy(report_file_name,
                 os.path.join(output_dir, "graph_{}.html".format(output_file_name)))
     return "graph_{}.html".format(output_file_name)
 
@@ -258,13 +258,13 @@ def build_all_reports(algo_name, dataset_name, modules, all_bg_genes, score_file
     modules_summary = manager.list()
 
     params=[]
-    # p=multiprocessing.Pool(2)
+    p=multiprocessing.Pool(3)
     for i, module in enumerate(modules):
-        # params.append([module_report, [algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports,
-        #      modules_summary]])
-        module_report(algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports, modules_summary)
+        params.append([module_report, [algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports,
+             modules_summary]])
+        # module_report(algo_name, i, module, all_bg_genes[i], score_file_name, network_file_name, dataset_name, all_hg_reports, modules_summary)
 
-    # p.map(func_star, params)
+    p.map(func_star, params)
 
     modules_summary=list(modules_summary)
     all_hg_reports=list(all_hg_reports)

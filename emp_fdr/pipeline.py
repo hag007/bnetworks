@@ -38,17 +38,17 @@ def execute_stage(py_script, params):
 if __name__=="__main__":
 
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="SOC")
+    parser.add_argument('--datasets', dest='datasets', default="TNFa_2,HC12,SHERA,ROR_1,SHEZH_1,ERS_1,IEM")
     parser.add_argument('--prefix', dest='prefix', default="GE")
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy")
+    parser.add_argument('--algos', dest='algos', default="my_netbox_td")
     parser.add_argument('--network', dest='network', default="dip.sif")
     parser.add_argument('--n_start', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_start', default=0)
-    parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_end', default=1000)
+    parser.add_argument('--n_end', help="number of iterations (total n permutation is pf*(n_end-n_start))", dest='n_end', default=5100)
     parser.add_argument('--pf', dest='pf', help="parallelization factor", default=20)
     parser.add_argument('--recalc_true_modules', dest='recalc_true_modules', default="false")
-    parser.add_argument('--n_iteration', dest='n_iteration', default=100)
-    parser.add_argument('--n_total_samples', help="n_total_samples", dest='n_total_samples', default=1000)
-    parser.add_argument('--n_dist_samples', help="n_dist_samples", dest='n_dist_samples', default=200)
+    parser.add_argument('--n_iteration', dest='n_iteration', default=1)
+    parser.add_argument('--n_total_samples', help="n_total_samples", dest='n_total_samples', default=5000)
+    parser.add_argument('--n_dist_samples', help="n_dist_samples", dest='n_dist_samples', default=5000)
     parser.add_argument('--override_permutations', help="override_permutations", dest='override_permutations', default='false') 
     args = parser.parse_args()
 
@@ -87,17 +87,17 @@ if __name__=="__main__":
                # py_script = "generate_bg_dist.py"
                # execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, override_permutations_param])
 
-               # py_script = "aggregate_bg_dist.py"
-               # execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, recalc_true_modules_param])
+               py_script = "aggregate_bg_dist.py"
+               execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, recalc_true_modules_param])
 
-               # py_script = "aggregate_bg_modules_copy_dist.py"
-               # execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, recalc_true_modules_param])
+               py_script = "aggregate_bg_modules_copy_dist.py"
+               execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_start_param, n_end_param, pf_param, recalc_true_modules_param])
 
-               # py_script = "add_terms_md_modules.py"
-               # execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_permutations_param])
+               py_script = "add_terms_md_modules.py"
+               execute_stage(py_script, [datasets_param, algos_param, prefix_param, n_permutations_param])
 
-               # py_script = "fdr_consistent_terms_modules.py"
-               # execute_stage(py_script, [datasets_param, algos_param, prefix_param, pf_param, n_iteration_param, n_total_samples_param, n_dist_samples_param, n_iteration_param])
+               py_script = "fdr_consistent_terms_modules.py"
+               execute_stage(py_script, [datasets_param, algos_param, prefix_param, pf_param, n_iteration_param, n_total_samples_param, n_dist_samples_param, n_iteration_param])
 
                py_script = "report_result_modules.py"
                execute_stage(py_script, [datasets_param, algos_param, prefix_param, pf_param])

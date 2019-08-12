@@ -124,10 +124,10 @@ if __name__ == "__main__":
         for algo in algos:
             pval = np.array([])
             prcs = []
-
+            # empirical_dist_iteration(prefix, dataset, 0, algo, network_file_name)
             p = MyPool(parallelization_factor)
             params=[ [empirical_dist_iteration, [prefix, dataset, x, algo, network_file_name]] for x in np.arange(int(n_start), int(n_end)) if override_permutations or not permutation_output_exists(prefix, dataset, algo, x)]
             p.map(func_star, params)
-
+           
 
 

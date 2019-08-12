@@ -1,6 +1,6 @@
 import json
 import matplotlib
-from matplotlib_venn import venn2
+# from matplotlib_venn import venn2
 matplotlib.use('Agg')
 
 from pandas._libs.parsers import k
@@ -41,18 +41,13 @@ def calc_emp_pval(cur_rv, cur_dist):
 
 
 
-def calc_modules_ehr(algo_sample = None, dataset_sample = None, terms_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr", "MAX", "emp_diff_{}_{}_oob.tsv"),
-         modules_file_name=os.path.join("/media/hag007/Data/bnet/output/GE_{}/{}/modules_summary.tsv"), emp_ratio_th=0.5):
+def calc_modules_ehr(terms_file_name, modules_file_name, algo_sample=None, dataset_sample=None, emp_ratio_th=0.5):
     statistics = {}
     full_data = pd.DataFrame()
 
-    output_terms = pd.read_csv(
-        terms_file_name.format(dataset_sample, algo_sample),
-        sep='\t', index_col=0).dropna()
+    output_terms = pd.read_csv(terms_file_name, sep='\t', index_col=0).dropna()
 
-    output_modules = pd.read_csv(
-        modules_file_name.format(dataset_sample, algo_sample),
-        sep='\t', index_col=0).dropna()
+    output_modules = pd.read_csv(modules_file_name, sep='\t', index_col=0).dropna()
 
 
 
@@ -119,7 +114,6 @@ def calc_modules_ehr(algo_sample = None, dataset_sample = None, terms_file_name=
         statistics["module_{}_tp".format(a)] = len(tps[a])
         statistics["module_{}_fp".format(a)] = len(fps[a])
         statistics["module_{}_total".format(a)] = len(tps[a])+len(fps[a])
-        print dataset_sample, algo_sample
         statistics["module_{}_size".format(a)] = output_modules.loc[a, '#_genes']
 
         if statistics["module_{}_emp_ratio".format(a)] >emp_ratio_th:
@@ -159,6 +153,8 @@ def plot_modules_ehr_summary():
     parser = argparse.ArgumentParser(description='args')
     parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50")  # TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM
     parser.add_argument('--prefix', dest='prefix', default="GE")
+    parser.add_argument('--base_folder', dest='base_folder', default="/home/hag007/Desktop/aggregate_gwas_report/oob")
+    parser.add_argument('--terms_file_name_format', dest='terms_file_name_format', default="emp_diff_modules_{}_{}_passed_oob.tsv")
     parser.add_argument('--algos', dest='algos',
                         default="my_netbox_td")  # ,keypathwayminer_INES_GREEDY,hotnet2,my_netbox_td
 
@@ -167,6 +163,8 @@ def plot_modules_ehr_summary():
     datasets = args.datasets.split(",")
     algos = args.algos.split(",")
     prefix = args.prefix
+    base_folder = args.base_folder
+    terms_file_name_format = args.terms_file_name_format
 
     terms_limit = 0
     df_rank_matrix = pd.DataFrame()
@@ -177,9 +175,9 @@ def plot_modules_ehr_summary():
     for cur_ds in datasets:
         df_ds=pd.DataFrame()
         for cur_alg in algos:
-            tps, fps, sig_hg_genes, sig_emp_genes, statistics=calc_modules_ehr(cur_alg, cur_ds,
-                                                                   terms_file_name=os.path.join("/home/hag007/Desktop/aggregate_gwas_report/oob", "emp_diff_modules_{}_{}_passed_oob.tsv"),
-                                                                   modules_file_name=os.path.join("/media/hag007/Data/bnet/output/PASCAL_SUM_{}/{}/modules_summary.tsv"))
+            terms_file_name=os.path.join(base_folder, terms_file_name_format.format(cur_ds,cur_alg))
+            modules_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "{}_{}".format(prefix,cur_ds), cur_alg, "modules_summary.tsv")
+            tps, fps, sig_hg_genes, sig_emp_genes, statistics=calc_modules_ehr(terms_file_name, modules_file_name, cur_alg, cur_ds)
             statistics["algo"]=cur_alg
             statistics["dataset"]=cur_ds
             statistics["id"]="{}_{}".format(cur_alg, cur_ds)
