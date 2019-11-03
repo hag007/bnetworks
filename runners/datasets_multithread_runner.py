@@ -12,7 +12,9 @@ from runners import netbox_runner
 from runners import reactomefi_runner
 from runners import matisse_runner
 from runners import my_netbox_runner
-from runners import my_netbox_td_runner
+from runners import dcem3_runner
+from runners import dcem4_runner
+from runners import dcem2_runner
 from runners import dcem_runner
 algo_by_names = {"reactomefi":reactomefi_runner.main,
                  "matisse": matisse_runner.main,
@@ -20,11 +22,13 @@ algo_by_names = {"reactomefi":reactomefi_runner.main,
                  "keypathwayminer_INES_GREEDY": keypathwayminer_ines_greedy_runner.main,
                  "netbox": netbox_runner.main,
                  "my_netbox": my_netbox_runner.main,
-                 "my_netbox_td": my_netbox_td_runner.main,
                  "hotnet2": hotnet2_runner.main,
                  "jactivemodules_greedy": jactivemodules_greedy_runner.main,
                  "jactivemodules_sa": jactivemodules_sa_runner.main,
-                 "dcem" : dcem_runner.main}
+                 "dcem" : dcem_runner.main,
+                 "dcem2": dcem2_runner.main,
+                 "dcem3": dcem3_runner.main,
+                 "dcem4": dcem4_runner.main}
 
 def create_ds_folders(dataset_name):
     os.makedirs(os.path.join(os.path.join(constants.DATASETS_DIR, dataset_name, "data")))
@@ -70,8 +74,8 @@ def run_dataset(dataset_name, expected_genes=None, disease_name=None, score_meth
 
 if __name__ == "__main__":
 
-    datasets=["EN_CML", "EN_LICH", "EN_BRCA", "EN_KIRC"] # ["EN_LUNG", "EN_PRAD", "EN_PAAD"]
-    algos = ["hotnet2", "bionet", "jactivemodules_greedy", "jactivemodules_sa", "netbox", "keypathwayminer_INES_GREEDY"]
+    datasets=["PRE_UVM"] # ["EN_CML", "EN_LICH", "EN_BRCA", "EN_KIRC"] # ["EN_LUNG", "EN_PRAD", "EN_PAAD"]
+    algos = ["netbox","dcem","dcem2","dcem3","dcem4",] # ["hotnet2", "bionet", "jactivemodules_greedy", "jactivemodules_sa", "netbox", "keypathwayminer_INES_GREEDY"]
 
     for cur_ds in datasets:
         print "current folder : {}".format(os.path.basename(cur_ds))

@@ -15,6 +15,7 @@ dict_result, go2geneids, geneids2go, entrez2ensembl = go_hierarcies.build_hierar
     roots=['GO:0008150'])
 vertices = dict_result.values()[0]['vertices']
 
+terms_to_genes={}
 
 def mean_difference(row, dataset_data, classes_data):
     try:
@@ -56,6 +57,8 @@ def calc_empirical_pval(row, n_permutation):
 
 
 def get_all_genes_for_term(vertices, cur_root, term, in_subtree):
+    if term in terms_to_genes:
+        return terms_to_genes[term]
     in_subtree = in_subtree or term == cur_root
     all_genes = set()
     if in_subtree:
@@ -63,6 +66,8 @@ def get_all_genes_for_term(vertices, cur_root, term, in_subtree):
 
     for cur_child in vertices[cur_root]["obj"].children:
         all_genes.update(get_all_genes_for_term(vertices, cur_child.id, term, in_subtree))
+
+    terms_to_genes[term]=all_genes
     return all_genes
 
 

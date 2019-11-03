@@ -83,7 +83,7 @@ if __name__ == "__main__":
     parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy,jactivemodules_sa,bionet,netbox,keypathwayminer_INES_GREEDY,my_netbox_td,dcem") #
 
     args = parser.parse_args()
-
+    count_matrix
     datasets=args.datasets.split(",")
     algos=args.algos.split(",")
     prefix = args.prefix

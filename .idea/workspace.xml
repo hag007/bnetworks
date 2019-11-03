@@ -5,61 +5,57 @@
     <bookmark url="file://$PROJECT_DIR$/utils/go_pval_dist.py" line="107" />
     <bookmark url="file://$PROJECT_DIR$/utils/go_pval_dist.py" line="108" />
     <bookmark url="file://$PROJECT_DIR$/utils/go_pval_dist.py" line="69" />
-    <bookmark url="file://$PROJECT_DIR$/plots/recovery_integrated_plot.py" line="138" />
+    <bookmark url="file://$PROJECT_DIR$/plots/recovery_integrated_plot.py" line="146" />
     <bookmark url="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py" line="27" mnemonic="9" />
+    <bookmark url="file://$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py" line="80" />
+    <bookmark url="file://$PROJECT_DIR$/emp_fdr/fdr_hg_emp_modules_summary.py" line="94" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bc7023f0-9195-457a-8dd4-1ccfb915ad71" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/emp_fdr/compute_similarity_matrix.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emp_fdr/module_global_performance.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emp_fdr/module_variability.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emp_fdr/recover_original_terms_aggregator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emp_fdr/remove_redundant_modules_old.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emp_fdr/variability_between_go_sets.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/implementations/heat_diffusion_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/implementations/my_netbox_td_heat_global.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/implementations/my_netbox_td_heat_modules.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots/go_pval_dist.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots/homogeneity_heterogeneity_modules_summary.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots/recovery_dot_plot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots/richness_homogeneity_plot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots/similarity_dist.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots/variability_aggregated_plot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots/variance_dot_plot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/go_similarity.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/table_to_matrix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.constants.py.swp" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/emp_fdr/recover_original_terms_reduced.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emp_fdr/recover_original_terms_summary.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/implementations/dcem2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/implementations/dcem3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/implementations/dcem4.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/implementations/dcem5.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/implementations/dcem_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/implementations/dcem_test_2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plots/combined_criteria_scatter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plots/revigo_heterogeneity_rank_score.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plots/terms_per_module_reduced_summary.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runners/dcem2_runner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runners/dcem3_runner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runners/dcem4_runner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runners/dcem5_runner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runners/dcem_test_runner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/add_terms_md_modules.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/add_terms_md_modules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/aggregate_bg_dist.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/aggregate_bg_dist.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms_modules.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms_modules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emp_fdr/fdr_hg_emp_modules_summary.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/fdr_hg_emp_modules_summary.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emp_fdr/fdr_hg_emp_summary.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/fdr_hg_emp_summary.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/recover_original_terms.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/recover_original_terms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/remove redundant_modules.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/remove_redundant_modules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emp_fdr/revigo_heterogeneity_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/revigo_heterogeneity_score.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/implementations/my_netbox_td.py" beforeDir="false" afterPath="$PROJECT_DIR$/implementations/my_netbox_td.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infra.py" beforeDir="false" afterPath="$PROJECT_DIR$/infra.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emp_fdr/module_global_performance.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/module_global_performance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emp_fdr/remove_redundant_modules.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/remove_redundant_modules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emp_fdr/revigo_heterogeneity_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/revigo_heterogeneity_score.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emp_fdr/similarity_between_go_set_lists.py" beforeDir="false" afterPath="$PROJECT_DIR$/emp_fdr/similarity_between_go_set_lists.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env/config/conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/env/config/conf.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/EHR_hists_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/EHR_hists_plot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/criteria_dot_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/criteria_dot_plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/go_pval_dist.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/go_pval_dist.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/homogeneity_heterogeneity_modules_summary.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/homogeneity_heterogeneity_modules_summary.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/recovery_dot_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/recovery_dot_plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/recovery_integrated_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/recovery_integrated_plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/richness_homogeneity_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/richness_homogeneity_plot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/terms_per_module_summary.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/terms_per_module_summary.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/my_netbox_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/my_netbox_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runners/my_netbox_td_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/my_netbox_td_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sh/scripts/run_jactivemodules.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/bnet2sif/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/recovery_integrated_plot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/bnet2sif/dip2sif.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/bnet2sif/hn2sif.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/bnet2sif/string2sif.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/catboost_info/catboost_training.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/catboost_info/learn/events.out.tfevents" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/catboost_info/learn_error.tsv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/catboost_info/meta.tsv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/catboost_info/time_left.tsv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/go.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/go.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/scripts.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/scripts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/steiner_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/steiner_tree.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/variability_aggregated_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/variability_aggregated_plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/r/scripts/edger.r" beforeDir="false" afterPath="$PROJECT_DIR$/r/scripts/edger.r" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runners/datasets_multithread_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/datasets_multithread_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runners/dcem_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/dcem_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runners/hotnet2_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/hotnet2_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runners/jactivemodules_sa_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/jactivemodules_sa_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runners/keypathwayminer_ines_greedy_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/keypathwayminer_ines_greedy_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runners/netbox_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runners/netbox_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/table_to_matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/table_to_matrix.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -73,89 +69,61 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="variability_aggregated_plot.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plots/variability_aggregated_plot.py">
+      <file leaf-file-name="dcem_runner.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runners/dcem_runner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1957">
-              <caret line="106" column="56" selection-start-line="106" selection-start-column="56" selection-end-line="106" selection-end-column="56" />
+            <state relative-caret-position="1995">
+              <caret line="105" selection-start-line="105" selection-end-line="105" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="revigo_heterogeneity_score.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emp_fdr/revigo_heterogeneity_score.py">
+      <file leaf-file-name="jactivemodules_greedy_runner.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2033">
-              <caret line="109" column="83" selection-start-line="109" selection-start-column="83" selection-end-line="109" selection-end-column="83" />
+            <state relative-caret-position="1596">
+              <caret line="84" column="4" selection-start-line="84" selection-start-column="4" selection-end-line="87" selection-end-column="90" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hotnet2_runner.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runners/hotnet2_runner.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2223">
+              <caret line="119" column="78" selection-start-line="119" selection-start-column="78" selection-end-line="119" selection-end-column="78" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jactivemodules_sa_runner.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runners/jactivemodules_sa_runner.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1254">
+              <caret line="66" column="52" selection-start-line="66" selection-start-column="52" selection-end-line="66" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fre_plotter.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plots/fre_plotter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#0#9#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="remove_redundant_modules.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emp_fdr/remove_redundant_modules.py">
+      <file leaf-file-name="criteria_reduced_dot_plot.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="177" selection-start-line="177" selection-end-line="177" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="my_netbox_td.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/implementations/my_netbox_td.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="883">
-              <caret line="156" selection-start-line="156" selection-end-line="156" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="indexing.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/core/indexing.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33459">
-              <caret line="1784" selection-start-line="1784" selection-end-line="1784" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="go_similarity.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/go_similarity.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1748">
-              <caret line="94" column="27" lean-forward="true" selection-start-line="94" selection-start-column="27" selection-end-line="94" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="solutions_by terms_distance_hierarchical_plot.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plots/solutions_by terms_distance_hierarchical_plot.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
-              <caret line="172" lean-forward="true" selection-start-line="172" selection-end-line="172" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fdr_hg_emp_summary.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emp_fdr/fdr_hg_emp_summary.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1900">
-              <caret line="102" column="64" lean-forward="true" selection-start-line="102" selection-start-column="64" selection-end-line="102" selection-end-column="64" />
+            <state relative-caret-position="3059">
+              <caret line="167" column="79" selection-start-line="167" selection-start-column="4" selection-end-line="167" selection-end-column="79" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="go.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/go.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2204">
-              <caret line="122" lean-forward="true" selection-start-line="122" selection-end-line="122" />
             </state>
           </provider>
         </entry>
@@ -163,8 +131,38 @@
       <file leaf-file-name="richness_homogeneity_plot.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plots/richness_homogeneity_plot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2774">
-              <caret line="152" column="11" lean-forward="true" selection-start-line="152" selection-start-column="11" selection-end-line="152" selection-end-column="11" />
+            <state relative-caret-position="363">
+              <caret line="81" column="29" selection-start-line="81" selection-start-column="29" selection-end-line="81" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/utils/server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="505">
+              <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="discrimination_summary_plot.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plots/discrimination_summary_plot.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1444">
+              <caret line="83" column="84" selection-start-line="83" selection-start-column="10" selection-end-line="83" selection-end-column="84" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="keypathwayminer_ines_greedy_runner.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runners/keypathwayminer_ines_greedy_runner.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2660">
+              <caret line="140" column="21" selection-start-line="140" selection-start-column="21" selection-end-line="140" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -180,36 +178,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>viol</find>
-      <find>palette</find>
-      <find>figure_4</find>
-      <find>violin</find>
-      <find>order</find>
-      <find>sns.</find>
-      <find>dot_grid</find>
-      <find>plot</find>
-      <find>figure_5</find>
-      <find>my_or</find>
-      <find>linestyle</find>
-      <find>gwas</find>
-      <find>n_modules_fraction</find>
-      <find>significa</find>
-      <find>summary_sig</find>
-      <find>sig</find>
-      <find>len(data</find>
-      <find>figure_13</find>
-      <find>solution_richness_matrix_</find>
-      <find>algos</find>
-      <find>vio</find>
-      <find>cutoffs</find>
-      <find>results</find>
-      <find>colorlist</find>
-      <find>cutoff</find>
-      <find>simila</find>
-      <find>resni</find>
-      <find>venn</find>
-      <find>venn2</find>
-      <find>matplotlib.rc</find>
+      <find>average</find>
+      <find>to_Cs</find>
+      <find>rea</find>
+      <find>scatter</find>
+      <find>patc</find>
+      <find>pat</find>
+      <find>line</find>
+      <find>Circle</find>
+      <find>legend</find>
+      <find>ax.</find>
+      <find>20</find>
+      <find>circle</find>
+      <find>homogeneity</find>
+      <find>title</find>
+      <find>plot_agg_scatter</find>
+      <find>interse</find>
+      <find>palett</find>
+      <find>vs</find>
+      <find>robust</find>
+      <find>nan</find>
+      <find>median</find>
+      <find>semsim</find>
+      <find>df_total</find>
+      <find>mean</find>
+      <find>summary_m_ehr_mean</find>
+      <find>mehr</find>
+      <find>mEHR_</find>
+      <find>err</find>
+      <find>lege</find>
+      <find>score_method</find>
     </findStrings>
     <replaceStrings>
       <replace>ALGO_DIR</replace>
@@ -230,6 +228,9 @@
       <replace>&quot;pval&quot;</replace>
       <replace>aggregate_gwas_report</replace>
       <replace>GE</replace>
+      <replace>constants.ALGOS_ACRONYM</replace>
+      <replace>ax_average</replace>
+      <replace>mean</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -241,65 +242,65 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/runners/netbox_runner.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/add_terms_md_modules.py" />
-        <option value="$PROJECT_DIR$/utils/network.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/aggregate_bg_dist.py" />
-        <option value="$PROJECT_DIR$/utils/scripts.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/remove redundant_modules.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/recover_original_terms_aggregator.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/report_result_modules.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/similarity_between_go_set_lists.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/modules_variance.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/variance_between_go_set_lists.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/recover_original_terms.py" />
-        <option value="$PROJECT_DIR$/plots/variance_dot_plot.py" />
-        <option value="$PROJECT_DIR$/plots/recovery_dot_plot.py" />
-        <option value="$PROJECT_DIR$/infra.py" />
-        <option value="$PROJECT_DIR$/plots/grid_plot_criteria.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/compute_similarity_matrix.py" />
-        <option value="$PROJECT_DIR$/plots/similarity_dist.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/module_variability.py" />
-        <option value="$PROJECT_DIR$/plots/recovery_integrated_plot.py" />
-        <option value="$PROJECT_DIR$/utils/table_to_matrix.py" />
-        <option value="$PROJECT_DIR$/plots/go_pval_dist.py" />
-        <option value="$PROJECT_DIR$/plots/EHR_hists_plot.py" />
-        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
-        <option value="$PROJECT_DIR$/implementations/my_netbox_td_backup.py" />
-        <option value="$PROJECT_DIR$/implementations/heat_diffusion_service.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/fdr_consistent_terms_modules.py" />
-        <option value="$PROJECT_DIR$/utils/steiner_tree.py" />
-        <option value="$PROJECT_DIR$/implementations/my_netbox.py" />
-        <option value="$PROJECT_DIR$/implementations/my_netbox_td_pcst_modules.py" />
-        <option value="$PROJECT_DIR$/implementations/my_netbox_td_heat_modules.py" />
-        <option value="$PROJECT_DIR$/implementations/my_netbox_td_heat_global.py" />
-        <option value="$PROJECT_DIR$/runners/my_netbox_runner.py" />
-        <option value="$PROJECT_DIR$/utils/go.py" />
         <option value="$PROJECT_DIR$/runners/my_netbox_td_runner.py" />
         <option value="$PROJECT_DIR$/implementations/my_netbox_td.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/fdr_hg_emp_modules_summary.py" />
-        <option value="$PROJECT_DIR$/plots/homogeneity_heterogeneity_modules_summary.py" />
         <option value="$PROJECT_DIR$/emp_fdr/variability_between_go_sets.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/module_global_performance.py" />
         <option value="$PROJECT_DIR$/plots/criteria_dot_plot.py" />
-        <option value="$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py" />
-        <option value="$PROJECT_DIR$/plots/variability_aggregated_plot.py" />
-        <option value="$PROJECT_DIR$/plots/terms_per_module_summary.py" />
         <option value="$PROJECT_DIR$/emp_fdr/remove_redundant_modules_old.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/revigo_heterogeneity_score.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/remove_redundant_modules.py" />
-        <option value="$PROJECT_DIR$/plots/richness_homogeneity_plot.py" />
         <option value="$PROJECT_DIR$/utils/go_similarity.py" />
-        <option value="$PROJECT_DIR$/emp_fdr/fdr_hg_emp_summary.py" />
         <option value="$PROJECT_DIR$/plots/solutions_by terms_distance_hierarchical_plot.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/recover_original_terms.py" />
+        <option value="$PROJECT_DIR$/r/scripts/edger.r" />
+        <option value="$PROJECT_DIR$/plots/recovery_dot_plot.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/fdr_hg_emp_summary.py" />
+        <option value="$PROJECT_DIR$/implementations/dcem3.py" />
+        <option value="$PROJECT_DIR$/implementations/dcem2.py" />
+        <option value="$PROJECT_DIR$/runners/dcem2_runner.py" />
+        <option value="$PROJECT_DIR$/runners/dcem3_runner.py" />
+        <option value="$PROJECT_DIR$/runners/dcem4_runner.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/revigo_heterogeneity_score.py" />
+        <option value="$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/recover_original_terms_reduced.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/recover_original_terms_summary.py" />
+        <option value="$PROJECT_DIR$/plots/EHR_hists_plot.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/remove_redundant_modules.py" />
+        <option value="$PROJECT_DIR$/utils/table_to_matrix.py" />
+        <option value="$PROJECT_DIR$/plots/revigo_heterogeneity_rank_score.py" />
+        <option value="$PROJECT_DIR$/env/config/conf.json" />
+        <option value="$PROJECT_DIR$/runners/datasets_multithread_runner.py" />
+        <option value="$PROJECT_DIR$/runners/dcem5_runner.py" />
+        <option value="$PROJECT_DIR$/implementations/dcem5.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/fdr_hg_emp_modules_summary.py" />
+        <option value="$PROJECT_DIR$/implementations/dcem_test_2.py" />
+        <option value="$PROJECT_DIR$/runners/dcem_test_runner.py" />
+        <option value="$PROJECT_DIR$/implementations/dcem_test.py" />
+        <option value="$PROJECT_DIR$/plots/go_pval_dist.py" />
+        <option value="$PROJECT_DIR$/plots/homogeneity_heterogeneity_modules_summary.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/module_global_performance.py" />
+        <option value="$PROJECT_DIR$/plots/revigo_heterogeneity_score.py" />
+        <option value="$PROJECT_DIR$/plots/terms_per_module_summary.py" />
+        <option value="$PROJECT_DIR$/plots/variability_aggregated_plot.py" />
+        <option value="$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py" />
+        <option value="$PROJECT_DIR$/plots/recovery_integrated_plot.py" />
+        <option value="$PROJECT_DIR$/emp_fdr/similarity_between_go_set_lists.py" />
+        <option value="$PROJECT_DIR$/constants.py" />
+        <option value="$PROJECT_DIR$/plots/combined_criteria_scatter.py" />
+        <option value="$PROJECT_DIR$/plots/terms_per_module_reduced_summary.py" />
+        <option value="$PROJECT_DIR$/runners/dcem_runner.py" />
+        <option value="$PROJECT_DIR$/runners/netbox_runner.py" />
+        <option value="$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py" />
+        <option value="$PROJECT_DIR$/runners/hotnet2_runner.py" />
+        <option value="$PROJECT_DIR$/runners/keypathwayminer_ines_greedy_runner.py" />
+        <option value="$PROJECT_DIR$/runners/jactivemodules_sa_runner.py" />
+        <option value="$PROJECT_DIR$/plots/richness_homogeneity_plot.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="296" />
-    <option name="y" value="128" />
-    <option name="width" value="1393" />
-    <option name="height" value="820" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="1855" />
+    <option name="height" value="1084" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -316,16 +317,11 @@
             <path>
               <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
               <item name="bnetworks" type="462c0819:PsiDirectoryNode" />
-              <item name="implementations" type="462c0819:PsiDirectoryNode" />
+              <item name="plots" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
               <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
-            </path>
-            <path>
-              <item name="bnetworks" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
-              <item name="Scratches" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
             </path>
           </expand>
           <select />
@@ -337,22 +333,22 @@
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="networ&#9;FILE&#9;file:///home/hag007/repos/bnetworks/utils/network.py" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
-    <property name="last_opened_file_path" value="$USER_HOME$/heat-diffusion" />
+    <property name="last_opened_file_path" value="/media/hag007/Data/Documents/studies/thesis/code/melanoma" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/plots" />
       <recent name="$PROJECT_DIR$/utils" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/plots" />
       <recent name="$PROJECT_DIR$/" />
       <recent name="$PROJECT_DIR$/emp_fdr" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/emp_fdr" />
-      <recent name="$PROJECT_DIR$/implementations" />
       <recent name="$PROJECT_DIR$/plots" />
       <recent name="$PROJECT_DIR$/runners" />
+      <recent name="$PROJECT_DIR$/implementations" />
+      <recent name="$PROJECT_DIR$/emp_fdr" />
       <recent name="$PROJECT_DIR$/utils" />
     </key>
   </component>
@@ -368,7 +364,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.remove_redundant_modules">
+  <component name="RunManager" selected="Python.jactivemodules_sa_runner">
     <configuration name="aggregate_reports" type="PythonConfigurationType" factoryName="Python">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -401,6 +397,60 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/runners/bionet_runner.py" />
       <option name="PARAMETERS" value="--gene_expression $PROJECT_DIR$/../bnet-app/public/ge.tsv --score &quot;&quot; --network $PROJECT_DIR$/../bnet-app/public/dip.sif --classes $PROJECT_DIR$/../bnet-app/public/classes.tsv --mode 1" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="combined_criteria_scatter" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="bnetworks" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/plots" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plots/combined_criteria_scatter.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="criteria_reduced_dot_plot" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="bnetworks" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/plots" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="dcem_runner" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="bnetworks" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/runners" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/runners/dcem_runner.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -531,7 +581,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="remove_redundant_modules" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="similarity_between_go_set_lists" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -543,49 +593,13 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emp_fdr/remove_redundant_modules.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emp_fdr/similarity_between_go_set_lists.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="remove_redundant_modules_old" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="bnetworks" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/emp_fdr" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emp_fdr/remove_redundant_modules_old.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="revigo_heterogeneity_score" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="bnetworks" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/emp_fdr" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/emp_fdr/revigo_heterogeneity_score.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="richness_homogeneity_plot" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="terms_per_module_reduced_summary" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="bnetworks" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -597,25 +611,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plots/richness_homogeneity_plot.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="terms_per_module_summary" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="bnetworks" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/plots" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plots/terms_per_module_summary.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plots/terms_per_module_reduced_summary.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -631,19 +627,19 @@
       <item itemvalue="Python.keypathwayminer_ines_runner" />
       <item itemvalue="Python.bionet_runner" />
       <item itemvalue="Python.go_to_modules_plt" />
-      <item itemvalue="Python.terms_per_module_summary" />
-      <item itemvalue="Python.remove_redundant_modules_old" />
-      <item itemvalue="Python.remove_redundant_modules" />
-      <item itemvalue="Python.revigo_heterogeneity_score" />
-      <item itemvalue="Python.richness_homogeneity_plot" />
+      <item itemvalue="Python.criteria_reduced_dot_plot" />
+      <item itemvalue="Python.terms_per_module_reduced_summary" />
+      <item itemvalue="Python.combined_criteria_scatter" />
+      <item itemvalue="Python.similarity_between_go_set_lists" />
+      <item itemvalue="Python.dcem_runner" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.remove_redundant_modules" />
-        <item itemvalue="Python.revigo_heterogeneity_score" />
-        <item itemvalue="Python.richness_homogeneity_plot" />
-        <item itemvalue="Python.remove_redundant_modules_old" />
-        <item itemvalue="Python.terms_per_module_summary" />
+        <item itemvalue="Python.dcem_runner" />
+        <item itemvalue="Python.terms_per_module_reduced_summary" />
+        <item itemvalue="Python.combined_criteria_scatter" />
+        <item itemvalue="Python.similarity_between_go_set_lists" />
+        <item itemvalue="Python.criteria_reduced_dot_plot" />
       </list>
     </recent_temporary>
   </component>
@@ -670,19 +666,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <frame x="65" y="-4" width="1295" height="772" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.81680673" visible="true" weight="0.17951483" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.81680673" visible="true" weight="0.25714287" />
       <window_info anchor="bottom" id="TODO" order="9" sideWeight="0.49973047" weight="0.32991803" />
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.19042437" side_tool="true" weight="0.56540084" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32991803" />
       <window_info anchor="bottom" id="Python Console" order="0" weight="0.32991803" />
-      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.5892183" weight="0.5081967" />
+      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.5859838" weight="0.39344263" />
       <window_info anchor="right" id="Structure" order="3" sideWeight="0.5020492" side_tool="true" weight="0.056603774" />
       <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49865228" weight="0.32684427" />
       <window_info id="Favorites" order="0" sideWeight="0.18319328" side_tool="true" weight="0.23827493" />
-      <window_info anchor="bottom" id="Debug" order="6" sideWeight="0.6048517" weight="0.3968085" />
+      <window_info anchor="bottom" id="Debug" order="6" sideWeight="0.6032345" weight="0.3954918" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -690,7 +686,7 @@
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
-      <window_info anchor="bottom" x="1985" y="377" width="1855" height="321" id="Find" order="10" sideWeight="0.41078168" side_tool="true" weight="0.5084388" />
+      <window_info anchor="bottom" x="1985" y="377" width="1855" height="321" id="Find" order="10" sideWeight="0.4140162" side_tool="true" weight="0.45901638" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -787,7 +783,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py</url>
-          <line>176</line>
+          <line>181</line>
           <option name="timeStamp" value="1537" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -842,12 +838,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/plots/terms_per_module_summary.py</url>
-          <line>194</line>
+          <line>197</line>
           <option name="timeStamp" value="1602" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/plots/EHR_hists_plot.py</url>
-          <line>34</line>
+          <line>36</line>
           <option name="timeStamp" value="1615" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -907,12 +903,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py</url>
-          <line>167</line>
+          <line>172</line>
           <option name="timeStamp" value="1768" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py</url>
-          <line>121</line>
+          <line>126</line>
           <option name="timeStamp" value="1771" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -927,7 +923,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py</url>
-          <line>113</line>
+          <line>118</line>
           <option name="timeStamp" value="1831" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -956,29 +952,14 @@
           <option name="timeStamp" value="1849" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/recovery_dot_plot.py</url>
-          <line>130</line>
-          <option name="timeStamp" value="1874" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/recovery_dot_plot.py</url>
-          <line>127</line>
-          <option name="timeStamp" value="1875" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/emp_fdr/module_variability.py</url>
           <line>125</line>
           <option name="timeStamp" value="1881" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/utils/table_to_matrix.py</url>
-          <line>21</line>
+          <line>23</line>
           <option name="timeStamp" value="1894" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/table_to_matrix.py</url>
-          <line>20</line>
-          <option name="timeStamp" value="1895" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/emp_fdr/module_variability.py</url>
@@ -992,13 +973,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/emp_fdr/module_global_performance.py</url>
-          <line>152</line>
+          <line>155</line>
           <option name="timeStamp" value="1935" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="np.isnan(np.mean(all_m_scores))" language="Python" />
           <url>file://$PROJECT_DIR$/emp_fdr/module_global_performance.py</url>
-          <line>149</line>
+          <line>152</line>
           <option name="timeStamp" value="1937" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -1007,49 +988,9 @@
           <option name="timeStamp" value="1939" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/go_similarity.py</url>
-          <line>176</line>
-          <option name="timeStamp" value="1971" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/go_similarity.py</url>
-          <line>173</line>
-          <option name="timeStamp" value="1972" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/go_similarity.py</url>
-          <line>172</line>
-          <option name="timeStamp" value="1973" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/go_similarity.py</url>
-          <line>175</line>
-          <option name="timeStamp" value="1974" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/plots/similarity_dist.py</url>
           <line>74</line>
           <option name="timeStamp" value="1975" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/recovery_integrated_plot.py</url>
-          <line>135</line>
-          <option name="timeStamp" value="1979" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/recovery_integrated_plot.py</url>
-          <line>102</line>
-          <option name="timeStamp" value="1981" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/go_pval_dist.py</url>
-          <line>87</line>
-          <option name="timeStamp" value="1982" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/go_pval_dist.py</url>
-          <line>57</line>
-          <option name="timeStamp" value="1988" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py</url>
@@ -1092,46 +1033,6 @@
           <option name="timeStamp" value="2066" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/implementations/my_netbox_td.py</url>
-          <line>578</line>
-          <option name="timeStamp" value="2091" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/implementations/my_netbox_td.py</url>
-          <line>584</line>
-          <option name="timeStamp" value="2092" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/implementations/my_netbox_td.py</url>
-          <line>206</line>
-          <option name="timeStamp" value="2095" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/implementations/my_netbox_td.py</url>
-          <line>484</line>
-          <option name="timeStamp" value="2099" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/implementations/my_netbox_td.py</url>
-          <line>433</line>
-          <option name="timeStamp" value="2100" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/implementations/my_netbox_td.py</url>
-          <line>612</line>
-          <option name="timeStamp" value="2101" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/implementations/my_netbox_td.py</url>
-          <line>636</line>
-          <option name="timeStamp" value="2102" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/implementations/my_netbox_td.py</url>
-          <line>625</line>
-          <option name="timeStamp" value="2103" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/emp_fdr/fdr_hg_emp_modules_summary.py</url>
           <line>132</line>
           <option name="timeStamp" value="2108" />
@@ -1142,210 +1043,222 @@
           <option name="timeStamp" value="2110" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/emp_fdr/variability_between_go_sets.py</url>
-          <line>102</line>
-          <option name="timeStamp" value="2111" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/variability_aggregated_plot.py</url>
-          <line>79</line>
-          <option name="timeStamp" value="2114" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py</url>
-          <line>126</line>
+          <line>151</line>
           <option name="timeStamp" value="2130" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/terms_per_module_summary.py</url>
-          <line>209</line>
-          <option name="timeStamp" value="2134" />
+          <url>file://$PROJECT_DIR$/plots/revigo_heterogeneity_score.py</url>
+          <line>131</line>
+          <option name="timeStamp" value="2146" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/emp_fdr/remove_redundant_modules.py</url>
+          <url>file://$PROJECT_DIR$/emp_fdr/module_global_performance.py</url>
+          <line>112</line>
+          <option name="timeStamp" value="2152" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/variability_between_go_sets.py</url>
+          <line>78</line>
+          <option name="timeStamp" value="2153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/variability_between_go_sets.py</url>
+          <line>148</line>
+          <option name="timeStamp" value="2156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/terms_per_module_summary.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="2158" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/variability_aggregated_plot.py</url>
+          <line>92</line>
+          <option name="timeStamp" value="2159" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/variability_aggregated_plot.py</url>
+          <line>27</line>
+          <option name="timeStamp" value="2160" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/variability_aggregated_plot.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="2161" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/revigo_heterogeneity_rank_score.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="2173" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/implementations/dcem_test.py</url>
+          <line>682</line>
+          <option name="timeStamp" value="2177" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/implementations/dcem_test.py</url>
+          <line>634</line>
+          <option name="timeStamp" value="2179" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/revigo_heterogeneity_score.py</url>
+          <line>78</line>
+          <option name="timeStamp" value="2180" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/revigo_heterogeneity_score.py</url>
+          <line>90</line>
+          <option name="timeStamp" value="2181" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/go_pval_dist.py</url>
+          <line>87</line>
+          <option name="timeStamp" value="2183" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/go_pval_dist.py</url>
+          <line>85</line>
+          <option name="timeStamp" value="2184" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/module_global_performance.py</url>
           <line>177</line>
-          <option name="timeStamp" value="2137" />
+          <option name="timeStamp" value="2185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/module_global_performance.py</url>
+          <line>51</line>
+          <option name="timeStamp" value="2186" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/terms_per_module_summary.py</url>
+          <line>243</line>
+          <option name="timeStamp" value="2189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/richness_homogeneity_plot.py</url>
+          <line>117</line>
+          <option name="timeStamp" value="2192" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/richness_homogeneity_plot.py</url>
+          <line>93</line>
+          <option name="timeStamp" value="2194" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py</url>
+          <line>208</line>
+          <option name="timeStamp" value="2195" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py</url>
+          <line>44</line>
+          <option name="timeStamp" value="2196" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py</url>
+          <line>41</line>
+          <option name="timeStamp" value="2197" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/terms_per_module_reduced_summary.py</url>
+          <line>375</line>
+          <option name="timeStamp" value="2198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/combined_criteria_scatter.py</url>
+          <line>183</line>
+          <option name="timeStamp" value="2202" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/similarity_between_go_set_lists.py</url>
+          <line>95</line>
+          <option name="timeStamp" value="2205" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/similarity_between_go_set_lists.py</url>
+          <line>85</line>
+          <option name="timeStamp" value="2206" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emp_fdr/similarity_between_go_set_lists.py</url>
+          <line>161</line>
+          <option name="timeStamp" value="2207" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/combined_criteria_scatter.py</url>
+          <line>100</line>
+          <option name="timeStamp" value="2211" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/runners/netbox_runner.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="2212" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="2138" />
+      <option name="time" value="2213" />
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="x, y" language="Python" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
-        <expression-string>font = {'size': 30}
-import matplotlib
-matplotlib.rc('font', **font)
-from matplotlib_venn import venn2
-import utils.go_hierarcies as go_hierarcies
-plt.clf()
-fig, ax  =plt.subplots(2,1, figsize=(20,20))
-score_0=round(semsim.SemSim(&quot;GO:0048839&quot;, &quot;GO:0090102&quot;),2)
-venn2([set(go2geneids[&quot;GO:0048839&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0048839\nInner Ear Development', 'GO:0090102\nCochlea Development'), ax=ax[0])
-ax[0].set_title(&quot;Resnik score: {}&quot;.format(score_0))
-
-score_1=round(semsim.SemSim(&quot;GO:0060348&quot;, &quot;GO:0090102&quot;), 2)
-venn2([set(go2geneids[&quot;GO:0060348&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0060348\nBone Development', 'GO:0090102\nCochlea Development'), ax=ax[1])
-ax[1].set_title(&quot;Resnik score: {}&quot;.format(score_1))
-# plt.tight_layout()
-fig.text(0.01, 0.97, &quot;A:&quot;)
-fig.text(0.01, 0.5, &quot;B:&quot;)
-plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
+        <expression-string>None</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>font = {'size': 30}
-import matplotlib
-matplotlib.rc('font', **font)
-from matplotlib_venn import venn2
-import utils.go_hierarcies as go_hierarcies
-plt.clf()
-fig, ax  =plt.subplots(2,1, figsize=(20,20))
-score_0=round(semsim.SemSim(&quot;GO:0048839&quot;, &quot;GO:0090102&quot;),2)
-venn2([set(go2geneids[&quot;GO:0048839&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0048839\nInner Ear Development', 'GO:0090102\nCochlea Development'), ax=ax[0])
-ax[0].set_title(&quot;Resnik score: {}&quot;.format(score_0))
-
-score_1=round(semsim.SemSim(&quot;GO:0060348&quot;, &quot;GO:0090102&quot;), 2)
-venn2([set(go2geneids[&quot;GO:0060348&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0060348\nBone Development', 'GO:0090102\nCochlea Development'), ax=ax[1])
-ax[1].set_title(&quot;Resnik score: {}&quot;.format(score_1))
-# plt.tight_layout()
-plt.text(0.05, 0.97, &quot;A:&quot;)
-plt.text(0.05, 0.5, &quot;A:&quot;)
-plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
+        <expression-string>np.where(deg_data[:,np.where(h_cols==&quot;qval&quot;)[0][0]]&gt;0.05)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>font = {'size': 30}
-import matplotlib
-matplotlib.rc('font', **font)
-from matplotlib_venn import venn2
-import utils.go_hierarcies as go_hierarcies
-plt.clf()
-fig, ax  =plt.subplots(2,1, figsize=(20,20))
-score_0=round(semsim.SemSim(&quot;GO:0048839&quot;, &quot;GO:0090102&quot;),2)
-venn2([set(go2geneids[&quot;GO:0048839&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0048839\nInner Ear Development', 'GO:0090102\nCochlea Development'), ax=ax[0])
-ax[0].set_title(&quot;Resnik score: {}&quot;.format(score_0))
-
-score_1=round(semsim.SemSim(&quot;GO:0060348&quot;, &quot;GO:0090102&quot;), 2)
-venn2([set(go2geneids[&quot;GO:0060348&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0060348\nBone Development', 'GO:0090102\nCochlea Development'), ax=ax[1])
-ax[1].set_title(&quot;Resnik score: {}&quot;.format(score_1))
-# plt.tight_layout()
-plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
+        <expression-string>np.where(deg_data[:,np.where(h_cols==&quot;qval&quot;)[0][0]]&gt;0.05)[0][0]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>font = {'size': 22}
-import matplotlib
-matplotlib.rc('font', **font)
-from matplotlib_venn import venn2
-import utils.go_hierarcies as go_hierarcies
-plt.clf()
-fig, ax  =plt.subplots(2,1, figsize=(20,20))
-score_0=round(semsim.SemSim(&quot;GO:0048839&quot;, &quot;GO:0090102&quot;),2)
-venn2([set(go2geneids[&quot;GO:0048839&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0048839\nInner Ear Development', 'GO:0090102\nCochlea Development'), ax=ax[0])
-ax[0].set_title(&quot;Resnik score: {}&quot;.format(score_0))
-
-score_1=round(semsim.SemSim(&quot;GO:0060348&quot;, &quot;GO:0090102&quot;), 2)
-venn2([set(go2geneids[&quot;GO:0060348&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0060348\nBone Development', 'GO:0090102\nCochlea Development'), ax=ax[1])
-ax[1].set_title(&quot;Resnik score: {}&quot;.format(score_1))
-# plt.tight_layout()
-plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
+        <expression-string>np.array(df_measurements_x.T).std(axis=1), df_measurements_x.T.std()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>font = {'size': 22}
-import matplotlib
-matplotlib.rc('font', **font)
-from matplotlib_venn import venn2
-import utils.go_hierarcies as go_hierarcies
-plt.clf()
-fig, ax  =plt.subplots(2,1, figsize=(20,25))
-score_0=round(semsim.SemSim(&quot;GO:0048839&quot;, &quot;GO:0090102&quot;),2)
-venn2([set(go2geneids[&quot;GO:0048839&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0048839\nInner Ear Development', 'GO:0090102\nCochlea Development'), ax=ax[0])
-ax[0].set_title(&quot;Resnik score: {}&quot;.format(score_0))
-
-score_1=round(semsim.SemSim(&quot;GO:0060348&quot;, &quot;GO:0090102&quot;), 2)
-venn2([set(go2geneids[&quot;GO:0060348&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0060348\nBone Development', 'GO:0090102\nCochlea Development'), ax=ax[1])
-ax[1].set_title(&quot;Resnik score: {}&quot;.format(score_1))
-# plt.tight_layout()
-plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
+        <expression-string>np.array(df_measurements_x.T).std(axis=1), np.array(df_measurements_x.T).std()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>font = {'size': 22}
-import matplotlib
-matplotlib.rc('font', **font)
-from matplotlib_venn import venn2
-import utils.go_hierarcies as go_hierarcies
-plt.clf()
-fig, ax  =plt.subplots(2,1, figsize=(20,25))
-score_0=round(semsim.SemSim(&quot;GO:0048839&quot;, &quot;GO:0090102&quot;),2)
-venn2([set(go2geneids[&quot;GO:0048839&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0048839\nInner Ear Development', 'GO:0090102\nCochlea Development'), ax=ax[0])
-ax[0].set_title.title(&quot;Resnik score: {}&quot;.format(score_0))
-
-score_1=round(semsim.SemSim(&quot;GO:0060348&quot;, &quot;GO:0090102&quot;), 2)
-venn2([set(go2geneids[&quot;GO:0060348&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0060348\nBone Development', 'GO:0090102\nCochlea Development'), ax=ax[1])
-ax[1].set_title(&quot;Resnik score: {}&quot;.format(score_1))
-# plt.tight_layout()
-plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
+        <expression-string>np.array(df_measurements_x.T).std(axis=1)
+np.array(df_measurements_x.T).std()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>font = {'size': 22}
-import matplotlib
-matplotlib.rc('font', **font)
-from matplotlib_venn import venn2
-import utils.go_hierarcies as go_hierarcies
-plt.clf()
-fig, ax  =plt.subplots(2,1, figsize=(20,25))
-score_0=round(semsim.SemSim(&quot;GO:0048839&quot;, &quot;GO:0090102&quot;),2)
-venn2([set(go2geneids[&quot;GO:0048839&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0048839\nInner Ear Development', 'GO:0090102\nCochlea Development'), ax=ax[0])
-ax[1].set_title.title(&quot;Resnik score: {}&quot;.format(score_0))
-
-score_1=round(semsim.SemSim(&quot;GO:0060348&quot;, &quot;GO:0090102&quot;), 2)
-venn2([set(go2geneids[&quot;GO:0060348&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0060348\nBone Development', 'GO:0090102\nCochlea Development'), ax=ax[1])
-ax[1].set_title(&quot;Resnik score: {}&quot;.format(score_1))
-# plt.tight_layout()
-plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
+        <expression-string>np.array(df_measurements_x.T).std(axis=1)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>plt.clf()
-fig, ax  =plt.subplots(2,1, figsize=(20,25))
-score_0=round(semsim.SemSim(&quot;GO:0048839&quot;, &quot;GO:0090102&quot;),2)
-venn2([set(go2geneids[&quot;GO:0048839&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0048839\nInner Ear Development', 'GO:0090102\nCochlea Development'), ax=ax[0])
-plt.title(&quot;Resnik score: {}&quot;.format(score_0))
-
-score_1=round(semsim.SemSim(&quot;GO:0060348&quot;, &quot;GO:0090102&quot;), 2)
-venn2([set(go2geneids[&quot;GO:0060348&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0060348\nBone Development', 'GO:0090102\nCochlea Development'), ax=ax[1])
-plt.title(&quot;Resnik score: {}&quot;.format(score_1))
-# plt.tight_layout()
-plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
+        <expression-string>np.array(df_measurements_x.T).std()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>plt.clf()
-fig, ax  =plt.subplots(2,1, figsize=(20,20))
-score_0=round(semsim.SemSim(&quot;GO:0048839&quot;, &quot;GO:0090102&quot;),2)
-venn2([set(go2geneids[&quot;GO:0048839&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0048839\nInner Ear Development', 'GO:0090102\nCochlea Development'), ax=ax[0])
-plt.title(&quot;Resnik score: {}&quot;.format(score_0))
-
-score_1=round(semsim.SemSim(&quot;GO:0060348&quot;, &quot;GO:0090102&quot;), 2)
-venn2([set(go2geneids[&quot;GO:0060348&quot;]), set(go2geneids[&quot;GO:0090102&quot;])], set_labels = ('GO:0060348\nBone Development', 'GO:0090102\nCochlea Development'), ax=ax[1])
-plt.title(&quot;Resnik score: {}&quot;.format(score_1))
-# plt.tight_layout()
-plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
+        <expression-string>df_measurements_x.T.std()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>getattr(df_measurements_x, x_agg_metric)()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -1357,39 +1270,37 @@ plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>intra_fraction / global_fraction &gt; 10</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>(1 - ((between_edges_n / float(max(len(m0_reduced) * len(m1_reduced), 10e-10))) / max(     len(G.edges) / float(len(G.nodes) * (len(G.nodes) - 1)), 10e-10))) *len(     m0_reduced + m1_reduced) / float(len(modules_union)) &lt; 0</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>(1 - ((between_edges_n / float(max(len(m0_reduced) * len(m1_reduced), 10e-10))) / max(
-    len(G.edges) / float(len(G.nodes) * (len(G.nodes) - 1)), 10e-10))) \                                    *len(
-    m0_reduced + m1_reduced) / float(len(modules_union)) &lt;0</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>(1-((between_edges_n / float(max(len(m0_reduced)*len(m1_reduced),10e-10))) /                                    max(len(G.edges) / float(len(G.nodes) * (len(G.nodes) - 1)),10e-10))) \                                    * len(m0_reduced + m1_reduced)/float(len(modules_union)) &lt;0</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>np.abs(between_edges_n / float(len(modules_union)*len(modules_union)-1) / max(len(G.edges) / float(len(G.nodes) * (len(G.nodes) - 1)),10e-10)) &gt; 1</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>np.abs(between_edges_n / float(len(modules_union)*(len(modules_union)-1))) \                 / max(len(G.edges) / float(len(G.nodes) * (len(G.nodes) - 1)),10e-10)) &gt;1</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>(between_edges_n / float(len(modules_union)*(len(modules_union)-1))) \                 / max(len(G.edges) / float(len(G.nodes) * (len(G.nodes) - 1)),10e-10) &lt; 0</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -1405,6 +1316,11 @@ plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
       </expression>
     </expressions>
     <expressions id="watch">
+      <expression>
+        <expression-string>x, y</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>np.mean(performaces)</expression-string>
         <language-id>Python</language-id>
@@ -1450,11 +1366,6 @@ plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string />
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
@@ -1463,22 +1374,22 @@ plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>hg_pvals=pd.read_csv(&quot;/home/hag007/Desktop/aggregate_report/oob/emp_diff_modules_TNFa_2_my_netbox_td_passed_oob.tsv&quot;, sep='\t')['hg_pval_max'].apply(lambda a: 10**(-a))</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>pd.read_csv(&quot;/home/hag007/Desktop/aggregate_report/oob/emp_diff_modules_TNFa_2_my_netbox_td_passed_oob.tsv&quot;, sep='\t')['hg_pval_max'].apply(lambda a: 10**(-a))</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>pd.read_csv(&quot;/home/hag007/Desktop/aggregate_report/oob/emp_diff_modules_TNFa_2_my_netbox_td_passed_oob.tsv&quot;, sep='\t')['hg_pval_max']</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>pd.read_csv(&quot;/home/hag007/Desktop/aggregate_report/oob/emp_diff_modules_TNFa_2_my_netbox_td_passed_oob.tsv&quot;, sep='\t')[['hg_pval_max']]</expression-string>
+        <expression-string />
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -1510,377 +1421,382 @@ plt.savefig(&quot;/home/hag007/Desktop/fig.png&quot;)</expression-string>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/-1219902337/pcst_fast.py">
+    <entry file="file://$PROJECT_DIR$/runners/datasets_multithread_runner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+        <state relative-caret-position="1463">
+          <caret line="77" column="12" selection-start-line="77" selection-start-column="12" selection-end-line="77" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/implementations/my_netbox_td_heat_modules.py">
+    <entry file="file://$PROJECT_DIR$/env/config/conf.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="408" selection-start-line="408" selection-end-line="408" />
+        <state relative-caret-position="152">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_dist.py">
+    <entry file="file://$PROJECT_DIR$/implementations/dcem3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="18" column="53" lean-forward="true" selection-start-line="16" selection-end-line="18" selection-end-column="53" />
+        <state relative-caret-position="11191">
+          <caret line="589" column="19" selection-start-line="589" selection-start-column="15" selection-end-line="589" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/compute_similarity_matrix.py">
+    <entry file="file://$PROJECT_DIR$/implementations/dcem5.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="20" column="53" lean-forward="true" selection-start-line="20" selection-start-column="53" selection-end-line="20" selection-end-column="53" />
+        <state relative-caret-position="9709">
+          <caret line="511" column="47" selection-start-line="511" selection-start-column="43" selection-end-line="511" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/lib/python2.7/multiprocessing/pool.py">
+    <entry file="file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="250" selection-start-line="250" selection-end-line="250" />
+        <state relative-caret-position="2223">
+          <caret line="118" column="41" selection-start-line="118" selection-start-column="27" selection-end-line="118" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/implementations/my_netbox_td_heat_global.py">
+    <entry file="file://$PROJECT_DIR$/runners/dcem5_runner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="525" column="78" lean-forward="true" selection-start-line="520" selection-end-line="525" selection-end-column="78" />
+        <state relative-caret-position="1482">
+          <caret line="78" column="4" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/implementations/my_netbox.py">
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/networkx/algorithms/shortest_paths/generic.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="190" selection-start-line="190" selection-end-line="190" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/scipy/stats/_distn_infrastructure.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="509">
-          <caret line="2984" column="8" lean-forward="true" selection-start-line="2984" selection-start-column="8" selection-end-line="2984" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/networkx/algorithms/community/quality.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="249" column="4" selection-start-line="249" selection-start-column="4" selection-end-line="249" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runners/my_netbox_runner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/networkx/classes/reportviews.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="177" selection-start-line="177" selection-end-line="177" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/-1219902337/__builtin__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="479" column="4" selection-start-line="479" selection-start-column="4" selection-end-line="479" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/networkx/classes/graph.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="457" selection-start-line="457" selection-end-line="457" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/graph_influence_linear_th.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-682">
-          <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runners/my_netbox_td_runner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="64" column="13" selection-start-line="64" selection-start-column="10" selection-end-line="64" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/mail.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" selection-start-line="12" selection-end-line="12" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_dist.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="120" column="30" lean-forward="true" selection-start-line="120" selection-start-column="30" selection-end-line="120" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_bg_modules_copy_dist.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="128" column="64" selection-start-line="128" selection-start-column="64" selection-end-line="128" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/add_terms_md_modules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="34" column="53" lean-forward="true" selection-start-line="34" selection-start-column="53" selection-end-line="34" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/add_GO_terms_metadata_agg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="126" column="108" selection-start-line="126" selection-start-column="94" selection-end-line="126" selection-end-column="108" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/fdr_consistent_terms_modules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="181" column="24" selection-start-line="181" selection-start-column="24" selection-end-line="181" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runners/friedman_test_runner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+        <state relative-caret-position="484">
+          <caret line="92" column="10" lean-forward="true" selection-start-line="92" selection-start-column="10" selection-end-line="92" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/emp_fdr/fdr_hg_emp_modules_summary.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="94" column="157" selection-start-line="94" selection-start-column="157" selection-end-line="94" selection-end-column="157" />
+        <state relative-caret-position="435">
+          <caret line="118" column="71" lean-forward="true" selection-start-line="118" selection-start-column="71" selection-end-line="118" selection-end-column="71" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/table_to_matrix.py">
+    <entry file="file://$PROJECT_DIR$/implementations/dcem_test_2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="66" selection-start-line="14" selection-start-column="66" selection-end-line="14" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/scipy/stats/stats.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75677">
+          <caret line="4000" column="24" selection-start-line="4000" selection-start-column="24" selection-end-line="4000" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/implementations/dcem.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <caret line="15" selection-end-line="659" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/io/parsers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12426">
+          <caret line="697" selection-start-line="697" selection-end-line="697" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/implementations/dcem_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9937">
+          <caret line="523" column="29" selection-start-line="523" selection-start-column="29" selection-end-line="523" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runners/dcem_test_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1862">
+          <caret line="98" column="38" selection-start-line="98" selection-start-column="38" selection-end-line="98" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/core/series.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1691">
+          <caret line="166" column="8" selection-start-line="166" selection-start-column="8" selection-end-line="166" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/infra.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="29" selection-start-line="1" selection-end-line="5" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plots/go_pval_dist.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plots/homogeneity_heterogeneity_modules_summary.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3895">
+          <caret line="206" column="38" selection-start-line="206" selection-start-column="38" selection-end-line="206" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/module_global_performance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="28" column="65" selection-start-line="28" selection-start-column="65" selection-end-line="28" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/matplotlib/artist.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16397">
+          <caret line="880" selection-start-line="880" selection-end-line="880" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/matplotlib/patches.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28519">
+          <caret line="1518" column="32" selection-start-line="1518" selection-start-column="32" selection-end-line="1518" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plots/revigo_heterogeneity_score.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1463">
+          <caret line="79" column="75" selection-start-line="79" selection-start-column="75" selection-end-line="79" selection-end-column="75" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plots/terms_per_module_summary.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="36" column="37" selection-start-line="36" selection-end-line="36" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plots/variability_aggregated_plot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1292">
+          <caret line="71" column="39" selection-start-line="71" selection-start-column="39" selection-end-line="71" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/aggregate_reports.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="86" column="19" selection-start-line="86" selection-start-column="19" selection-end-line="86" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/core/indexing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37715">
+          <caret line="2008" selection-start-line="2008" selection-end-line="2008" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/seaborn/rcmod.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10298">
+          <caret line="545" selection-start-line="545" selection-end-line="545" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20273">
+          <caret line="1067" selection-start-line="1067" selection-end-line="1067" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/compute_similarity_matrix.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/Ontology/ontologies.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1406">
+          <caret line="84" selection-start-line="84" selection-end-line="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/SetSemSim.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="53" column="44" selection-start-line="53" selection-start-column="44" selection-end-line="53" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plots/recovery_integrated_plot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="56" column="83" selection-start-line="56" selection-start-column="80" selection-end-line="56" selection-end-column="83" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/numpy/core/fromnumeric.py">
+    <entry file="file://$PROJECT_DIR$/constants.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55252">
-          <caret line="2919" selection-start-line="2919" selection-end-line="2919" />
+        <state relative-caret-position="209">
+          <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/variability_between_go_sets.py">
+    <entry file="file://$PROJECT_DIR$/../python27/lib/python2.7/site-packages/statsmodels/sandbox/distributions/mv_normal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1938">
-          <caret line="104" column="24" selection-start-line="104" selection-start-column="24" selection-end-line="104" selection-end-column="24" />
+        <state relative-caret-position="12046">
+          <caret line="638" column="8" selection-start-line="638" selection-start-column="8" selection-end-line="638" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plots/combined_criteria_scatter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2071">
+          <caret line="115" column="40" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plots/terms_per_module_reduced_summary.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="172" column="34" selection-start-line="172" selection-start-column="34" selection-end-line="172" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/emp_fdr/similarity_between_go_set_lists.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1558">
+          <caret line="84" column="69" selection-start-line="84" selection-start-column="69" selection-end-line="84" selection-end-column="69" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/plots/variance_dot_plot.py">
+    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/fastsemsim/SemSim/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="122" column="31" lean-forward="true" selection-start-line="122" selection-start-column="31" selection-end-line="122" selection-end-column="31" />
+        <state relative-caret-position="1254">
+          <caret line="84" selection-start-line="84" selection-end-line="84" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/seaborn/palettes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-208">
-          <caret line="81" column="4" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plots/grid_plot_criteria.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="169" column="39" selection-start-line="169" selection-start-column="39" selection-end-line="169" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plots/homogeneity_heterogeneity_modules_summary.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="203" column="84" lean-forward="true" selection-start-line="203" selection-start-column="84" selection-end-line="203" selection-end-column="84" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plots/EHR_hists_plot.py">
+    <entry file="file://$PROJECT_DIR$/../python27/lib/python2.7/posixpath.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="760">
-          <caret line="40" column="13" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="13" />
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runners/netbox_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1007">
+          <caret line="53" column="82" selection-start-line="53" selection-start-column="19" selection-end-line="53" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/km_curve.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="177" selection-start-line="22" selection-start-column="177" selection-end-line="22" selection-end-column="177" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runners/dcem_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1995">
+          <caret line="105" selection-start-line="105" selection-end-line="105" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runners/jactivemodules_greedy_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1596">
+          <caret line="84" column="4" selection-start-line="84" selection-start-column="4" selection-end-line="87" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runners/hotnet2_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2223">
+          <caret line="119" column="78" selection-start-line="119" selection-start-column="78" selection-end-line="119" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runners/keypathwayminer_ines_greedy_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2660">
+          <caret line="140" column="21" selection-start-line="140" selection-start-column="21" selection-end-line="140" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/plots/discrimination_summary_plot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1444">
-          <caret line="83" column="84" selection-start-line="83" selection-start-column="8" selection-end-line="83" selection-end-column="84" />
+          <caret line="83" column="84" selection-start-line="83" selection-start-column="10" selection-end-line="83" selection-end-column="84" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/module_global_performance.py">
+    <entry file="file://$PROJECT_DIR$/runners/jactivemodules_sa_runner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="218" column="29" selection-start-line="218" selection-start-column="29" selection-end-line="218" selection-end-column="29" />
+        <state relative-caret-position="1254">
+          <caret line="66" column="52" selection-start-line="66" selection-start-column="52" selection-end-line="66" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/infra.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/core/generic.py">
+    <entry file="file://$PROJECT_DIR$/plots/fre_plotter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="4371" selection-start-line="4371" selection-end-line="4371" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/seaborn/categorical.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46303">
-          <caret line="2456" column="12" selection-start-line="2456" selection-start-column="5" selection-end-line="2456" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plots/criteria_dot_plot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/core/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4560">
-          <caret line="266" selection-start-line="266" selection-end-line="266" />
+        <state>
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/plots/criteria_reduced_dot_plot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3287">
-          <caret line="173" column="10" selection-start-line="173" selection-start-column="10" selection-end-line="173" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plots/terms_per_module_summary.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6479">
-          <caret line="342" column="15" selection-start-line="342" selection-start-column="15" selection-end-line="342" selection-end-column="15" />
+        <state relative-caret-position="3059">
+          <caret line="167" column="79" selection-start-line="167" selection-start-column="4" selection-end-line="167" selection-end-column="79" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/remove_redundant_modules_old.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3534">
-          <caret line="186" column="120" selection-start-line="186" selection-start-column="120" selection-end-line="186" selection-end-column="120" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plots/variability_aggregated_plot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1957">
-          <caret line="106" column="56" selection-start-line="106" selection-start-column="56" selection-end-line="106" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/plots/richness_homogeneity_plot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2774">
-          <caret line="152" column="11" lean-forward="true" selection-start-line="152" selection-start-column="11" selection-end-line="152" selection-end-column="11" />
+        <state relative-caret-position="363">
+          <caret line="81" column="29" selection-start-line="81" selection-start-column="29" selection-end-line="81" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/revigo_heterogeneity_score.py">
+    <entry file="file://$PROJECT_DIR$/utils/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2033">
-          <caret line="109" column="83" selection-start-line="109" selection-start-column="83" selection-end-line="109" selection-end-column="83" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python27/local/lib/python2.7/site-packages/pandas/core/indexing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33459">
-          <caret line="1784" selection-start-line="1784" selection-end-line="1784" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/go.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2204">
-          <caret line="122" lean-forward="true" selection-start-line="122" selection-end-line="122" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/fdr_hg_emp_summary.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1900">
-          <caret line="102" column="64" lean-forward="true" selection-start-line="102" selection-start-column="64" selection-end-line="102" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/go_similarity.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1748">
-          <caret line="94" column="27" lean-forward="true" selection-start-line="94" selection-start-column="27" selection-end-line="94" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plots/solutions_by terms_distance_hierarchical_plot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="172" lean-forward="true" selection-start-line="172" selection-end-line="172" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emp_fdr/remove_redundant_modules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="177" selection-start-line="177" selection-end-line="177" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/implementations/my_netbox_td.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="883">
-          <caret line="156" selection-start-line="156" selection-end-line="156" />
+        <state relative-caret-position="505">
+          <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
         </state>
       </provider>
     </entry>

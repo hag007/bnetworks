@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 import subprocess
 
-from implementations.dcem import main as dcem_main
+from implementations.dcem3 import main as dcem_main
 
 # import rpy2.robjects.numpy2ri  as numpy2ri
 # numpy2ri.activate()
@@ -38,7 +38,7 @@ from utils.scripts import format_script
 import utils.server as server
 from utils.network import output_modules
 
-ALGO_NAME = "dcem"
+ALGO_NAME = "dcem3"
 ALGO_DIR = os.path.join(constants.ALGO_BASE_DIR, ALGO_NAME)
 
 import shutil
@@ -96,7 +96,9 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
 
 if __name__ == "__main__":
-    ds=["GE_NADAV", "GE_NADAV_2"] # ["PASCAL_SUM_Breast_Cancer.G50", "PASCAL_SUM_Crohns_Disease.G50", "PASCAL_SUM_Schizophrenia.G50", "PASCAL_SUM_Triglycerides.G50", "PASCAL_SUM_Type_2_Diabetes.G50"]
+    ds = ["PASCAL_SUM_Crohns_Disease.G50", "PASCAL_SUM_Schizophrenia.G50", "PASCAL_SUM_Type_2_Diabetes.G50",
+          "PASCAL_SUM_Triglycerides.G50", "PASCAL_SUM_Breast_Cancer.G50"]
+    # ds=["GE_TNFa_2", "GE_HC12", "GE_ROR_1","GE_SHERA","GE_SHEZH_1,GE_ERS_1,GE_IEM"]
     for cur in ds:
         constants.update_dirs(DATASET_NAME_u=cur) # Type_2_Diabetes Crohns_Disease
         main(dataset_name=constants.DATASET_NAME, score_method=constants.PREDEFINED_SCORE, module_sig_th=0.3)

@@ -174,11 +174,11 @@ if __name__ == "__main__":
     fig, axs = plt.subplots(1,2,figsize=(20,10))
     prefix = "GE"
     datasets=["TNFa_2" ,"HC12","ROR_1","ERS_1","IEM","SHERA","SHEZH_1"]
-    algos=["dcem", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY", "hotnet2", "my_netbox_td"]
+    algos=["dcem", "dcem2" , "dcem3", "dcem4", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY", "hotnet2", "my_netbox_td"]
     compute_redundancy(datasets=datasets, algos=algos, pf=pf, base_folder=base_folder, file_format=file_format, sim_method=sim_method, cutoffs=cutoffs, ax=axs[0])
 
 
-    # prefix = "PASCAL_SUM"
-    # datasets=["Breast_Cancer.G50", "Crohns_Disease.G50", "Schizophrenia.G50", "Triglycerides.G50", "Type_2_Diabetes.G50"]
-    # algos = ["dcem","jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "my_netbox_td"]
-    # compute_redundancy(datasets=datasets, algos=algos, pf=pf, base_folder=base_folder, file_format=file_format, sim_method=sim_method, cutoffs=cutoffs, ax=axs[1])
+    prefix = "PASCAL_SUM"
+    datasets= ["Breast_Cancer.G50", "Crohns_Disease.G50", "Schizophrenia.G50", "Triglycerides.G50", "Type_2_Diabetes.G50"]
+    algos = ["dcem", "dcem2", "dcem3", "dcem4", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "my_netbox_td"]
+    compute_redundancy(datasets=datasets, algos=algos, pf=pf, base_folder=base_folder, file_format=file_format, sim_method=sim_method, cutoffs=cutoffs, ax=axs[1])

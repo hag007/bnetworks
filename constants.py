@@ -1,6 +1,30 @@
 import json
 import os
 
+import seaborn as sns
+sns.set(color_codes=True)
+from matplotlib.lines import Line2D
+import numpy as np
+
+ALGOS_ACRONYM={"jactivemodules_greedy":"jAM_greedy",
+               "jactivemodules_sa": "jAM_SA",
+               "netbox": "netbox",
+               "keypathwayminer_INES_GREEDY": "KPM",
+               "hotnet2": "hotnet2",
+               "bionet": "bionet",
+               "dcem": "Domino",
+               # "dcem2": "dcem2",
+               # "dcem3": "dcem3",
+               # "dcem4": "dcem4",
+               # "my_netbox_td": "my_netbox_td"
+               }
+ALGOS=ALGOS_ACRONYM.keys()
+COLORDICT = {a: sns.color_palette("bright", n_colors=len(ALGOS))[i] for i, a in
+                 enumerate(ALGOS)}
+PATCHES = [Line2D([0], [0], marker='o', color='gray', label=ALGOS_ACRONYM[a], markersize=12, markerfacecolor=c, alpha=0.7) for a, c in COLORDICT.iteritems()]
+
+
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 PATH_TO_CONF = "env/config/conf.json"
 config_json = json.load(file(os.path.join(dir_path, PATH_TO_CONF)))
@@ -9,6 +33,8 @@ REPO_DIR = os.path.dirname(os.path.realpath(__file__))
 SH_DIR = os.path.join(REPO_DIR, "sh","scripts")
 
 ALGO_BASE_DIR = config_json['ALGO_BASE_PROFILE']
+
+
 
 SERVER_MODE = False
 REPORTS = True
@@ -80,12 +106,6 @@ ALL_CANCER_TYPES = ["ESCA", "LAML", "ACC", "CHOL", "BLCA", "BRCA", "CESC", "COAD
 ALL_TUMOR_TYPES = ["Primary Tumor", "Metastatic", "Additional - New Parimary", "Additional Metatatic", "Primary Blood Derived Cancer - Peripheral Blood", "Blood Derived Cancer - Bone Marrow, Post-treatment", "Primary Blood Derived Cancer - Bone Marrow", "Recurrent Blood Derived Cancer - Peripheral Blood", "Recurrent Tumor"]
 
 
-ALGOS_ACRONYM={"jactivemodules_greedy":"jAM_greedy",
-               "jactivemodules_sa": "jAM_SA",
-               "netbox": "netbox",
-               "hotnet2": "hotnet2",
-               "bionet": "bionet",
-               "keypathwayminer_INES_GREEDY": "KPM"}
 
 
 def update_dirs(BASE_DIR=config_json["BASE_PROFILE"], DATASET_NAME_u=None, DATASET_TYPE_u ="GDC-TCGA", CANCER_TYPE_u ="SKCM"):

@@ -45,7 +45,8 @@ algos_acronym={"jactivemodules_greedy":"jAM_greedy",
                "my_netbox_td": "my_netbox_td",
                "bionet": "bionet",
                "hotnet2": "hotnet2",
-               "keypathwayminer_INES_GREEDY": "KPM"
+               "keypathwayminer_INES_GREEDY": "KPM",
+               "dcem": "dcem"
 }
 
 # "hotnet2": "hotnet2",
@@ -117,27 +118,35 @@ def main():
 
     fig, axs = plt.subplots(2,2, figsize=(20, 20))
 
-    suffix='GE_100_0.4'
+    suffix='PASCAL_SUM_100_0.1'
 
     if suffix.startswith("GE"):
         omic_type=''
     elif suffix.startswith("PASCAL"):
         omic_type='_gwas'
 
-    main_path = constants.OUTPUT_GLOBAL_DIR
+    main_path = os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr/MAX")
     df_measurements=pd.read_csv(os.path.join(main_path, "recovery_results_{}_matrix_p.tsv".format(suffix)), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
 
-    df_zeros = pd.read_csv(os.path.join('/home/hag007/Desktop/aggregate{}_report/visual/'.format(omic_type), "true_positive_counts.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()), df_measurements.columns.values]
-    # df_measurements[np.logical_or(df_zeros==0, np.isnan(df_zeros)).values]=np.nan
+    df_zeros = pd.read_csv(os.path.join('/home/hag007/Desktop/aggregate{}_report/venn/'.format(omic_type), "count_matrix.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()), df_measurements.columns.values]
+    df_measurements[np.logical_or(df_zeros==0, np.isnan(df_zeros)).values]=np.nan
 
     dot_grid(df_measurements, "precision", "Precision", ax=axs[0][0])
 
-    main_path = constants.OUTPUT_GLOBAL_DIR
     df_measurements=pd.read_csv(os.path.join(main_path, "recovery_results_{}_matrix_r.tsv".format(suffix)), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
+
+    df_zeros = pd.read_csv(os.path.join('/home/hag007/Desktop/aggregate{}_report/venn/'.format(omic_type), "count_matrix.tsv"),
+                sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()), df_measurements.columns.values]
+    df_measurements[np.logical_or(df_zeros == 0, np.isnan(df_zeros)).values] = np.nan
+
     dot_grid(df_measurements, "recall", "Recall", ax=axs[0][1])
 
-    main_path = constants.OUTPUT_GLOBAL_DIR
     df_measurements=pd.read_csv(os.path.join(main_path, "recovery_results_{}_matrix_f1.tsv".format(suffix)), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
+
+    df_zeros = pd.read_csv(os.path.join('/home/hag007/Desktop/aggregate{}_report/venn/'.format(omic_type), "count_matrix.tsv"),
+                sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()), df_measurements.columns.values]
+    df_measurements[np.logical_or(df_zeros == 0, np.isnan(df_zeros)).values] = np.nan
+
     dot_grid(df_measurements, "f1", "F1", ax=axs[1][0])
 
     plt.figtext(0.01,0.99, "A:", weight='bold')

@@ -22,7 +22,9 @@ QVAL="qval"
 METHOD='average'
 
 
-def main(base_folder=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","MAX"), file_format="emp_diff_modules_{}_{}_passed_oob.tsv", algo=None, dataset=None, subplot=None):
+def main(base_folder=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","MAX"), file_format="emp_diff_modules_{}_{}_passed_oob.tsv", algo=None, dataset=None, ax=None):
+    ax.set_facecolor('#ffffff')
+
 
     go_terms_emp_tables=pd.read_csv(os.path.join(base_folder, file_format.format(dataset,algo)),sep='\t', index_col=0).dropna()
     hg_hist = go_terms_emp_tables['hg_pval_max']
@@ -31,17 +33,17 @@ def main(base_folder=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","MAX"), 
     emp_hist = go_terms_emp_tables['hg_pval_max']
 
 
-    ax=sns.distplot(hg_hist, norm_hist=False, kde=False, label="# HG enriched terms", bins=25, hist_kws=dict(alpha=0.5, range=(0,25)), ax=subplot)
-    ax=sns.distplot(emp_hist, norm_hist=False, kde=False, label="# EMP validated terms", bins=25, hist_kws=dict(alpha=0.5, range=(0,25)), ax=subplot)
-    subplot.set_xlabel("enrichment score: -log10(pval)", fontsize=20)
-    subplot.set_ylabel("counts", fontsize=20)
-    subplot.legend(prop={"size": 20}, loc='upper right')
+    ax=sns.distplot(hg_hist, norm_hist=False, kde=False, label="# HG enriched terms", bins=25, hist_kws=dict(alpha=0.5, range=(0,25)), ax=ax)
+    ax=sns.distplot(emp_hist, norm_hist=False, kde=False, label="# EMP validated terms", bins=25, hist_kws=dict(alpha=0.5, range=(0,25)), ax=ax)
+    ax.set_xlabel("enrichment score: -log10(pval)", fontsize=20)
+    ax.set_ylabel("# of GO terms", fontsize=20)
+    ax.legend(prop={"size": 20}, loc='upper right', facecolor='#ffffff')
     font={'size' : 17}
     # plt.rc('font' , **font)
     # subplot.legend()
     # subplot.set_title("algorithm: {}, dataset: {}\n"
     #           "EHR: {}".format(algo, dataset, round(len(emp_hist)/float(len(hg_hist)), 2)), fontdict={"size": 18})
-    subplot.set_title("EHR: {}".format(round(len(emp_hist)/float(len(hg_hist)), 2)), fontdict={"size": 20})
+    ax.set_title("Dataset: {}, Algorithm: {}\nEHR: {}".format(dataset, algo, round(len(emp_hist) / float(len(hg_hist)), 2)), fontdict={"size": 20})
 
     # plt.clf()
 
@@ -65,11 +67,11 @@ if __name__ == "__main__":
     plt.subplots_adjust(left=0.05, right=0.95, top=0.90, bottom=0.05)
     for i, algo in enumerate(algos):
         for j, dataset in enumerate(datasets):
-            main(algo=algo, dataset=dataset, subplot=subplots[j][i])
+            main(algo=algo, dataset=dataset, ax=subplots[j][i])
 
     figure.text(0.01, 0.97, "A:", weight='bold', fontsize=22)
-    figure.text(0.5, 0.97, "B:", weight='bold', fontsize=22)
+    figure.text(0.55, 0.97, "B:", weight='bold', fontsize=22)
     figure.text(0.01, 0.5, "C:", weight='bold', fontsize=22)
-    figure.text(0.5, 0.5, "D:", weight='bold', fontsize=22)
+    figure.text(0.55, 0.5, "D:", weight='bold', fontsize=22)
     figure.tight_layout()
     plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "figure_12.png".format(",".join(algos), ",".join(datasets))))
