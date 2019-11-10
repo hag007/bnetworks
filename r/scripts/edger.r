@@ -1,5 +1,5 @@
-.libPaths("/specific/netapp5/gaga/hagailevi/evaluation/Renv")
-library(edgeR, lib.loc  = "/specific/netapp5/gaga/hagailevi/evaluation/Renv")
+# .libPaths("/specific/netapp5/gaga/hagailevi/evaluation/Renv")
+# library(edgeR, lib.loc  = "/specific/netapp5/gaga/hagailevi/evaluation/Renv")
 group=unlist(group)
 print(dim(group))
 print(dim(data))

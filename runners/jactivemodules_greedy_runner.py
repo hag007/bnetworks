@@ -82,14 +82,10 @@ def main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes 
 
 
 if __name__ == "__main__":
-    constants.update_dirs(DATASET_NAME_u="GE_TNFa_2")
-    main(dataset_name=constants.DATASET_NAME, disease_name=None, expected_genes = None, score_method=constants.DEG_EDGER, network_file_name="dip.sif")
-
-
-
-
-
-
+    ds = ["GE_TNFa_2"] # NADAV" ,"GE_NADAV_2"]  # ["PASCAL_SUM_Breast_Cancer.G50", "PASCAL_SUM_Crohns_Disease.G50", "PASCAL_SUM_Schizophrenia.G50", "PASCAL_SUM_Triglycerides.G50", "PASCAL_SUM_Type_2_Diabetes.G50"]
+    for cur in ds:
+        constants.update_dirs(DATASET_NAME_u=cur)  # Type_2_Diabetes Crohns_Disease
+        main(dataset_name=constants.DATASET_NAME, score_method=constants.DEG_EDGER)
 
 
 

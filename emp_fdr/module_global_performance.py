@@ -24,16 +24,16 @@ from variability_between_go_sets import cc_to_v_ratio_analysis, community_perfor
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50") #  TNFa_2,HC12,ROR_1,ERS_1,IEM,SHERA,SHEZH_1 "Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50 TNFa_2,HC12,SHERA,ROR_1,SHEZH_1,ERS_1,IEM
-    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM")  # GE  PASCAL_SUM
-    parser.add_argument('--algos', dest='algos', default="dcem,jactivemodules_greedy,jactivemodules_sa,bionet,netbox,my_netbox_td,hotnet2,keypathwayminer_INES_GREEDY") # my_netbox_td ,hotnet2,keypathwayminer_INES_GREEDY
+    parser.add_argument('--datasets', dest='datasets', default="TNFa_2,HC12,SHERA,ROR_1,SHEZH_1,ERS_1,IEM") # Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50 TNFa_2,HC12,ROR_1,SHERA,SHEZH_1,ERS_1,IEM "Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50 TNFa_2,HC12,SHERA,ROR_1,SHEZH_1,ERS_1,IEM
+    parser.add_argument('--prefix', dest='prefix', default="GE")  # GE  PASCAL_SUM
+    parser.add_argument('--algos', dest='algos', default="hotnet2") # dcem,dcem3,dcem4,jactivemodules_greedy,jactivemodules_sa,bionet,netbox,my_netbox_td,hotnet2,keypathwayminer_INES_GREEDY
     # parser.add_argument('--module_indices', dest='module_indices',
     #                     default="0,1,2")  # jactivemodules_greedy,jactivemodules_sa,bionet,netbox,my_netbox_td
     parser.add_argument('--pf', dest='pf', default=3)
     parser.add_argument('--base_folder', dest='base_folder', default=os.path.join(constants.OUTPUT_GLOBAL_DIR,"emp_fdr","MAX"))
     parser.add_argument('--sim_method', dest='sim_method', default="Resnik")
     parser.add_argument('--file_format', dest='file_format', default="emp_diff_modules_{}_{}_passed_oob.tsv")
-    parser.add_argument('--cutoffs', dest='cutoffs', default="0.0, 1.0,2.0,3.0,4.0") # ,5.0,6.0,7.0,8.0,9.0,10.0,11.0
+    parser.add_argument('--cutoffs', dest='cutoffs', default="1.0,2.0,3.0,4.0,5.0") # 1.0,2.0,3.0,4.0  ,5.0,6.0,7.0,8.0,9.0,10.0,11.0
 
     args = parser.parse_args()
 
@@ -109,7 +109,10 @@ if __name__ == "__main__":
 
 
                         if set_1==set_0:
-                            score=np.mean(community_performance_analysis(cache_file, intervals=np.linspace(cutoff,cutoff,1), modules=[set_0, set_1], dataset=cur_ds, algo=cur_alg, base_folder=base_folder, file_format=file_format))
+                            if len(set_0) >1:
+                                score=np.mean(community_performance_analysis(cache_file, intervals=np.linspace(cutoff,cutoff,1), modules=[set_0, set_1], dataset=cur_ds, algo=cur_alg, base_folder=base_folder, file_format=file_format))
+                            else:
+                                score=np.nan
                         else:
                             score=0
                             # if score_p==None:
@@ -147,10 +150,10 @@ if __name__ == "__main__":
                         all_m_scores.append((1 if m_homogeneities[-1] > 1 and m_heterogeneities[-1] < 1 else 0))
 
                 if len(all_m_scores) != 0:
-                    m_scores[cur_alg].append(np.mean(all_m_scores))
+                    m_scores[cur_alg].append(np.nanmean(all_m_scores))
 
         for k,v in m_scores.iteritems():
-            print k, "n={}".format(len(v)), np.mean(v)
+            print k, "n={}".format(len(v)), np.nanmean(v)
         fig, ax = plt.subplots()
         ax.scatter(m_heterogeneities, m_homogeneities, c=m_cs, cmap='jet')
         for i, data in enumerate(zip(m_heterogeneities, m_homogeneities)):

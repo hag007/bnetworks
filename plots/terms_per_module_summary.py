@@ -33,6 +33,9 @@ import random
 from statsmodels.sandbox.stats.multicomp import fdrcorrection0
 import multiprocessing
 from utils.daemon_multiprocessing import func_star
+
+from matplotlib.patches import Circle
+
 def calc_emp_pval(cur_rv, cur_dist):
     pos = np.size(cur_dist) - np.searchsorted(np.sort(cur_dist), cur_rv, side='left')
 
@@ -155,29 +158,29 @@ def plot_modules_ehr_summary(prefix,datasets,algos, base_folder, terms_file_name
 
 
 
-    terms_limit = 0
-    df_rank_matrix = pd.DataFrame()
-    df_matrix = pd.DataFrame()
-    df_count_matrix = pd.DataFrame()
-    df_all = pd.DataFrame()
-    df_statistics = pd.DataFrame()
-    for cur_ds in datasets:
-        df_ds=pd.DataFrame()
-        for cur_alg in algos:
-            terms_file_name=os.path.join(base_folder, terms_file_name_format.format(cur_ds,cur_alg))
-            modules_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "{}_{}".format(prefix,cur_ds), cur_alg, "modules_summary.tsv")
-            res=calc_modules_ehr(terms_file_name, modules_file_name, cur_alg, cur_ds)
-            if res is None:
-                continue
-            tps, fps, sig_hg_genes, sig_emp_genes, statistics = res
-            statistics["algo"]=cur_alg
-            statistics["dataset"]=cur_ds
-            statistics["id"]="{}_{}".format(cur_alg, cur_ds)
-
-            df_statistics=df_statistics.append(statistics, ignore_index=True)
-
-    df_statistics=df_statistics.set_index("id")
-    df_statistics.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"modules_statistics.tsv"), sep='\t')
+    # terms_limit = 0
+    # df_rank_matrix = pd.DataFrame()
+    # df_matrix = pd.DataFrame()
+    # df_count_matrix = pd.DataFrame()
+    # df_all = pd.DataFrame()
+    # df_statistics = pd.DataFrame()
+    # for cur_ds in datasets:
+    #     df_ds=pd.DataFrame()
+    #     for cur_alg in algos:
+    #         terms_file_name=os.path.join(base_folder, terms_file_name_format.format(cur_ds,cur_alg))
+    #         modules_file_name=os.path.join(constants.OUTPUT_GLOBAL_DIR, "{}_{}".format(prefix,cur_ds), cur_alg, "modules_summary.tsv")
+    #         res=calc_modules_ehr(terms_file_name, modules_file_name, cur_alg, cur_ds)
+    #         if res is None:
+    #             continue
+    #         tps, fps, sig_hg_genes, sig_emp_genes, statistics = res
+    #         statistics["algo"]=cur_alg
+    #         statistics["dataset"]=cur_ds
+    #         statistics["id"]="{}_{}".format(cur_alg, cur_ds)
+    #
+    #         df_statistics=df_statistics.append(statistics, ignore_index=True)
+    #
+    # df_statistics=df_statistics.set_index("id")
+    # df_statistics.to_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR,"modules_statistics.tsv"), sep='\t')
 
     df_statistics = pd.read_csv(os.path.join(constants.OUTPUT_GLOBAL_DIR, "modules_statistics.tsv"), sep='\t',
                                 index_col=0)
@@ -262,7 +265,7 @@ def plot_modules_ehr_summary(prefix,datasets,algos, base_folder, terms_file_name
     plt.tight_layout()
     plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "modules_statistics_plot.png"))
 
-    max_n_modules_th =20
+    max_n_modules_th =2
     summary_m_ehr = pd.DataFrame()
     summary_sig = pd.DataFrame()
     n_modules_fraction = []
@@ -378,6 +381,7 @@ def plot_modules_ehr_summary(prefix,datasets,algos, base_folder, terms_file_name
     plt.figtext(0.69, 0.33, "D:", weight='bold', size=25)
     plt.figtext(0.69, 0.66, "C:", weight='bold', size=25)
 
+
     plt.tight_layout()
     plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "figure_5_{}.png".format(prefix)))
 
@@ -403,18 +407,19 @@ if __name__ == "__main__":
 
 
 
-    prefix = "GE"
-    algos = ["dcem", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY",
-             "hotnet2", "my_netbox_td"]
-    datasets = ["TNFa_2", "HC12", "SHERA", "SHEZH_1", "ROR_1", "ERS_1", "IEM"]
-    omic_type = ""
-    plot_modules_ehr_summary(prefix, datasets, algos, base_folder_format.format(omic_type), terms_file_name_format)
+    # prefix = "GE"
+    # algos = ["dcem", "dcem3", "dcem4", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY",
+    #          "hotnet2", "my_netbox_td"]
+    # datasets = ["TNFa_2", "HC12", "SHERA", "SHEZH_1", "ROR_1", "ERS_1", "IEM"]
+    # omic_type = ""
+    # plot_modules_ehr_summary(prefix, datasets, algos, base_folder_format.format(omic_type), terms_file_name_format)
 
     prefix = "PASCAL_SUM"
-    algos = ["dcem", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY",
+    algos = ["dcem", "dcem3", "dcem4", "jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY",
              "hotnet2", "my_netbox_td"]
     datasets=["Breast_Cancer.G50", "Crohns_Disease.G50", "Schizophrenia.G50", "Triglycerides.G50", "Type_2_Diabetes.G50"]
     omic_type = "_gwas"
     plot_modules_ehr_summary(prefix, datasets, algos, base_folder_format.format(omic_type), terms_file_name_format)
+
 
 

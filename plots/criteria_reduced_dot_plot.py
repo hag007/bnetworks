@@ -38,27 +38,17 @@ QVAL_TH = 0.01
 SIM_TH= 0.4
 
 
-algos_acronym={"jactivemodules_greedy":"jAM_greedy",
-               "jactivemodules_sa": "jAM_SA",
-               "netbox": "netbox",
-               "keypathwayminer_INES_GREEDY": "KPM",
-               "hotnet2": "hotnet2",
-               "bionet": "bionet",
-               "dcem": "dcem",
-               "my_netbox_td": "netbox_td"
-               }
+def plot_scatter_with_size(df_size, df_ratio, ax=None, title="", algos=constants.ALGOS_ACRONYM.keys()):
+    df_size = df_size.loc[set(constants.ALGOS).intersection(df_size.index).intersection(df_ratio.index)].dropna()
+    df_ratio = df_ratio.loc[set(constants.ALGOS).intersection(df_size.index).intersection(df_ratio.index)].dropna()
 
-
-def plot_scatter_with_size(df_size, df_ratio, grid_type, ax=None):
     df_size=df_size.loc[np.sort(df_size.index), np.sort(df_size.columns)]
     df_ratio=df_ratio.loc[np.sort(df_ratio.index), np.sort(df_ratio.columns)]
-    algos = list(df_size.index)
-    sns.set_palette("husl", len(algos))
 
     if ax is None:
         fig, ax = plt.subplots(figsize=(13, 13))
 
-    ax.set_facecolor('#fffde3')
+    ax.set_facecolor('#ffffff')
     ax.grid(color='gray')
 
     i_x = np.arange(len(df_size.columns))
@@ -66,7 +56,7 @@ def plot_scatter_with_size(df_size, df_ratio, grid_type, ax=None):
     size = np.array([df_size.iloc[b, a] for a in i_x for b in i_y])
     x = np.array([df_ratio.iloc[b, a] for a in i_x for b in i_y])
     y = np.array([df_size.iloc[b, a] for a in i_x for b in i_y])
-    labels=np.array([sns.color_palette()[b] for a in i_x for b in i_y])
+    labels=np.array([constants.COLORDICT[b] for a in df_size.columns for b in df_size.index])
     sc = ax.scatter(x, y, s=200, c=labels, cmap='jet') # size/float(max(size))*2000+20
 
     # sorted_list = sorted([[x[i], y[i]] for i in range(len(x))], reverse=True)
@@ -84,114 +74,147 @@ def plot_scatter_with_size(df_size, df_ratio, grid_type, ax=None):
     # ax.plot(pf_X, pf_Y)
 
 
-    colormap = cm.jet
-
-    colorlist = [sns.color_palette()[i] for i in
-                 np.array(list(range(len(algos))))]
-    patches = [Line2D([0], [0], marker='o', markersize=12, color='gray', label=a,
-                      markerfacecolor=c) for i, a, c in zip(list(range(len(algos))), algos, colorlist)]
-    ax.legend(handles=patches, loc='upper left', prop={'size': 22})
-    ax.margins(0.03, 0.03)
-    ax.set_xlabel("EHR", fontdict={"size":22})
+    patches = [Line2D([0], [0], marker='o', markersize=12, color='gray', label=constants.ALGOS_ACRONYM[a],
+                      markerfacecolor=constants.COLORDICT[a]) for i, a in zip(list(range(len(algos))), algos)]
+    ax.legend(handles=patches, loc=(0.0,1.1), prop={'size': 20},ncol=2, facecolor='#ffffff')
+    # ax.margins(0.03, 0.03)
+    ax.set_xlabel("# of non-redundant GO terms", fontdict={"size":22})
+    ax.set_ylabel("EHR", fontdict={"size": 22})
+    ax.set_title(title, fontdict={"size":22})
     plt.subplots_adjust(left=0.25, right=0.99, top=0.99, bottom=0.05)
-    ax.set_ylabel("term count", fontdict={"size":22})
+
+
+def plot_agg_scatter(df_size, df_ratio, ax=None, title=""):
+    df_size = df_size.loc[set(constants.ALGOS).intersection(df_size.index).intersection(df_ratio.index)].dropna()
+    df_ratio = df_ratio.loc[set(constants.ALGOS).intersection(df_size.index).intersection(df_ratio.index)].dropna()
+
+    df_size=df_size.loc[np.sort(df_size.index), np.sort(df_size.columns)]
+    df_ratio=df_ratio.loc[np.sort(df_ratio.index), np.sort(df_ratio.columns)]
+    algos = list(df_size.index)
+    sns.set_palette("husl", len(algos))
+
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(13, 13))
+
+    ax.set_facecolor('#ffffff')
+    ax.grid(color='gray')
+
+    datasets = df_size.columns
+    algos = df_size.index
+    for cur_algo in algos:
+        y=df_size.loc[cur_algo,:].mean()
+        x=df_ratio.loc[cur_algo,:].median()
+        sc = ax.scatter(x, y, s=200, c=constants.COLORDICT[cur_algo])
+
+    patches = [Line2D([0], [0], marker='o', markersize=12, color='gray', label=constants.ALGOS_ACRONYM[a],
+                      markerfacecolor=constants.COLORDICT[a]) for i, a in zip(list(range(len(algos))), algos)]
+    ax.legend(handles=patches, loc=(0.0,1.1), prop={'size': 20},ncol=2, facecolor='#ffffff')
+    # ax.margins(0.03, 0.03)
+    ax.set_xlabel("non-redundant GO terms", fontdict={"size":22})
+    ax.set_ylabel("EHR", fontdict={"size": 22})
+    ax.set_title(title, fontdict={"size":22})
+    plt.subplots_adjust(left=0.25, right=0.99, top=0.99, bottom=0.05)
 
 
 
-def dot_grid(df_measurements, grid_type, y_label, filter_zeros=False, ax=None, algos=None):
+
+def dot_grid(df_measurements, y_label, filter_zeros=False, ax=None, algos=None, title=""):
     if ax is None:
         fig, ax = plt.subplots(figsize=(10, 10))
 
-    ax.set_facecolor('#fffde3')
+    ax.set_facecolor('#ffffff')
     ax.grid(color='gray')
 
-    if algos is None:
-        algos=algos_acronym.keys()
+    algos = []
 
-    algos = sorted(list(algos))
-
-    algo_acrs=[algos_acronym[a] for a in algos]
-
-    colorlist = [sns.color_palette("hls", n_colors=len(algos))[i] for i in
-                 np.array(list(range(len(algos))))]
-    patches = [Line2D([0], [0], marker='o', color='gray', label=algos_acronym[a], markersize=12,
-                      markerfacecolor=c, alpha=0.7) for i, a, c in zip(list(range(len(algos))), algos, colorlist)]
-
+    df_measurements=df_measurements.loc[constants.ALGOS].dropna()
     df_new = pd.DataFrame()
     for i, cur_row in df_measurements.iterrows():
         for cur_entry in cur_row:
-            df_new=df_new.append({"algo": algos_acronym[i], y_label : cur_entry}, ignore_index=True)
+            df_new=df_new.append({"Alg": constants.ALGOS_ACRONYM[i], y_label : cur_entry}, ignore_index=True)
 
     df_new=df_new.dropna(axis=0)
-    my_order = df_new.groupby(by=["algo"])[y_label].mean().sort_values().index
-    ax = sns.stripplot(x='algo', y=y_label, data=df_new, jitter=True, size=15, ax=ax, order=my_order, palette={a: colorlist[algo_acrs.index(a)] for a in my_order})
-    ax.set_title("{}".format(y_label), fontdict={"size":22})
+    my_order = constants.ALGOS_ACRONYM.values() # df_new.groupby(by=["algo"])[y_label].mean().sort_values().index
+    ax = sns.stripplot(x='Alg', y=y_label, data=df_new, jitter=True, size=15, ax=ax, order=my_order, palette={a: "#AAAAAA" for a in my_order}) # {a: colorlist[algo_acrs.index(a)] for a in my_order}
+    ax.set_title("{}".format(title), fontdict={"size":22})
 
-    patches += [Line2D([0], [0], marker='D', color='gray', markersize=0)]
-    patches += [Line2D([0], [0], marker='D', color='gray', label='mean', markersize=12, markerfacecolor='red', alpha=0.7)]
-    patches += [Line2D([0], [0], marker='P', color='gray', label='median', markersize=12, markerfacecolor='red', alpha=0.7)]
+    # patches += [Line2D([0], [0], marker='D', color='gray', markersize=0)]
+    patches = [Line2D([0], [0], marker='D', color='gray', label='mean', markersize=12, markerfacecolor='red', alpha=0.7),  Line2D([0], [0], marker='P', color='gray', label='median', markersize=12, markerfacecolor='blue', alpha=0.7)]
     i=0
     for index, row in df_measurements.iterrows():
 
-        if algos_acronym[index] not in my_order:
-            continue
+        # if constants.ALGOS_ACRONYM[index] not in my_order:
+        #     continue
 
         if filter_zeros:
-            mn = row.values[row.values != 0].mean()
+            mn = np.nanmean(row.values[row.values != 0])
             mdn = np.median(row.values[row.values != 0])
         else:
-            mn = row.values.mean()
+            mn = np.nanmean(row.values)
             mdn = np.median(row.values)
 
 
-        ax.scatter(list(my_order).index(algos_acronym[index]), [mn], marker='D', color='red', edgecolors='b', s=[200], alpha=0.7 ,zorder=4)
+        ax.scatter(list(my_order).index(constants.ALGOS_ACRONYM[index]), [mn], marker='D', color='red', edgecolors='b', s=[250], alpha=0.7 ,zorder=4)
 
 
-        ax.scatter(list(my_order).index(algos_acronym[index]), [mdn], marker='P', color='red', edgecolors='b', s=[200], alpha=0.7, zorder=4)
+        ax.scatter(list(my_order).index(constants.ALGOS_ACRONYM[index]), [mdn], marker='P', color='blue', edgecolors='b', s=[200], alpha=0.7, zorder=5)
         i+=1
 
     ax.set_xlabel(ax.get_xlabel(), fontdict={"size" : 22})
     ax.set_ylabel(ax.get_ylabel(), fontdict={"size": 22})
-    ax.legend(handles=patches, loc='upper left', fontsize=22)
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
+    ax.set_title(title, fontdict={"size":22})
+    ax.legend(handles=patches, loc=(0.0,1.0), fontsize=20, facecolor='#ffffff')
+    ax.set_xticklabels([a for a in ax.get_xticklabels()], rotation=45)
 
     plt.tight_layout()
-    plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "datasets_algo_dot_{}.png".format(grid_type)))
+    plt.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "datasets_algo_dot_{}.png".format(title)))
 
 
 
 def main():
 
     fig_4, axs_4 = plt.subplots(2,2, figsize=(20, 20))
-    fig_5, axs_5 = plt.subplots(1,2, figsize=(20, 10))
+    fig_5, axs_5 = plt.subplots(1,2, figsize=(25, 12))
+    fig_6, axs_6 = plt.subplots(1,2, figsize=(25, 12))
 
     main_path = "/home/hag007/Desktop/aggregate_report/venn"
-    df_measurements_counts=pd.read_csv(os.path.join(main_path, "count_matrix.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
+    df_measurements_ratio=pd.read_csv(os.path.join(main_path, "ratio_matrix.tsv"), sep='\t', index_col=0) # .loc[np.sort(constants.ALGOS_ACRONYM.keys()),:]
     # df_measurements_counts=df_measurements_counts.drop(labels=["SHERA"], axis=1)
-    dot_grid(df_measurements_counts, "counts", "term count", ax=axs_4[0][0])
+    dot_grid(df_measurements_ratio, "EHR", ax=axs_4[0][0], title="EHR, GE")
 
+    main_path = "/home/hag007/Desktop/aggregate_report/venn"
+    df_measurements_counts = pd.read_csv(os.path.join(main_path, "count_matrix.tsv"), sep='\t', index_col=0) # .loc[np.sort(constants.ALGOS_ACRONYM.keys()),:] # ratio_matrix.tsv
+    dot_grid(df_measurements_counts, "# GO terms", ax=axs_4[1][0], title="Term count, GE")
 
-    df_measurements_ratio = pd.read_csv(os.path.join(main_path, "ratio_matrix.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
-    dot_grid(df_measurements_ratio, "ratio", "EHR", ax=axs_4[1][0])
+    main_path= constants.OUTPUT_GLOBAL_DIR
+    df_measurements_richness=pd.read_csv(os.path.join(main_path, "solution_richness_matrix_GE_3.0.tsv"), sep='\t', index_col=0) # .loc[np.sort(constants.ALGOS_ACRONYM.keys()),:]
 
-    plot_scatter_with_size(df_measurements_counts, df_measurements_ratio, "size", ax=axs_5[0])
+    algos=["jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox", "keypathwayminer_INES_GREEDY"]
+    plot_scatter_with_size(df_measurements_ratio, df_measurements_richness, ax=axs_5[0], title="EHR-Richness, GE", algos=algos)
+
+    plot_agg_scatter(df_measurements_ratio, df_measurements_richness, ax=axs_6[0], title="EHR-Richness, GE")
 
     main_path = "/home/hag007/Desktop/aggregate_gwas_report/venn"
-    df_measurements_counts=pd.read_csv(os.path.join(main_path, "count_matrix.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
-    # df_measurements_counts=df_measurements_counts.drop(labels=["SHERA"], axis=1)
-    dot_grid(df_measurements_counts, "counts", "term count", ax=axs_4[0][1])
+    df_measurements_ratio=pd.read_csv(os.path.join(main_path, "ratio_matrix.tsv"), sep='\t', index_col=0) # .loc[np.sort(constants.ALGOS_ACRONYM.keys()),:]
+    dot_grid(df_measurements_ratio, "EHR", ax=axs_4[0][1], title="EHR, GWAS")
 
+    main_path = "/home/hag007/Desktop/aggregate_gwas_report/venn"
+    df_measurements_counts = pd.read_csv(os.path.join(main_path, "count_matrix.tsv"), sep='\t', index_col=0) # .loc[np.sort(constants.ALGOS_ACRONYM.keys()),:] # ratio_matrix.tsv
+    dot_grid(df_measurements_counts, "# GO terms", ax=axs_4[1][1], title="Term count, GWAS")
 
-    df_measurements_ratio = pd.read_csv(os.path.join(main_path, "ratio_matrix.tsv"), sep='\t', index_col=0).loc[np.sort(algos_acronym.keys()),:]
-    dot_grid(df_measurements_ratio, "ratio", "EHR", ax=axs_4[1][1])
+    main_path= constants.OUTPUT_GLOBAL_DIR
+    df_measurements_richness=pd.read_csv(os.path.join(main_path, "solution_richness_matrix_PASCAL_SUM_3.0.tsv"), sep='\t', index_col=0) # .loc[np.sort(constants.ALGOS_ACRONYM.keys()),:]
 
-    plot_scatter_with_size(df_measurements_counts, df_measurements_ratio, "size", ax=axs_5[1])
+    algos=["jactivemodules_greedy", "jactivemodules_sa", "bionet", "netbox"]
+    plot_scatter_with_size(df_measurements_ratio, df_measurements_richness, ax=axs_5[1], title="EHR-Richness, GWAS", algos=algos)
+
+    # plot_agg_scatter(df_measurements_ratio, df_measurements_richness, ax=axs_6[1], title="EHR-Richness, GWAS")
 
 
     fig_4.text(0.01,0.98, "A:", weight='bold',fontsize=22)
-    fig_4.text(0.5, 0.98, "B:", weight='bold',fontsize=22)
+    fig_4.text(0.51, 0.98, "B:", weight='bold',fontsize=22)
     fig_4.text(0.01, 0.49, "C:", weight='bold',fontsize=22)
-    fig_4.text(0.5, 0.49, "D:", weight='bold',fontsize=22)
+    fig_4.text(0.51, 0.49, "D:", weight='bold',fontsize=22)
     fig_4.tight_layout()
     fig_4.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "figure_4.png"))
 
@@ -200,6 +223,10 @@ def main():
     fig_5.tight_layout()
     fig_5.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "figure_5.png"))
 
+    fig_6.text(0.01, 0.97, "A:", weight='bold', fontsize=22)
+    fig_6.text(0.5, 0.97, "B:", weight='bold', fontsize=22)
+    fig_6.tight_layout()
+    fig_6.savefig(os.path.join(constants.OUTPUT_GLOBAL_DIR, "figure_6.png"))
 
     # df_counts = pd.read_csv(os.path.join(main_path, "empirical_terms_counts.tsv"), sep='\t', index_col=0)
     # plot_scatter_with_size(df_measurements_counts, df_measurements_ratio, "size", ax=axs[1][0])

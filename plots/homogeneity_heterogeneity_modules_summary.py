@@ -199,12 +199,12 @@ def plot_modules_ehr_summary(prefix, datasets, algos, base_folder, terms_file_na
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50")  # TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM     TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM
-    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM") # GE   PASCAL_SUM
-    parser.add_argument('--base_folder', dest='base_folder', default="/home/hag007/Desktop/aggregate_gwas_report/oob")
+    parser.add_argument('--datasets', dest='datasets', default="TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM")  # Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50       TNFa_2,HC12,SHERA,SHEZH_1,ROR_1,ERS_1,IEM
+    parser.add_argument('--prefix', dest='prefix', default="GE") # GE   PASCAL_SUM
+    parser.add_argument('--base_folder', dest='base_folder', default=os.path.join(constants.OUTPUT_GLOBAL_DIR, "emp_fdr/MAX"))
     parser.add_argument('--terms_file_name_format', dest='terms_file_name_format', default="emp_diff_modules_{}_{}_passed_oob.tsv")
     parser.add_argument('--algos', dest='algos',
-                        default="dcem,jactivemodules_greedy,jactivemodules_sa,bionet,netbox,my_netbox_td") # ")  # ,keypathwayminer_INES_GREEDY,hotnet2,my_netbox_td,hotnet2,keypathwayminer_INES_GREEDY
+                        default="dcem,dcem3,dcem4,jactivemodules_greedy,jactivemodules_sa,bionet,netbox,my_netbox_td,hotnet2,keypathwayminer_INES_GREEDY") # ")  # ,keypathwayminer_INES_GREEDY,hotnet2,my_netbox_td,hotnet2,keypathwayminer_INES_GREEDY
 
     args = parser.parse_args()
 

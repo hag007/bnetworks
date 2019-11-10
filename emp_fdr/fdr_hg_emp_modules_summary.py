@@ -90,10 +90,10 @@ def main(algo_sample = None, dataset_sample = None,tsv_file_name=os.path.join(co
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='args')
-    parser.add_argument('--datasets', dest='datasets', default="Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50") # TNFa_2,HC12,ROR_1,SHERA,SHEZH_1,ERS_1,IEM
-    parser.add_argument('--prefix', dest='prefix', default="PASCAL_SUM") #
-    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy,jactivemodules_sa,bionet,netbox,keypathwayminer_INES_GREEDY,my_netbox_td,dcem") #
-    omic_prefix="_gwas"
+    parser.add_argument('--datasets', dest='datasets', default="TNFa_2,HC12,ROR_1,SHERA,SHEZH_1,ERS_1,IEM") # Breast_Cancer.G50,Crohns_Disease.G50,Schizophrenia.G50,Triglycerides.G50,Type_2_Diabetes.G50   TNFa_2,HC12,ROR_1,SHERA,SHEZH_1,ERS_1,IEM
+    parser.add_argument('--prefix', dest='prefix', default="GE") # PASCAL_SUM   GE
+    parser.add_argument('--algos', dest='algos', default="jactivemodules_greedy,jactivemodules_sa,bionet,netbox,keypathwayminer_INES_GREEDY,hotnet2,my_netbox_td,dcem,dcem2,dcem3,dcem4") #
+    omic_prefix=""
     args = parser.parse_args()
 
     datasets=args.datasets.split(",")
