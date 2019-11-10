@@ -3,4 +3,4 @@
 /env/config/conf.json
 /sh/scripts/prepare_*_0.
 /sh/scripts/run_*_0.
-/python27
+/python27/*
